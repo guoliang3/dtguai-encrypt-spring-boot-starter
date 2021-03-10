@@ -1,0 +1,95 @@
+package com.dtguai.encrypt.sign;
+
+import com.alibaba.fastjson.JSON;
+import com.dtguai.encrypt.exception.SignDtguaiException;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.codec.digest.DigestUtils;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
+
+import java.util.Map;
+import java.util.Optional;
+import java.util.TreeMap;
+
+
+/**
+ * 系统日志，切面处理类
+ *
+ * @author guo
+ * @date 2018年12月25日14:21:42
+ */
+@Aspect
+@Component
+@Order(1)
+@Slf4j
+public class SignAspect {
+
+    @Value("${sign.key:#{null}}")
+    private String signKey;
+
+    @Pointcut("@annotation(com.dtguai.encrypt.annotation.Sign)")
+    public void signPointCut() {
+    }
+
+    public static final String TIMESTAMP_HEADER = "timestamp";
+    public static final String TOKEN_HEADER = "token";
+    public static final String SIGN_HEADER = "sign";
+    public static final String DATA_SECRET_HEADER = "dataSecret";
+
+    @Around("signPointCut()")
+    public Object around(ProceedingJoinPoint point) throws Throwable {
+        //请求的参数
+        Object[] args = point.getArgs();
+        TreeMap<String, String> reqm = Optional.ofNullable(args[0])
+                .map(x -> JSON.toJSONStringWithDateFormat(x, "yyyy-MM-dd HH:mm:ss"))
+                .map(x -> JSON.parseObject(x, TreeMap.class))
+                .orElseThrow(() -> new SignDtguaiException("sing注解中加密数据为空"));
+
+        String timestamp = Optional.ofNullable(reqm.get("timestamp"))
+                .orElseThrow(() -> new SignDtguaiException("数字证书timestamp不能为空"));
+
+        log.info("sign的TreeMap默认key升序排序timestamp:{} ---- json:{}", timestamp, JSON.toJSONString(reqm));
+
+        Optional.of(reqm)
+                .ifPresent(this::validSign);
+        //执行方法
+        return point.proceed();
+    }
+
+    private void validSign(Map<String, String> reqm) {
+        String md5Sign;
+        String sign;
+        StringBuilder paramBuilder = new StringBuilder();
+        try {
+            reqm = Optional.ofNullable(reqm)
+                    .orElseThrow(() -> new SignDtguaiException(SIGN_HEADER + "的map不能为空"));
+            sign = Optional.ofNullable(reqm).map(x -> x.get(SIGN_HEADER))
+                    .orElseThrow(() -> new SignDtguaiException(SIGN_HEADER + "不能为空"));
+
+            // 校验 Sign
+            reqm.forEach((k, v) -> {
+                if (v != null && !k.equals(SIGN_HEADER) && !k.equals(TOKEN_HEADER) && !k.equals(DATA_SECRET_HEADER)) {
+                    paramBuilder.append(k).append("=").append(v).append("&");
+                }
+            });
+            String dataSing = paramBuilder.append("signKey=").append(signKey).toString();
+            log.info("sing之前的拼装数据:{}", dataSing);
+            md5Sign = DigestUtils.md5Hex(dataSing);
+        } catch (Exception e) {
+            log.error("sign数据签名校验出错{}", reqm, e);
+            throw new SignDtguaiException(SIGN_HEADER + "数据签名校验出错");
+        }
+        if (!md5Sign.equals(sign)) {
+            log.error("验证失败:{}  传入的sign:{}  当前生成的md5Sign:{}", paramBuilder.toString(), sign, md5Sign);
+            throw new SignDtguaiException("数字证书校验失败");
+        }
+
+    }
+
+
+}
