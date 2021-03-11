@@ -47,7 +47,7 @@ public class SignAspect {
         Object[] args = point.getArgs();
         TreeMap<String, String> reqm = Optional.ofNullable(args[0])
                 .map(x -> JSON.toJSONStringWithDateFormat(x, "yyyy-MM-dd HH:mm:ss"))
-                .map(x -> JSON.parseObject(x, TreeMap.class))
+                .map(x -> JSON.<TreeMap<String, String>>parseObject(x, TreeMap.class))
                 .orElseThrow(() -> new SignDtguaiException("sing注解中加密数据为空"));
 
         String timestamp = Optional.ofNullable(reqm.get("timestamp"))

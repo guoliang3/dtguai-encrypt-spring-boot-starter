@@ -8,10 +8,11 @@ import java.lang.annotation.*;
 
 /**
  * <p>加密{@link org.springframework.web.bind.annotation.ResponseBody}响应数据，可用于整个控制类或者某个控制器上</p>
+ *
  * @author guo
  * @date 2019年4月16日14:09:02
  */
-@Target(value = {ElementType.METHOD,ElementType.TYPE})
+@Target(value = {ElementType.METHOD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface EncryptBody {

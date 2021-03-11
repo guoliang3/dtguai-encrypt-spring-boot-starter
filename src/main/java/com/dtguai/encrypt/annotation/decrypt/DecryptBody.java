@@ -18,6 +18,7 @@ public @interface DecryptBody {
 
     /**
      * 解密方式 默认为aes
+     *
      * @return DecryptBodyMethod
      */
     DecryptBodyMethod value() default DecryptBodyMethod.AES;

@@ -2,8 +2,11 @@ package com.dtguai.encrypt.util.security;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESKeySpec;
 import java.nio.charset.StandardCharsets;
@@ -13,9 +16,10 @@ import java.security.SecureRandom;
  * <p>DES加密处理工具类</p>
  *
  * @author guo
- * @date  2019年4月10日10:13:59
+ * @date 2021年3月11日19:52:43
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
+@Slf4j
 public class DesEncryptUtil {
 
     private static final String DES = "DES";
@@ -57,19 +61,34 @@ public class DesEncryptUtil {
             Cipher cipher = Cipher.getInstance(DES);
             cipher.init(type, keyFactory.generateSecret(desKey), random);
 
-            if (type == Cipher.ENCRYPT_MODE) {
-                byte[] byteContent = content.getBytes(StandardCharsets.UTF_8);
-                return Hex2Util.parseByte2HexStr(cipher.doFinal(byteContent));
-            } else {
-                byte[] byteContent = Hex2Util.parseHexStr2Byte(content);
-                assert byteContent != null;
-                return new String(cipher.doFinal(byteContent));
-            }
+            return DesEncryptUtil.encryptMode(content, type, cipher);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
 
+    public static String encryptMode(String content, int type, Cipher cipher) throws BadPaddingException, IllegalBlockSizeException {
 
+        if (type == Cipher.ENCRYPT_MODE) {
+
+            byte[] byteContent = content.getBytes(StandardCharsets.UTF_8);
+
+            return Hex2Util.parseByte2HexStr(cipher.doFinal(byteContent));
+
+        } else {
+
+            byte[] byteContent = Hex2Util.parseHexStr2Byte(content);
+
+            if (null == byteContent) {
+                log.error("加解密转换数据为null请注意byteContent:null");
+                byteContent = new byte[0];
+            }
+
+            return new String(cipher.doFinal(byteContent));
+        }
+
+
+    }
 }

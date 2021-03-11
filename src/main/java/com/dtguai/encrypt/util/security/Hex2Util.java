@@ -1,11 +1,15 @@
 package com.dtguai.encrypt.util.security;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 /**
  * <p>二进制转换工具类</p>
  *
  * @author guo
  * @date 2019年4月10日10:53:09
  */
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Hex2Util {
 
     /**

@@ -7,7 +7,6 @@ import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
-import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
 
 /**
@@ -61,14 +60,9 @@ public class AesEncryptUtil {
             SecretKeySpec key = new SecretKeySpec(enCodeFormat, AES);
             Cipher cipher = Cipher.getInstance(AES);
             cipher.init(type, key);
-            if (type == Cipher.ENCRYPT_MODE) {
-                byte[] byteContent = content.getBytes(StandardCharsets.UTF_8);
-                return Hex2Util.parseByte2HexStr(cipher.doFinal(byteContent));
-            } else {
-                byte[] byteContent = Hex2Util.parseHexStr2Byte(content);
-                assert byteContent != null;
-                return new String(cipher.doFinal(byteContent));
-            }
+
+            return DesEncryptUtil.encryptMode(content,type,cipher);
+
         } catch (Exception e) {
             log.error("AES加密/解密出错", e);
         }
