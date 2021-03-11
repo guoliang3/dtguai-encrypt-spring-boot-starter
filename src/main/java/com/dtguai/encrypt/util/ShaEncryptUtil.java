@@ -4,6 +4,7 @@ package com.dtguai.encrypt.util;
 
 
 import com.dtguai.encrypt.enums.SHAEncryptType;
+import org.springframework.util.StringUtils;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -24,12 +25,14 @@ public class ShaEncryptUtil {
      * @param type   加密类型 {@link SHAEncryptType}
      */
     public static String encrypt(String string, SHAEncryptType type) {
-        if (string == null || "".equals(string.trim())) {
+        if (StringUtils.isEmpty(string)) {
             return "";
         }
+
         if (type == null) {
             type = SHAEncryptType.SHA256;
         }
+
         try {
             MessageDigest md5 = MessageDigest.getInstance(type.getValue());
             byte[] bytes = md5.digest((string).getBytes());

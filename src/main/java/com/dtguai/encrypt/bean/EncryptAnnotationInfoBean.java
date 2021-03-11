@@ -19,6 +19,9 @@ import lombok.NoArgsConstructor;
 @Builder
 public class EncryptAnnotationInfoBean {
 
+    /**
+     * 加密类型
+     */
     private EncryptBodyMethod encryptBodyMethod;
 
     private String key;

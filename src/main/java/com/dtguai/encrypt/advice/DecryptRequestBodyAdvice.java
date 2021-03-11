@@ -2,10 +2,7 @@ package com.dtguai.encrypt.advice;
 
 
 import com.alibaba.fastjson.JSON;
-import com.dtguai.encrypt.annotation.decrypt.AESDecryptBody;
-import com.dtguai.encrypt.annotation.decrypt.DESDecryptBody;
 import com.dtguai.encrypt.annotation.decrypt.DecryptBody;
-import com.dtguai.encrypt.annotation.decrypt.RSADecryptBody;
 import com.dtguai.encrypt.bean.DecryptAnnotationInfoBean;
 import com.dtguai.encrypt.bean.DecryptHttpInputMessage;
 import com.dtguai.encrypt.config.EncryptBodyConfig;
@@ -28,10 +25,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
-import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * 请求数据解密处理
@@ -52,21 +46,18 @@ public class DecryptRequestBodyAdvice implements RequestBodyAdvice {
 
     @Override
     public boolean supports(MethodParameter methodParameter, Type targetType, Class<? extends HttpMessageConverter<?>> converterType) {
+
         Annotation[] annotations = methodParameter.getDeclaringClass().getAnnotations();
-        if (annotations.length > 0) {
-            for (Annotation annotation : annotations) {
-                if (annotation instanceof DecryptBody ||
-                        annotation instanceof AESDecryptBody ||
-                        annotation instanceof DESDecryptBody ||
-                        annotation instanceof RSADecryptBody) {
-                    return true;
-                }
-            }
+
+        if (Arrays.stream(annotations).anyMatch(x -> x instanceof DecryptBody)) {
+            return true;
         }
-        return methodParameter.getMethod().isAnnotationPresent(DecryptBody.class) ||
-                methodParameter.getMethod().isAnnotationPresent(AESDecryptBody.class) ||
-                methodParameter.getMethod().isAnnotationPresent(DESDecryptBody.class) ||
-                methodParameter.getMethod().isAnnotationPresent(RSADecryptBody.class);
+
+        return Optional.of(methodParameter)
+                .map(MethodParameter::getMethod)
+                .map(x -> x.isAnnotationPresent(DecryptBody.class))
+                .orElseThrow(() -> new DecryptDtguaiException("解密拦截器返回异常"));
+
     }
 
     @Override
@@ -88,12 +79,12 @@ public class DecryptRequestBodyAdvice implements RequestBodyAdvice {
             return inputMessage;
         }
 
-        Map req;
+        LinkedHashMap<String, Object> req;
         String body;
         String sign;
         try {
             body = IOUtils.toString((inputMessage.getBody()), config.getEncoding());
-            req = JSON.<Map<String, Object>>parseObject(body, Map.class);
+            req = JSON.<LinkedHashMap<String, Object>>parseObject(body, LinkedHashMap.class);
 
             body = (String) Optional.ofNullable(req.get("dataSecret"))
                     .orElse(null);
@@ -121,13 +112,14 @@ public class DecryptRequestBodyAdvice implements RequestBodyAdvice {
         }
 
         decryptBody = Optional.ofNullable(decryptBody).orElseThrow(() -> {
-                    log.error("decryptBody是null当前类:{}", this.getClass().getName());
+                    log.error("decryptBody是null" +
+                            "当前类:{}", this.getClass().getName());
                     return new DecryptDtguaiException("解密错误，请检查选择的源数据的加密方式是否正确");
                 }
         );
 
         try {
-            req = JSON.parseObject(decryptBody, LinkedHashMap.class);
+            req = JSON.<LinkedHashMap<String, Object>>parseObject(decryptBody, LinkedHashMap.class);
             req.put("sign", sign);
             log.info("解密数据补充timestamp和sign的map:{}", JSON.toJSONString(req));
             InputStream inputStream = IOUtils.toInputStream(JSON.toJSONString(req), config.getEncoding());
@@ -149,38 +141,30 @@ public class DecryptRequestBodyAdvice implements RequestBodyAdvice {
      * @return 加密注解信息
      */
     private DecryptAnnotationInfoBean getMethodAnnotation(MethodParameter methodParameter) {
-        if (methodParameter.getMethod().isAnnotationPresent(DecryptBody.class)) {
+
+        boolean annotation = Optional.ofNullable(methodParameter)
+                .map(MethodParameter::getMethod)
+                .map(x -> x.isAnnotationPresent(DecryptBody.class))
+                .orElse(false);
+
+        if (annotation) {
+
             DecryptBody decryptBody = methodParameter.getMethodAnnotation(DecryptBody.class);
+
             return DecryptAnnotationInfoBean.builder()
-                    .decryptBodyMethod(decryptBody.value())
-                    .key(decryptBody.otherKey())
-                    .timeOut(decryptBody.timeOut())
+                    .decryptBodyMethod(Optional.ofNullable(decryptBody)
+                            .map(DecryptBody::value)
+                            .orElse(null))
+                    .key(Optional.ofNullable(decryptBody)
+                            .map(DecryptBody::otherKey)
+                            .orElse(null))
+                    .timeOut(Optional.ofNullable(decryptBody)
+                            .map(DecryptBody::timeOut)
+                            .orElse(0L))
                     .build();
         }
-        if (methodParameter.getMethod().isAnnotationPresent(DESDecryptBody.class)) {
-            DESDecryptBody des = methodParameter.getMethodAnnotation(DESDecryptBody.class);
-            return DecryptAnnotationInfoBean.builder()
-                    .decryptBodyMethod(DecryptBodyMethod.DES)
-                    .key(des.otherKey())
-                    .timeOut(des.timeOut())
-                    .build();
-        }
-        if (methodParameter.getMethod().isAnnotationPresent(AESDecryptBody.class)) {
-            AESDecryptBody aes = methodParameter.getMethodAnnotation(AESDecryptBody.class);
-            return DecryptAnnotationInfoBean.builder()
-                    .decryptBodyMethod(DecryptBodyMethod.AES)
-                    .key(aes.otherKey())
-                    .timeOut(aes.timeOut())
-                    .build();
-        }
-        if (methodParameter.getMethod().isAnnotationPresent(RSADecryptBody.class)) {
-            RSADecryptBody rsa = methodParameter.getMethodAnnotation(RSADecryptBody.class);
-            return DecryptAnnotationInfoBean.builder()
-                    .decryptBodyMethod(DecryptBodyMethod.RSA)
-                    .key(rsa.otherKey())
-                    .timeOut(rsa.timeOut())
-                    .build();
-        }
+
+
         return null;
     }
 
@@ -190,10 +174,11 @@ public class DecryptRequestBodyAdvice implements RequestBodyAdvice {
      * @param clazz 控制器类
      * @return 加密注解信息
      */
-    private DecryptAnnotationInfoBean getClassAnnotation(Class clazz) {
+    private DecryptAnnotationInfoBean getClassAnnotation(Class<?> clazz) {
+
         Annotation[] annotations = clazz.getDeclaredAnnotations();
 
-        return Optional.ofNullable(annotations)
+        return Optional.of(annotations)
                 .map(x -> {
                             for (Annotation annotation : x) {
                                 if (annotation instanceof DecryptBody) {
@@ -201,24 +186,6 @@ public class DecryptRequestBodyAdvice implements RequestBodyAdvice {
                                     return DecryptAnnotationInfoBean.builder()
                                             .decryptBodyMethod(decryptBody.value())
                                             .key(decryptBody.otherKey())
-                                            .build();
-                                }
-                                if (annotation instanceof DESDecryptBody) {
-                                    return DecryptAnnotationInfoBean.builder()
-                                            .decryptBodyMethod(DecryptBodyMethod.DES)
-                                            .key(((DESDecryptBody) annotation).otherKey())
-                                            .build();
-                                }
-                                if (annotation instanceof AESDecryptBody) {
-                                    return DecryptAnnotationInfoBean.builder()
-                                            .decryptBodyMethod(DecryptBodyMethod.AES)
-                                            .key(((AESDecryptBody) annotation).otherKey())
-                                            .build();
-                                }
-                                if (annotation instanceof RSADecryptBody) {
-                                    return DecryptAnnotationInfoBean.builder()
-                                            .decryptBodyMethod(DecryptBodyMethod.RSA)
-                                            .key(((RSADecryptBody) annotation).otherKey())
                                             .build();
                                 }
                             }
@@ -242,7 +209,6 @@ public class DecryptRequestBodyAdvice implements RequestBodyAdvice {
 
         method = Optional.ofNullable(method)
                 .orElseThrow(() -> new DecryptDtguaiException("解密方式未定义"));
-
 
         String key = infoBean.getKey();
 

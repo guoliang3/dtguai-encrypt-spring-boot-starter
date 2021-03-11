@@ -158,7 +158,10 @@ public class RsaEncryptUtil {
             //数据加密
             Cipher cipher = Cipher.getInstance(keyFactory.getAlgorithm());
             cipher.init(Cipher.ENCRYPT_MODE, pubKey);
-            return cipher.doFinal(data);
+
+            return cipher.doFinal(Optional.ofNullable(data)
+                    .orElseThrow(() -> new EncryptDtguaiException("待加密数据为null")));
+
         } catch (Exception e) {
             log.error("公钥加密出错", e);
             throw new EncryptDtguaiException("公钥加密出错");

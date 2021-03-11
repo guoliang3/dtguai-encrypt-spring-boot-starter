@@ -16,7 +16,7 @@ import java.lang.annotation.*;
 @Documented
 public @interface EncryptBody {
 
-    EncryptBodyMethod value() default EncryptBodyMethod.MD5;
+    EncryptBodyMethod value() default EncryptBodyMethod.AES;
 
     String otherKey() default "";
 

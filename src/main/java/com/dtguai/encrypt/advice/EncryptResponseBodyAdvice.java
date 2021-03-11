@@ -2,12 +2,12 @@ package com.dtguai.encrypt.advice;
 
 
 import com.alibaba.fastjson.JSON;
-import com.dtguai.encrypt.annotation.decrypt.RSADecryptBody;
-import com.dtguai.encrypt.annotation.encrypt.*;
+import com.dtguai.encrypt.annotation.encrypt.EncryptBody;
 import com.dtguai.encrypt.bean.EncryptAnnotationInfoBean;
 import com.dtguai.encrypt.config.EncryptBodyConfig;
 import com.dtguai.encrypt.enums.EncryptBodyMethod;
 import com.dtguai.encrypt.enums.SHAEncryptType;
+import com.dtguai.encrypt.exception.DecryptDtguaiException;
 import com.dtguai.encrypt.exception.EncryptDtguaiException;
 import com.dtguai.encrypt.util.CheckUtils;
 import com.dtguai.encrypt.util.Md5EncryptUtil;
@@ -29,6 +29,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Optional;
 
@@ -45,7 +46,7 @@ import java.util.Optional;
 @Order(1)
 @RestControllerAdvice(basePackages = "com.dtguai.app")
 @Slf4j
-public class EncryptResponseBodyAdvice implements ResponseBodyAdvice {
+public class EncryptResponseBodyAdvice implements ResponseBodyAdvice<Object> {
 
     private final ObjectMapper objectMapper;
 
@@ -58,55 +59,51 @@ public class EncryptResponseBodyAdvice implements ResponseBodyAdvice {
     }
 
     /**
-     *
-     * @param returnType returnType
+     * @param returnType    returnType
      * @param converterType converterType
      * @return boolean
      */
     @Override
     public boolean supports(MethodParameter returnType, Class converterType) {
+
         Annotation[] annotations = returnType.getDeclaringClass().getAnnotations();
-        if (annotations.length > 0) {
-            for (Annotation annotation : annotations) {
-                if (annotation instanceof EncryptBody ||
-                        annotation instanceof AESEncryptBody ||
-                        annotation instanceof DESEncryptBody ||
-                        annotation instanceof RSAEncryptBody ||
-                        annotation instanceof MD5EncryptBody ||
-                        annotation instanceof SHAEncryptBody) {
-                    return true;
-                }
-            }
+
+        if (Arrays.stream(annotations).anyMatch(x -> x instanceof EncryptBody)) {
+            return true;
         }
-        return returnType.getMethod().isAnnotationPresent(EncryptBody.class) ||
-                returnType.getMethod().isAnnotationPresent(AESEncryptBody.class) ||
-                returnType.getMethod().isAnnotationPresent(DESEncryptBody.class) ||
-                returnType.getMethod().isAnnotationPresent(RSAEncryptBody.class) ||
-                returnType.getMethod().isAnnotationPresent(MD5EncryptBody.class) ||
-                returnType.getMethod().isAnnotationPresent(SHAEncryptBody.class);
+
+        return Optional.of(returnType)
+                .map(MethodParameter::getMethod)
+                .map(x -> x.isAnnotationPresent(EncryptBody.class))
+                .orElseThrow(() -> new DecryptDtguaiException("加密拦截器返回异常"));
+
     }
 
     @Override
-    public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType,
-                                  Class selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
+    public Object beforeBodyWrite(Object body,
+                                  MethodParameter returnType,
+                                  MediaType selectedContentType,
+                                  Class selectedConverterType,
+                                  ServerHttpRequest request,
+                                  ServerHttpResponse response) {
         if (body == null) {
             return null;
         }
         response.getHeaders().setContentType(MediaType.TEXT_PLAIN);
         String str;
         String result = null;
-        Map repMap = null;
-
+        Map<String, Object> repMap = null;
         try {
             str = objectMapper.writeValueAsString(body);
             repMap = Optional.ofNullable(str)
-                    .map(x -> JSON.parseObject(x, Map.class))
+                    .map(x -> JSON.<Map<String, Object>>parseObject(x, Map.class))
                     .orElse(null);
 
             result = Optional.ofNullable(repMap)
                     .map(x -> x.get("result"))
                     .map(JSON::toJSONString)
                     .orElse(null);
+
         } catch (JsonProcessingException e) {
             log.error("响应数据的加密异常,请联系管理员", e);
         }
@@ -146,37 +143,16 @@ public class EncryptResponseBodyAdvice implements ResponseBodyAdvice {
                     return new EncryptDtguaiException("获取方法控制器上的加密注解信息,为null");
                 });
 
-        if (method.isAnnotationPresent(EncryptBody.class)) {
-            EncryptBody encryptBody = methodParameter.getMethodAnnotation(EncryptBody.class);
+        EncryptBody encryptBody = methodParameter.getMethodAnnotation(EncryptBody.class);
+
+        if (method.isAnnotationPresent(EncryptBody.class) && encryptBody != null) {
+
             return EncryptAnnotationInfoBean.builder()
                     .encryptBodyMethod(encryptBody.value())
                     .key(encryptBody.otherKey())
                     .shaEncryptType(encryptBody.shaType())
                     .build();
-        } else if (method.isAnnotationPresent(MD5EncryptBody.class)) {
-            return EncryptAnnotationInfoBean.builder()
-                    .encryptBodyMethod(EncryptBodyMethod.MD5)
-                    .build();
-        } else if (method.isAnnotationPresent(SHAEncryptBody.class)) {
-            return EncryptAnnotationInfoBean.builder()
-                    .encryptBodyMethod(EncryptBodyMethod.SHA)
-                    .shaEncryptType(methodParameter.getMethodAnnotation(SHAEncryptBody.class).value())
-                    .build();
-        } else if (method.isAnnotationPresent(DESEncryptBody.class)) {
-            return EncryptAnnotationInfoBean.builder()
-                    .encryptBodyMethod(EncryptBodyMethod.DES)
-                    .key(methodParameter.getMethodAnnotation(DESEncryptBody.class).otherKey())
-                    .build();
-        } else if (method.isAnnotationPresent(AESEncryptBody.class)) {
-            return EncryptAnnotationInfoBean.builder()
-                    .encryptBodyMethod(EncryptBodyMethod.AES)
-                    .key(methodParameter.getMethodAnnotation(AESEncryptBody.class).otherKey())
-                    .build();
-        } else if (method.isAnnotationPresent(RSADecryptBody.class)) {
-            return EncryptAnnotationInfoBean.builder()
-                    .encryptBodyMethod(EncryptBodyMethod.RSA)
-                    .key(methodParameter.getMethodAnnotation(RSADecryptBody.class).otherKey())
-                    .build();
+
         }
         return null;
     }
@@ -187,7 +163,7 @@ public class EncryptResponseBodyAdvice implements ResponseBodyAdvice {
      * @param clazz 控制器类
      * @return 加密注解信息
      */
-    private EncryptAnnotationInfoBean getClassAnnotation(Class clazz) {
+    private EncryptAnnotationInfoBean getClassAnnotation(Class<?> clazz) {
         Annotation[] annotations = clazz.getDeclaredAnnotations();
         return Optional.of(annotations)
                 .map(x -> {
@@ -199,34 +175,11 @@ public class EncryptResponseBodyAdvice implements ResponseBodyAdvice {
                                     .key(encryptBody.otherKey())
                                     .shaEncryptType(encryptBody.shaType())
                                     .build();
-                        } else if (annotation instanceof MD5EncryptBody) {
-                            return EncryptAnnotationInfoBean.builder()
-                                    .encryptBodyMethod(EncryptBodyMethod.MD5)
-                                    .build();
-                        } else if (annotation instanceof SHAEncryptBody) {
-                            return EncryptAnnotationInfoBean.builder()
-                                    .encryptBodyMethod(EncryptBodyMethod.SHA)
-                                    .shaEncryptType(((SHAEncryptBody) annotation).value())
-                                    .build();
-                        } else if (annotation instanceof DESEncryptBody) {
-                            return EncryptAnnotationInfoBean.builder()
-                                    .encryptBodyMethod(EncryptBodyMethod.DES)
-                                    .key(((DESEncryptBody) annotation).otherKey())
-                                    .build();
-                        } else if (annotation instanceof AESEncryptBody) {
-                            return EncryptAnnotationInfoBean.builder()
-                                    .encryptBodyMethod(EncryptBodyMethod.AES)
-                                    .key(((AESEncryptBody) annotation).otherKey())
-                                    .build();
-                        } else if (annotation instanceof RSAEncryptBody) {
-                            return EncryptAnnotationInfoBean.builder()
-                                    .encryptBodyMethod(EncryptBodyMethod.RSA)
-                                    .key(((RSAEncryptBody) annotation).otherKey())
-                                    .build();
                         }
                     }
                     return null;
-                }).orElse(null);
+                })
+                .orElse(null);
     }
 
 

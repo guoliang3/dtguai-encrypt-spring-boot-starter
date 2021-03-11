@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import javax.crypto.Cipher;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESKeySpec;
+import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
 
 /**
@@ -16,6 +17,8 @@ import java.security.SecureRandom;
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class DesEncryptUtil {
+
+    private static final String DES = "DES";
 
     /**
      * DES加密
@@ -50,12 +53,12 @@ public class DesEncryptUtil {
         try {
             SecureRandom random = new SecureRandom();
             DESKeySpec desKey = new DESKeySpec(password.getBytes());
-            SecretKeyFactory keyFactory = SecretKeyFactory.getInstance("DES");
-            Cipher cipher = Cipher.getInstance("DES");
+            SecretKeyFactory keyFactory = SecretKeyFactory.getInstance(DES);
+            Cipher cipher = Cipher.getInstance(DES);
             cipher.init(type, keyFactory.generateSecret(desKey), random);
 
             if (type == Cipher.ENCRYPT_MODE) {
-                byte[] byteContent = content.getBytes("utf-8");
+                byte[] byteContent = content.getBytes(StandardCharsets.UTF_8);
                 return Hex2Util.parseByte2HexStr(cipher.doFinal(byteContent));
             } else {
                 byte[] byteContent = Hex2Util.parseHexStr2Byte(content);

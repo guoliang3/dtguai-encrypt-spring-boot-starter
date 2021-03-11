@@ -1,11 +1,13 @@
 package com.dtguai.encrypt.util.security;
 
+import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
+import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
 
 /**
@@ -15,11 +17,10 @@ import java.security.SecureRandom;
  * @date 2019年4月16日14:11:20
  */
 @Slf4j
+@UtilityClass
 public class AesEncryptUtil {
 
-    private AesEncryptUtil(){
-        throw new IllegalStateException("这是一个公共类不需要实例化");
-    }
+    private static final String AES = "AES";
 
     /**
      * AES加密
@@ -51,17 +52,17 @@ public class AesEncryptUtil {
      */
     private static String aes(String content, String password, int type) {
         try {
-            KeyGenerator generator = KeyGenerator.getInstance("AES");
+            KeyGenerator generator = KeyGenerator.getInstance(AES);
             SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
             random.setSeed(password.getBytes());
             generator.init(128, random);
             SecretKey secretKey = generator.generateKey();
             byte[] enCodeFormat = secretKey.getEncoded();
-            SecretKeySpec key = new SecretKeySpec(enCodeFormat, "AES");
-            Cipher cipher = Cipher.getInstance("AES");
+            SecretKeySpec key = new SecretKeySpec(enCodeFormat, AES);
+            Cipher cipher = Cipher.getInstance(AES);
             cipher.init(type, key);
             if (type == Cipher.ENCRYPT_MODE) {
-                byte[] byteContent = content.getBytes("utf-8");
+                byte[] byteContent = content.getBytes(StandardCharsets.UTF_8);
                 return Hex2Util.parseByte2HexStr(cipher.doFinal(byteContent));
             } else {
                 byte[] byteContent = Hex2Util.parseHexStr2Byte(content);
@@ -69,7 +70,7 @@ public class AesEncryptUtil {
                 return new String(cipher.doFinal(byteContent));
             }
         } catch (Exception e) {
-           log.error("AES加密/解密出错",e);
+            log.error("AES加密/解密出错", e);
         }
         return null;
     }

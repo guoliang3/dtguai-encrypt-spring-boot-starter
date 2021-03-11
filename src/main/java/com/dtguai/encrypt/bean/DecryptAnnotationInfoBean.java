@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 /**
  * <p>解密注解信息</p>
+ *
  * @author guo
  * @date 2019年4月16日14:10:18
  */
@@ -18,6 +19,9 @@ import lombok.NoArgsConstructor;
 @Builder
 public class DecryptAnnotationInfoBean {
 
+    /**
+     * 解密方法
+     */
     private DecryptBodyMethod decryptBodyMethod;
 
     private String key;

@@ -28,7 +28,7 @@ public enum SHAEncryptType {
     /**
      * SHA512
      */
-    SHA512("sha-512"),
+    SHA512("sha-512")
     ;
 
     @Getter
