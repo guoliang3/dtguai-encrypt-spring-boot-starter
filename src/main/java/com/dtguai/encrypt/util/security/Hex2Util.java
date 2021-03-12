@@ -38,7 +38,7 @@ public class Hex2Util {
      */
     public static byte[] parseHexStr2Byte(String hexStr) {
         if (hexStr.length() < 1) {
-            return null;
+            return new byte[0];
         }
         byte[] result = new byte[hexStr.length() / 2];
         int len = hexStr.length() / 2;

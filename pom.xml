@@ -36,6 +36,10 @@
         <version>2.3.9.RELEASE</version>
     </parent>
 
+    <properties>
+        <java.version>11</java.version>
+    </properties>
+
     <dependencies>
 
         <dependency>
@@ -106,7 +110,6 @@
                     <!--打包源代码-->
                     <plugin>
                         <artifactId>maven-source-plugin</artifactId>
-                        <!--<version>3.0.1</version>-->
                         <executions>
                             <execution>
                                 <id>attach-sources</id>

@@ -17,7 +17,7 @@ import org.springframework.context.annotation.Configuration;
  * @author guo
  * @date 2021年3月9日11:31:57
  */
-@ConfigurationProperties(prefix = "encrypt.body")
+@ConfigurationProperties(prefix = "dtguai.encrypt.body")
 @Configuration
 @Data
 public class EncryptBodyConfig {

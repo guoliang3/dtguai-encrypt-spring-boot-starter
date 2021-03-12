@@ -1,6 +1,11 @@
 package com.dtguai.encrypt.util;
 
+import com.dtguai.encrypt.exception.EncryptDtguaiException;
+import lombok.experimental.UtilityClass;
+import lombok.extern.slf4j.Slf4j;
+
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * <p>MD5加密工具类</p>
@@ -8,6 +13,8 @@ import java.security.MessageDigest;
  * @author guo
  * @date 2019年4月16日14:11:20
  */
+@UtilityClass
+@Slf4j
 public class Md5EncryptUtil {
 
     /**
@@ -27,8 +34,9 @@ public class Md5EncryptUtil {
                 hexValue.append(Integer.toHexString(val));
             }
             encryptStr = hexValue.toString();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } catch (NoSuchAlgorithmException e) {
+            log.error("MD5加密异常,encryptStr:{}", encryptStr);
+            throw new EncryptDtguaiException("MD5加密异常,encryptStr:" + encryptStr);
         }
         return encryptStr;
     }

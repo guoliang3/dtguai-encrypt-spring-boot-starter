@@ -1,14 +1,15 @@
 package com.dtguai.encrypt.sign;
 
 import com.alibaba.fastjson.JSON;
+import com.dtguai.encrypt.config.SignConfig;
 import com.dtguai.encrypt.exception.SignDtguaiException;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -27,10 +28,10 @@ import java.util.TreeMap;
 @Component
 @Order(1)
 @Slf4j
+@AllArgsConstructor
 public class SignAspect {
 
-    @Value("${sign.key:#{null}}")
-    private String signKey;
+    private final SignConfig signConfig;
 
     @Pointcut("@annotation(com.dtguai.encrypt.annotation.Sign)")
     public void signPointCut() {
@@ -83,7 +84,7 @@ public class SignAspect {
                     paramBuilder.append(k).append("=").append(v).append("&");
                 }
             });
-            String dataSing = paramBuilder.append("signKey=").append(signKey).toString();
+            String dataSing = paramBuilder.append("signKey=").append(signConfig.getKey()).toString();
             log.info("sing之前的拼装数据:{}", dataSing);
             md5Sign = DigestUtils.md5Hex(dataSing);
         } catch (Exception e) {

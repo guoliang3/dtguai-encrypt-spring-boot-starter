@@ -4,6 +4,7 @@ package com.dtguai.encrypt.util;
 
 
 import com.dtguai.encrypt.enums.SHAEncryptType;
+import lombok.experimental.UtilityClass;
 import org.springframework.util.StringUtils;
 
 import java.security.MessageDigest;
@@ -15,6 +16,7 @@ import java.security.NoSuchAlgorithmException;
  * @author guo
  * @date  2019年4月16日14:11:20
  */
+@UtilityClass
 public class ShaEncryptUtil {
 
 

@@ -1,0 +1,1 @@
+mvn sonar:sonar -Dsonar.host.url=http://klr.dtguai.com -Dsonar.login=68cac4de1f1fa79529ee7bea5129a3ab45bf9ac9
