@@ -58,7 +58,10 @@ public class DesEncryptUtil {
             SecureRandom random = new SecureRandom();
             DESKeySpec desKey = new DESKeySpec(password.getBytes());
             SecretKeyFactory keyFactory = SecretKeyFactory.getInstance(DES);
-            Cipher cipher = Cipher.getInstance(DES);
+
+            //算法名称/加密模式/填充方式
+            //DES共有四种工作模式-->>ECB：电子密码本模式、CBC：加密分组链接模式、CFB：加密反馈模式、OFB：输出反馈模式
+            Cipher cipher = Cipher.getInstance("DES/ECB/NoPadding");
             cipher.init(type, keyFactory.generateSecret(desKey), random);
 
             return DesEncryptUtil.encryptMode(content, type, cipher);

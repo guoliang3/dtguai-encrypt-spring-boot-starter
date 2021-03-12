@@ -93,6 +93,20 @@ public class EncryptResponseBodyAdvice implements ResponseBodyAdvice<Object> {
         String str;
         String result = null;
         Map<String, Object> repMap = null;
+
+        //获取方法注解 执行顺序 方法 ->类
+        EncryptAnnotationInfoBean methodAnnotation = getMethodAnnotation(returnType);
+        //获取类注解 执行顺序 方法 ->类
+        EncryptAnnotationInfoBean classAnnotation = getClassAnnotation(returnType.getDeclaringClass());
+
+        String dataName = Optional.ofNullable(methodAnnotation)
+                .map(EncryptAnnotationInfoBean::getEncryptMsgName)
+                .orElse(
+                        Optional.ofNullable(classAnnotation)
+                                .map(EncryptAnnotationInfoBean::getEncryptMsgName)
+                                .orElse(null)
+                );
+
         try {
             str = objectMapper.writeValueAsString(body);
             repMap = Optional.ofNullable(str)
@@ -100,7 +114,7 @@ public class EncryptResponseBodyAdvice implements ResponseBodyAdvice<Object> {
                     .orElse(null);
 
             result = Optional.ofNullable(repMap)
-                    .map(x -> x.get("result"))
+                    .map(x -> x.get(dataName))
                     .map(JSON::toJSONString)
                     .orElse(null);
 
@@ -109,10 +123,7 @@ public class EncryptResponseBodyAdvice implements ResponseBodyAdvice<Object> {
         }
 
         String encryptStr;
-        //获取方法注解 执行顺序 方法 ->类
-        EncryptAnnotationInfoBean methodAnnotation = getMethodAnnotation(returnType);
-        //获取类注解 执行顺序 方法 ->类
-        EncryptAnnotationInfoBean classAnnotation = getClassAnnotation(returnType.getDeclaringClass());
+
         if (methodAnnotation != null && result != null) {
             encryptStr = switchEncrypt(result, methodAnnotation);
         } else if (classAnnotation != null && result != null) {
@@ -151,6 +162,7 @@ public class EncryptResponseBodyAdvice implements ResponseBodyAdvice<Object> {
                     .encryptBodyMethod(encryptBody.value())
                     .key(encryptBody.otherKey())
                     .shaEncryptType(encryptBody.shaType())
+                    .encryptMsgName(encryptBody.encryptMsgName())
                     .build();
 
         }

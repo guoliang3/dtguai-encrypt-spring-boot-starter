@@ -21,7 +21,7 @@ import java.util.TreeMap;
  * 系统日志，切面处理类
  *
  * @author guo
- * @date 2018年12月25日14:21:42
+ * @date 2021年3月12日13:41:04
  */
 @Aspect
 @Component
@@ -36,15 +36,16 @@ public class SignAspect {
     public void signPointCut() {
     }
 
-    public static final String TIMESTAMP_HEADER = "timestamp";
     public static final String TOKEN_HEADER = "token";
     public static final String SIGN_HEADER = "sign";
     public static final String DATA_SECRET_HEADER = "dataSecret";
 
     @Around("signPointCut()")
     public Object around(ProceedingJoinPoint point) throws Throwable {
+
         //请求的参数
         Object[] args = point.getArgs();
+
         TreeMap<String, String> reqm = Optional.ofNullable(args[0])
                 .map(x -> JSON.toJSONStringWithDateFormat(x, "yyyy-MM-dd HH:mm:ss"))
                 .map(x -> JSON.<TreeMap<String, String>>parseObject(x, TreeMap.class))
@@ -61,6 +62,11 @@ public class SignAspect {
         return point.proceed();
     }
 
+    /**
+     * 验证数字证书
+     *
+     * @param reqm 数据map
+     */
     private void validSign(Map<String, String> reqm) {
         String md5Sign;
         String sign;

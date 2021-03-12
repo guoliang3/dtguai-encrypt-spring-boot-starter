@@ -23,4 +23,8 @@ public @interface EncryptBody {
 
     SHAEncryptType shaType() default SHAEncryptType.SHA256;
 
+    /**
+     * 所需要加密的字段
+     */
+    String encryptMsgName() default "result";
 }

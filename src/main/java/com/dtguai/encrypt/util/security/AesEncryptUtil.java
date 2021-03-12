@@ -58,7 +58,7 @@ public class AesEncryptUtil {
             SecretKey secretKey = generator.generateKey();
             byte[] enCodeFormat = secretKey.getEncoded();
             SecretKeySpec key = new SecretKeySpec(enCodeFormat, AES);
-            Cipher cipher = Cipher.getInstance(AES);
+            Cipher cipher = Cipher.getInstance("AES/GCM/NoPadding");
             cipher.init(type, key);
 
             return DesEncryptUtil.encryptMode(content,type,cipher);

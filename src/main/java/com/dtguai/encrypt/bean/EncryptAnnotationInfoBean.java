@@ -29,4 +29,8 @@ public class EncryptAnnotationInfoBean {
 
     private SHAEncryptType shaEncryptType;
 
+    /**
+     * 所需要加密的字段
+     */
+    private String encryptMsgName;
 }
