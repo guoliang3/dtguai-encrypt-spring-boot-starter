@@ -35,6 +35,7 @@ public class SignAspect {
 
     @Pointcut("@annotation(com.dtguai.encrypt.annotation.Sign)")
     public void signPointCut() {
+        //自定义切入点
     }
 
     public static final String TOKEN_HEADER = "token";
