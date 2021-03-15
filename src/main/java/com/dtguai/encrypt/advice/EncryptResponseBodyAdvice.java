@@ -221,11 +221,11 @@ public class EncryptResponseBodyAdvice implements ResponseBodyAdvice<Object> {
         String key = infoBean.getKey();
         if (method == EncryptBodyMethod.DES) {
             key = CheckUtils.checkAndGetKey(config.getDesKey(), key, "DES-KEY");
-            return DesEncryptUtil.encrypt(formatStringBody, key);
+            return DesEncryptUtil.encrypt(formatStringBody, key,config.getDesCipherAlgorithm());
         }
         if (method == EncryptBodyMethod.AES) {
             key = CheckUtils.checkAndGetKey(config.getAesKey(), key, "AES-KEY");
-            return AesEncryptUtil.encrypt(formatStringBody, key);
+            return AesEncryptUtil.encrypt(formatStringBody, key,config.getAesCipherAlgorithm());
         }
         if (method == EncryptBodyMethod.RSA) {
             key = CheckUtils.checkAndGetKey(config.getRsaPirKey(), key, "RSA-KEY");

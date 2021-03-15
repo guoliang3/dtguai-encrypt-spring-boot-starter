@@ -9,6 +9,8 @@ import com.dtguai.encrypt.config.EncryptBodyConfig;
 import com.dtguai.encrypt.enums.DecryptBodyMethod;
 import com.dtguai.encrypt.exception.DecryptDtguaiException;
 import com.dtguai.encrypt.util.CheckUtils;
+import com.dtguai.encrypt.util.security.AesEncryptUtil;
+import com.dtguai.encrypt.util.security.DesEncryptUtil;
 import com.dtguai.encrypt.util.security.RsaEncryptUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -210,20 +212,22 @@ public class DecryptRequestBodyAdvice implements RequestBodyAdvice {
         method = Optional.ofNullable(method)
                 .orElseThrow(() -> new DecryptDtguaiException("解密方式未定义"));
 
+        //获取注解中的key
         String key = infoBean.getKey();
-
+        String decodeData;
         if (method == DecryptBodyMethod.DES) {
             key = CheckUtils.checkAndGetKey(config.getDesKey(), key, "DES-KEY");
+            decodeData = DesEncryptUtil.decrypt(formatStringBody, key, config.getDesCipherAlgorithm());
         } else if (method == DecryptBodyMethod.AES) {
             key = CheckUtils.checkAndGetKey(config.getAesKey(), key, "AES-KEY");
+            decodeData = AesEncryptUtil.decrypt(formatStringBody, key, config.getAesCipherAlgorithm());
         } else if (method == DecryptBodyMethod.RSA) {
             key = CheckUtils.checkAndGetKey(config.getRsaPirKey(), key, "RSA-KEY");
+            decodeData = RsaEncryptUtil.decrypt(formatStringBody, key);
         } else {
             log.error("解密方式未定义,不知道你是aes/ecs/rsa");
             throw new DecryptDtguaiException("解密方式未定义,不知道你是aes/ecs/rsa");
         }
-
-        String decodeData = RsaEncryptUtil.decrypt(formatStringBody, key);
 
         //验证数据是否过期timestamp
         verifyTime(decodeData, infoBean.getTimeOut());

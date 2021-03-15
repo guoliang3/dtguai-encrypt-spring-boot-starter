@@ -24,6 +24,9 @@ public class DecryptAnnotationInfoBean {
      */
     private DecryptBodyMethod decryptBodyMethod;
 
+    /**
+     * 注解key 优先于配置文件key
+     */
     private String key;
 
     /**

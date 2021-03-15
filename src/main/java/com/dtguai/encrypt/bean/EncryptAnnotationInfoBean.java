@@ -25,6 +25,9 @@ public class EncryptAnnotationInfoBean {
      */
     private EncryptBodyMethod encryptBodyMethod;
 
+    /**
+     * 注解key 优先于配置文件key
+     */
     private String key;
 
     private SHAEncryptType shaEncryptType;

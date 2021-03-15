@@ -30,8 +30,8 @@ public class DesEncryptUtil {
      * @param content  字符串内容
      * @param password 密钥
      */
-    public static String encrypt(String content, String password) {
-        return des(content, password, Cipher.ENCRYPT_MODE);
+    public static String encrypt(String content, String password, String cipherAlgorithm) {
+        return des(content, password, Cipher.ENCRYPT_MODE, cipherAlgorithm);
     }
 
 
@@ -41,8 +41,8 @@ public class DesEncryptUtil {
      * @param content  字符串内容
      * @param password 密钥
      */
-    public static String decrypt(String content, String password) {
-        return des(content, password, Cipher.DECRYPT_MODE);
+    public static String decrypt(String content, String password, String cipherAlgorithm) {
+        return des(content, password, Cipher.DECRYPT_MODE, cipherAlgorithm);
     }
 
 
@@ -53,7 +53,7 @@ public class DesEncryptUtil {
      * @param password 密钥
      * @param type     加密：{@link Cipher#ENCRYPT_MODE}，解密：{@link Cipher#DECRYPT_MODE}
      */
-    private static String des(String content, String password, int type) {
+    private static String des(String content, String password, int type, String cipherAlgorithm) {
         try {
             SecureRandom random = new SecureRandom();
             DESKeySpec desKey = new DESKeySpec(password.getBytes());
@@ -61,7 +61,7 @@ public class DesEncryptUtil {
 
             //算法名称/加密模式/填充方式
             //DES共有四种工作模式-->>ECB：电子密码本模式、CBC：加密分组链接模式、CFB：加密反馈模式、OFB：输出反馈模式
-            Cipher cipher = Cipher.getInstance("DES/ECB/NoPadding");
+            Cipher cipher = Cipher.getInstance(cipherAlgorithm);
             cipher.init(type, keyFactory.generateSecret(desKey), random);
 
             return DesEncryptUtil.encryptMode(content, type, cipher);
@@ -83,11 +83,6 @@ public class DesEncryptUtil {
         } else {
 
             byte[] byteContent = Hex2Util.parseHexStr2Byte(content);
-
-            if (null == byteContent) {
-                log.error("加解密转换数据为null请注意byteContent:null");
-                byteContent = new byte[0];
-            }
 
             return new String(cipher.doFinal(byteContent));
         }

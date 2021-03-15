@@ -27,4 +27,5 @@ public @interface EncryptBody {
      * 所需要加密的字段
      */
     String encryptMsgName() default "result";
+
 }
