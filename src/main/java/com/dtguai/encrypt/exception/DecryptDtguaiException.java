@@ -11,4 +11,5 @@ public class DecryptDtguaiException extends RuntimeException {
     public DecryptDtguaiException(String message) {
         super(message);
     }
+
 }

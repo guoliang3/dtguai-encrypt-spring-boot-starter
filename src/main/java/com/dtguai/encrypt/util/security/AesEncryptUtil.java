@@ -29,9 +29,9 @@ public class AesEncryptUtil {
 
     private static final String AES = "AES";
 
-    private final static int GCM_IV_LENGTH = 12;
+    private static final int GCM_IV_LENGTH = 12;
 
-    private final static int GCM_TAG_LENGTH = 16;
+    private static final int GCM_TAG_LENGTH = 16;
 
 
     /**
