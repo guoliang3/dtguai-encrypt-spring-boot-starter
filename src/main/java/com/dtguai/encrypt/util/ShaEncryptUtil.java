@@ -4,7 +4,9 @@ package com.dtguai.encrypt.util;
 
 
 import com.dtguai.encrypt.enums.SHAEncryptType;
+import com.dtguai.encrypt.exception.EncryptDtguaiException;
 import lombok.experimental.UtilityClass;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
 
 import java.security.MessageDigest;
@@ -14,9 +16,10 @@ import java.security.NoSuchAlgorithmException;
  * <p>SHA加密工具类</p>
  *
  * @author guo
- * @date  2019年4月16日14:11:20
+ * @date 2019年4月16日14:11:20
  */
 @UtilityClass
+@Slf4j
 public class ShaEncryptUtil {
 
 
@@ -48,8 +51,8 @@ public class ShaEncryptUtil {
             }
             return result.toString();
         } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+            log.error("ShaEncryptUtil->encrypt 异常,string:{},type:{}", string, type);
+            throw new EncryptDtguaiException("ShaEncryptUtil->encrypt 异常");
         }
-        return "";
     }
 }

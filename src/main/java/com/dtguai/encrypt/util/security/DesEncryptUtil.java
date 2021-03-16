@@ -1,5 +1,6 @@
 package com.dtguai.encrypt.util.security;
 
+import com.dtguai.encrypt.exception.EncryptDtguaiException;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -67,9 +68,9 @@ public class DesEncryptUtil {
             return DesEncryptUtil.encryptMode(content, type, cipher);
 
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("des解密异常content:{},password:{},type:{},cipherAlgorithm:{},e:{}",content,password,type,cipherAlgorithm,e.getMessage());
+            throw new EncryptDtguaiException("des解密异常");
         }
-        return null;
     }
 
     public static String encryptMode(String content, int type, Cipher cipher) throws BadPaddingException, IllegalBlockSizeException {
