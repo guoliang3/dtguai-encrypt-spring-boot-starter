@@ -1,21 +1,13 @@
-# dtguai-app-api
+# dtguai-encrypt-spring-boot-starter
 
 
 <a href="http://spring.io/projects/spring-boot">
-            <img src="https://img.shields.io/badge/spring--boot-2.1.3-green.svg" alt="spring-boot">
+            <img src="https://img.shields.io/badge/spring--boot-2.3.9-green.svg" alt="spring-boot">
 </a>     
  
 # 介绍
-代码生成器源码: https://gitee.com/gouliang/dtguai-code_generator  
+数据传输加密/解密及数字证书(数据防改)的组件
 
-## 最新更新2019年6月26日15:46:57
-1.增加了RSA解密(加密数据最大长度 根据钥匙而定默认长度(2048/8)-11)   
-2.增加了RSA加密   
-3.升级了druid 连接池到17 并且修改了配置文件   
-4.修改了解密规则 安全性更高   
-5.提高了 数字签名的性能   
-6.删除了timeout标签 集成在数据校验   
-7.增加 数据校验过期时间 使得超过指定时间无法通过校验 提高安全性   
 
 ```java
 @RestController
@@ -38,7 +30,7 @@ public class TestController {
 @loginUser   获取用户信息  
 
 ### @sign使用介绍:
-test.java.com.dtguai.app.sign.SignTest.java  
+com.dtguai.encrypt.security 
 测试类  里面有详细规则 每一步 都打印了日志方便观察
 
 -----------------------------------------------------------   
@@ -99,16 +91,19 @@ public class TestController {
 - 参数配置
 在项目的`application.yml`或`application.properties`文件中进行参数配置，例如：
 ```yaml
-encrypt:
-  body:
-    aes-key: xiaoFuLoveXiaoQiu #AES加密秘钥
-    des-key: xiaoFuLoveXiaoQiu #DES加密秘钥
-    #RSA 生成公钥/私钥
-    rsa-key: xiaoFuLoveXiaoQiu
-    #RSA私钥
-    rsa-pir-key: xx
-    #RSA公钥
-    rsa-pub-key: xx
+dtguai:
+  encrypt:
+    body:
+      aes-key: xiaoFuLoveXiaoQi #AES加密秘钥
+      des-key: xiaoFuLoveXiaoQiu #DES加密秘钥
+      #RSA 生成公钥/私钥
+      rsa-key: xiaoFuLoveXiaoQiu
+      #RSA私钥
+      rsa-pir-key: MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCi7oI1cAnv5YPHPbu2NkDqgGlEWNVM6na6pL0xZoS1Uv0KmWTHNW5gaFmnOxiqjU9wxrwCSPMCpGDpUz/pDY/46mRUO+acdf29F0ERZIdLAm+H8Jk6Z+3QwB9YLm/YQm56RSqJL/Vw4ejVzx2OHh6TJmCeAl2gnKQ5UFgynBJN88RImtodAt2DTrFWCZ7WYcIjzAemYTNcoZQliM7Jt4CSh5acUer1opG2m3nVRaE4GEO6ZScyHndzjLwLKSbLrMvCXSEbpqH9NLGdY6wL7gSVWU6fhUYSZQS2CjDMXOMQvy+NQZ4qEcGfLJ6NjmPPfvO3Vf8aTi+0Dndm1vB2m0hLAgMBAAECggEBAJx4ZT+ge0qRpf4/wPd6HtmVvIJQtXeKa79O2gqJI8VnD2+QZIITRA7956t8S3HvB22MzZ18JTRSXGd29ZeA2NT5dKSYah20Cpv/qxNi8bMNgcKRQvYePPsOpotu/SY4lhSCPBlHn3Rq38oFf6KuNjqmzn6wUu4dwHDyQeFIlSOZ/0MdcIzHfkroogVFuo9G7jTXb/HJA84wWC/EG41GqIE0Zu/8u+gkDQsNggt0rU3ntPinudwp9sySmBY/7oK1+IpucM9nA9j7N5MmyXK3lLaWSGD4cGS5m4gy+cUnPVPNFMAhMcAzVFWv9mGTdsOzeGheCoLy9D3+IwgNUC68gmECgYEA3YjJWAWVzI/kspjGKBzT0L1f3t8nju5H14d+xvAGyN/FkD7+NEzkSE0lNCh4gK3YbCQeYKItC9T2VgPWIfkksXbKjKKZ8gMvMM3hCf1y7KUcghXwGNNRcLO+DpzduUQ2g122mPLsvjsOpRX1ByasBD7wQ3rf3XKY+XrXJJ0BY3kCgYEAvEe15j2QDOoMAfxNdlzf5Z8d34JwnsfNYdzpz4zzvAjnXSe6FawabU6jgaJUH8oMSYIIpYjf3HUu0CNTKYRHezz9nXiFgNFwmRmkmjEqDAMIjVkN3rsaP3A7ST24gT7xVcua3BRIITv2KVwYZYWZN5yvjeqXoD3zg9XSYsUntOMCgYBzwvSjgFeky1RQVzDE6TtuCmc8iROcxrrXzz/aKLcC5JvSIninT77CYT2docBGTZGYAM+240fytNf8XojYu94GtfJlxtn28t8H+60qkTwqmKTq/Re3gUU/RU19SU87bn+l6aRvDBHV3fprHawqjnS4y0K1oFG24Bk71Irz4O9G0QKBgCA+x9BeysTrcJMGet3CmjXhQmR9GnyXC32vL/vzz+psO/OgUiZUC1KdHTOecXngSKpuMrzm7C/9gb7zzdJWbUeV8nl9op+lPvt5gM9HjEPyYQyUK+Pxd1VWC1FH2MmJ1hsze5olfxTyB/6dXzBD6TG1C/vqKX2wHnx9qkJwMZSxAoGBAIo9aDm/Y1+I3wjm+rM2Tk43a56y1UdE6EAJ0fFv8cknxPOPnDvUtNFqDEzIbv3QLeGZkZyfgVGHnc4f2PZ//k+3okmxRF08uVAQIX8V5yrvbA2u0DkTW05gfajAoYjHa8PRL1UeSt9YRVC6h3jT3Kc/GMjoSXLMTmOwAFUDM4ep
+      #RSA公钥
+      rsa-pub-key: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAou6CNXAJ7+WDxz27tjZA6oBpRFjVTOp2uqS9MWaEtVL9CplkxzVuYGhZpzsYqo1PcMa8AkjzAqRg6VM/6Q2P+OpkVDvmnHX9vRdBEWSHSwJvh/CZOmft0MAfWC5v2EJuekUqiS/1cOHo1c8djh4ekyZgngJdoJykOVBYMpwSTfPESJraHQLdg06xVgme1mHCI8wHpmEzXKGUJYjOybeAkoeWnFHq9aKRtpt51UWhOBhDumUnMh53c4y8Cykmy6zLwl0hG6ah/TSxnWOsC+4ElVlOn4VGEmUEtgowzFzjEL8vjUGeKhHBnyyejY5jz37zt1X/Gk4vtA53ZtbwdptISwIDAQAB
+  sign:
+    key: qyxVsFzp
 ```
 
 - 对控制器响应体进行解密
@@ -196,13 +191,3 @@ RSA介绍
 (抛诸如 javax.crypto.IllegalBlockSizeException: Data must not be longer than 53 bytes 的异常)。   
 而 BC 提供的加密算法能够支持到的 RSA 明文长度最长为密钥长度。    
 
------------------------------------------------------------------   
-遇到的几个问题记录一下   
-1.过滤器 拿不到 controller 的注解  
-2.拦截器 无法改变 request 的值 不管是 body 还是 ParameterMap   
-3.自定义注解 无法动态 set反射类参数 所以自能用 @requestbody   
-4.request getInputStream 因为是流 只能读取一次 如果想多次必须在过滤器搞 拦截器不成因为无法set值  
-5.多次加密 需要多次获取信息   
-6.需要更灵活的标签   
-7.尽量减少解密次数提高性能  
-8.aop自定义注解解密不能搞对象类型 因为无法 预支对象类型和 set值   
