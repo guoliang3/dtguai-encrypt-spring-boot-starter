@@ -134,7 +134,7 @@ public class EncryptResponseBodyAdvice implements ResponseBodyAdvice<Object> {
         }
 
         Optional.ofNullable(repMap)
-                .ifPresent(x -> x.put("result", encryptStr));
+                .ifPresent(x -> x.put(dataName, encryptStr));
 
         return repMap;
     }

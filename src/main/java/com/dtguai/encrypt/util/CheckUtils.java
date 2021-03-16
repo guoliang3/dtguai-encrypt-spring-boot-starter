@@ -30,7 +30,7 @@ public class CheckUtils {
             log.error("{} is not configured (未配置{})", keyName, keyName);
             throw new EncryptDtguaiException(String.format("%s is not configured (未配置%s)", keyName, keyName));
         }
-        return k2 != null ? k2 : k1;
+        return StringUtils.isEmpty(k2) ? k1 : k2;
     }
 
 }
