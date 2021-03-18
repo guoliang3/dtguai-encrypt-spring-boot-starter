@@ -3,11 +3,14 @@ package com.dtguai.encrypt.security.encrypt;
 
 import com.dtguai.encrypt.security.decrypt.RsaDecryptTest;
 import com.dtguai.encrypt.util.security.RsaEncryptUtil;
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Base64;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.Map;
 
@@ -17,11 +20,13 @@ import java.util.Map;
  * @author guo
  * @date 2021年3月16日17:08:38
  */
+@SpringBootTest
 @Slf4j
-@AllArgsConstructor
+@RunWith(SpringJUnit4ClassRunner.class)
 public class RsaEncryptTest {
 
-    private final RsaEncryptUtil rsaEncryptUtil;
+    @Autowired
+    private RsaEncryptUtil rsaEncryptUtil;
 
     public static final String dataJson = "{" +
             "  \"mobile\": 13811889989," +
