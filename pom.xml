@@ -44,12 +44,6 @@
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
 
@@ -174,6 +168,7 @@
                         <version>1.6.7</version>
                         <extensions>true</extensions>
                         <configuration>
+                            <!-- id要和全局配置中的release id 一致 -->
                             <serverId>dtguai-encrypt-spring-boot-starter</serverId>
                             <nexusUrl>https://oss.sonatype.org/</nexusUrl>
                             <autoReleaseAfterClose>true</autoReleaseAfterClose>
@@ -195,13 +190,13 @@
             <distributionManagement>
 
                 <repository>
-                    <id>dtguai-cache</id>
+                    <id>dtguai-encrypt-spring-boot-starter</id>
                     <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
                 </repository>
 
                 <snapshotRepository>
                     <!--oss需要对应到settings.xml下的service的id-->
-                    <id>dtguai-cache</id>
+                    <id>dtguai-encrypt-spring-boot-starter</id>
                     <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
                 </snapshotRepository>
 
