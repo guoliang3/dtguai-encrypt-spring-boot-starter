@@ -8,86 +8,112 @@
 # 介绍
 数据传输加密/解密及数字证书(数据防改)的组件
 
+## 加密/解密支持
+- 可进行加密的方式有：
+    - - [x] MD5
+    - - [x] SHA-224 / 256 / 384 / 512
+    - - [x] AES
+    - - [x] DES
+    - - [x] RSA
+- 可进行解密的方式有：
+    - - [x] AES
+    - - [x] DES
+    - - [x] RSA
+
+## 开放标签
+#####@DecryptBody(value = DecryptBodyMethod.DES)
+#####@EncryptBody(value = EncryptBodyMethod.DES)
+
+#####@DecryptBody(value = DecryptBodyMethod.AES)
+#####@EncryptBody(value = EncryptBodyMethod.AES)
+
+#####@DecryptBody(value = DecryptBodyMethod.RSA)
+#####@EncryptBody(value = EncryptBodyMethod.RSA)
+
+默认为AES
+
+###标签主要参数介绍
+value 默认为 DecryptBodyMethod.AES;
+long 默认为0不限制超时时间
+
+## 使用方式
+
+##注:开发使用的版本为 jdk11
+```yaml
+    <properties>
+        <java.version>11</java.version>
+    </properties>
+```
+
+## Maven依赖
+```
+    <dependency>
+        <groupId>com.dtguai</groupId>
+        <artifactId>dtguai-encrypt-spring-boot-starter</artifactId>
+        <version>1.0.0</version>
+    </dependency>
+```
 
 ```java
 @RestController
 @RequestMapping("/test")
 public class TestController {
     
-    //加密并且设置超时时间
-    @RSADecryptBody(timeOut = 60 * 1000)
-    public String api(){
-        return "小邱爱小付";
-    }
-
-}
-```
-
-
-## 加入新标签    
-@sign        数字签名验证  支持body 和 Param  
-@login       需要登录验证  
-@loginUser   获取用户信息  
-
-### @sign使用介绍:
-com.dtguai.encrypt.security 
-测试类  里面有详细规则 每一步 都打印了日志方便观察
-
------------------------------------------------------------   
-
-### 加密解密 标签  
-#### 解密
-##### @AESDecryptBody   
-对含有@RequestBody注解的控制器的请求数据采用AES方式进行解密  
-##### @DESDecryptBody    
-对含有@RequestBody注解的控制器的请求数据采用DES方式进行解密  
-##### @RSADecryptBody  
-对含有@RequestBody注解的控制器的请求数据采用DES方式进行解密    
-#### 加密
-##### @AESEncryptBody   
-对含有@ResponseBody注解的控制器的响应值采用AES方式进行加密  
-##### @DESEncryptBody   
-对含有@ResponseBody注解的控制器的响应值采用DES方式进行加密  
-##### @RSAEncryptBody   
-对含有@ResponseBody注解的控制器的响应值采用RSA方式进行加密  
-##### @MD5EncryptBody   
-对含有@ResponseBody注解的控制器的响应值采用MD5方式进行加密  
-##### @SHAEncryptBody   
-含有@ResponseBody注解的控制器的响应值采用SHA方式进行加密  
-
-## 数字签名校验
-- 参数配置
-在项目的`application.yml`或`application.properties`文件中进行参数配置，例如：
-```yaml
-sign:
-  key: qyxVsFzp
-```
-- 对控制器响应体进行数字签名验证
-```java
-@RestController
-@RequestMapping("/test")
-public class TestController {
-
+    //需要数字证书
     @Sign
+    //des解密
+    @DecryptBody(value = DecryptBodyMethod.DES)
+    //des输出加密
+    @EncryptBody(value = EncryptBodyMethod.DES)
     public String api(){
         return "小邱爱小付";
     }
 
 }
 ```
+## 入参对象使用
+```java
+    @Sign
+    @DecryptBody(value = DecryptBodyMethod.RSA)
+    @EncryptBody(value = EncryptBodyMethod.RSA)
+    public ApiResponse<?> rsaSign(@RequestBody TestRsaDataSecretForm user) {
+        
+    }
+    
+    需要在原有的入参form添加 sign 和  dataSecret 字段 
+揭秘原理:接到解密数据和sign数据会解密完放到对应对象字段
+public class TestRsaDataSecretForm  {
 
-## 加密解密支持
-- 可进行加密的方式有：
-    - - [x] MD5
-    - - [x] SHA-224 / 256 / 384 / 512
-    - - [x] AES
-    - - [x] DES  
-    - - [x] RSA  
-- 可进行解密的方式有：
-    - - [x] AES
-    - - [x] DES  
-    - - [x] RSA  
+    @ApiModelProperty(hidden = true)
+    private String mobile;
 
+    @ApiModelProperty(hidden = true)
+    private String password;
+
+    @ApiModelProperty(hidden = true)
+    private String timestamp;
+
+    @ApiModelProperty(value = "数字签名", example = "")
+    private String sign;
+
+    @NotBlank(message = "加密数据不能为空", groups = {LoginGroup.class})
+    private String dataSecret;
+
+}
+```
+
+## 加密注意事项
+```java
+public class ApiResponse<T>{
+    //返回对象中 需要有result 字段 加密是根据此字段加密
+    @JsonInclude(Include.NON_NULL)
+    private T result;
+```
+如果名字不是result 请使用自定义
+@EncryptBody(encryptMsgName=xxx)
+
+
+## 配置文件
 - 参数配置
 在项目的`application.yml`或`application.properties`文件中进行参数配置，例如：
 ```yaml
@@ -105,65 +131,42 @@ dtguai:
   sign:
     key: qyxVsFzp
 ```
-
-- 对控制器响应体进行解密
-```java
-@Controller
-@RequestMapping("/test")
-public class TestController {
-
-    @PostMapping
-    @ResponseBody
-    @AESDecryptBody
-    public String api(@RequestBody UserForm user){
-        return "小邱爱小付";
-    }
-
-}
-```
-或者使用`@RestController`对整个控制器的方法响应体都进行解密：
+- 只需要对控制器响应体进行数字签名验证
 ```java
 @RestController
-@AESDecryptBody
 @RequestMapping("/test")
 public class TestController {
 
-    @PostMapping
-    public String api(@RequestBody UserForm user){
-        return "小邱爱小付";
-    }
-
-}
-```
-
-- 对控制器响应体进行加密
-```java
-@Controller
-@RequestMapping("/test")
-public class TestController {
-
-    @PostMapping
-    @ResponseBody
-    @AESEncryptBody
+    @Sign
     public String api(){
         return "小邱爱小付";
     }
 
 }
 ```
-或者使用`@RestController`对整个控制器的方法响应体都进行加密：
+- 配置文件可配置参数
 ```java
-@RestController
-@AESEncryptBody
-@RequestMapping("/test")
-public class TestController {
+private String aesKey;
 
-    @PostMapping
-    public String api(){
-        return "小邱爱小付";
-    }
+private String desKey;
 
-}
+private String rsaKey;
+
+private String encoding = "UTF-8";
+
+private String rsaPirKey;
+
+private String rsaPubKey;
+
+/**
+ * Aes密码算法及填充方式
+ */
+private String aesCipherAlgorithm = "AES/GCM/NoPadding";
+
+/**
+ * Aes密码算法及填充方式
+ */
+private String desCipherAlgorithm = "DES/ECB/PKCS5Padding";
 ```
 
 
