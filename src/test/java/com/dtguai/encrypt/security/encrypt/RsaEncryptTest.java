@@ -1,6 +1,7 @@
 package com.dtguai.encrypt.security.encrypt;
 
 
+import com.dtguai.encrypt.TestStart;
 import com.dtguai.encrypt.security.decrypt.RsaDecryptTest;
 import com.dtguai.encrypt.util.security.RsaEncryptUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +21,7 @@ import java.util.Map;
  * @author guo
  * @date 2021年3月16日17:08:38
  */
-@SpringBootTest
+@SpringBootTest(classes = TestStart.class)
 @Slf4j
 @RunWith(SpringJUnit4ClassRunner.class)
 public class RsaEncryptTest {

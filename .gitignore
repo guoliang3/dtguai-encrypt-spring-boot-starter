@@ -1,3 +1,9 @@
+/target/
+/logs/
+**/target
+/.idea/
+*.iml
+rebel.xml
 # Compiled class file
 *.class
 
