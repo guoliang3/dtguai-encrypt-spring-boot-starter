@@ -10,7 +10,7 @@
 
 ## 加密/解密支持
 - 可进行加密的方式有：
-    - - [x] MD5
+    - - [ ] MD5
     - - [x] SHA-224 / 256 / 384 / 512
     - - [x] AES
     - - [x] DES
@@ -41,7 +41,7 @@ long 默认为0不限制超时时间
 ##注:开发使用的版本为 jdk11
 ```yaml
     <properties>
-        <java.version>11</java.version>
+        <java.version>8</java.version>
     </properties>
 ```
 
