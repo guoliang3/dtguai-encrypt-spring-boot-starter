@@ -1,6 +1,8 @@
 package com.dtguai.encrypt.advice;
 
 
+import cn.hutool.crypto.SmUtil;
+import cn.hutool.crypto.asymmetric.KeyType;
 import com.alibaba.fastjson.JSON;
 import com.dtguai.encrypt.annotation.encrypt.EncryptBody;
 import com.dtguai.encrypt.bean.EncryptAnnotationInfoBean;
@@ -207,30 +209,49 @@ public class EncryptResponseBodyAdvice implements ResponseBodyAdvice<Object> {
         if (method == null) {
             log.error("EncryptResponseBodyAdvice加密方式未定义  找不到加密的method=null  formatStringBody:{}", formatStringBody);
             throw new EncryptDtguaiException("EncryptResponseBodyAdvice加密方式未定义  找不到加密的method");
-        }
-        if (method == EncryptBodyMethod.MD5) {
+        } else if (method == EncryptBodyMethod.MD5) {
             return Md5EncryptUtil.encrypt(formatStringBody);
-        }
-        if (method == EncryptBodyMethod.SHA) {
+        } else if (method == EncryptBodyMethod.SHA) {
             SHAEncryptType shaEncryptType = infoBean.getShaEncryptType();
             if (shaEncryptType == null) {
                 shaEncryptType = SHAEncryptType.SHA256;
             }
             return ShaEncryptUtil.encrypt(formatStringBody, shaEncryptType);
+        } else if (method == EncryptBodyMethod.SM3) {
+            return SmUtil.sm3(formatStringBody);
         }
         String key = infoBean.getKey();
         if (method == EncryptBodyMethod.DES) {
-            key = CheckUtils.checkAndGetKey(config.getDesKey(), key, "DES-KEY");
-            return DesEncryptUtil.encrypt(formatStringBody, key,config.getDesCipherAlgorithm());
-        }
-        if (method == EncryptBodyMethod.AES) {
-            key = CheckUtils.checkAndGetKey(config.getAesKey(), key, "AES-KEY");
-            return AesEncryptUtil.encrypt(formatStringBody, key,config.getAesCipherAlgorithm());
-        }
-        if (method == EncryptBodyMethod.RSA) {
-            key = CheckUtils.checkAndGetKey(config.getRsaPirKey(), key, "RSA-KEY");
+
+            key = CheckUtils.checkAndGetKey(config.getDesKey(), key, "DES-KEY加密");
+            return DesEncryptUtil.encrypt(formatStringBody, key, config.getDesCipherAlgorithm());
+
+        } else if (method == EncryptBodyMethod.AES) {
+
+            key = CheckUtils.checkAndGetKey(config.getAesKey(), key, "AES-KEY加密");
+            return AesEncryptUtil.encrypt(formatStringBody, key, config.getAesCipherAlgorithm());
+
+        } else if (method == EncryptBodyMethod.RSA) {
+
+            key = CheckUtils.checkAndGetKey(config.getRsaPirKey(), key, "RSA-KEY加密");
             return RsaEncryptUtil.encrypt(formatStringBody, key);
+
+        } else if (method == EncryptBodyMethod.SM2) {
+
+            key = CheckUtils.checkAndGetKey(config.getSm2PubKey(), key, "SM2-KEY-对方公钥-加密");
+            return SmUtil.sm2(null, key)
+                    .encryptBcd(formatStringBody, KeyType.PublicKey);
+
+
+        } else if (method == EncryptBodyMethod.SM4) {
+
+            key = CheckUtils.checkAndGetKey(config.getRsaPirKey(), key, "RSA-KEY加密");
+            return SmUtil.sm4(key.getBytes())
+                    .encryptHex(formatStringBody);
+
         }
+
+
         log.error("EncryptResponseBodyAdvice 加密数据失败 method:{}  formatStringBody:{}", method, formatStringBody);
         throw new EncryptDtguaiException("EncryptResponseBodyAdvice 加密数据失败");
     }

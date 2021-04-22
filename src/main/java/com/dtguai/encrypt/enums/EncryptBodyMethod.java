@@ -4,7 +4,7 @@ package com.dtguai.encrypt.enums;
  * <p>加密方式</p>
  *
  * @author guo
- * @date 2021年3月11日18:06:08
+ * @date 2021年4月21日16:08:32
  */
 public enum EncryptBodyMethod {
     /**
@@ -30,6 +30,20 @@ public enum EncryptBodyMethod {
     /**
      * RSA
      */
-    RSA
+    RSA,
 
+    /**
+     * 选择SM2解密方式
+     */
+    SM2,
+
+    /**
+     * 选择SM3解密方式
+     */
+    SM3,
+
+    /**
+     * 选择SM4解密方式
+     */
+    SM4,
 }

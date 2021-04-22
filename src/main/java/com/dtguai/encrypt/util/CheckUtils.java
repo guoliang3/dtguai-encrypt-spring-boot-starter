@@ -26,11 +26,11 @@ public class CheckUtils {
      * @return key
      */
     public static String checkAndGetKey(String k1, String k2, String keyName) {
-        if (StringUtils.isEmpty(k1) && StringUtils.isEmpty(k2)) {
+        if (StringUtils.hasText(k1) && StringUtils.hasText(k2)) {
             log.error("{} is not configured (未配置{})", keyName, keyName);
             throw new EncryptDtguaiException(String.format("%s is not configured (未配置%s)", keyName, keyName));
         }
-        return StringUtils.isEmpty(k2) ? k1 : k2;
+        return StringUtils.hasText(k2) ? k1 : k2;
     }
 
 }

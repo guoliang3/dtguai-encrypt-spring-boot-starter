@@ -10,8 +10,8 @@ import org.springframework.context.annotation.Configuration;
  * <pre>
  *     encrypt:
  *      body:
- *       aes-key: 12345678 # AES加密秘钥
- *       des-key: 12345678 # DES加密秘钥
+ *       aes-key: xiaoFuLoveXiaoQi # AES加密秘钥
+ *       des-key: xiaoFuLoveXiaoQiu # DES加密秘钥
  * </pre>
  *
  * @author guo
@@ -33,6 +33,12 @@ public class EncryptBodyConfig {
     private String rsaPirKey;
 
     private String rsaPubKey;
+
+    private String sm2PirKey;
+
+    private String sm2PubKey;
+
+    private String sm4Key;
 
     /**
      * Aes密码算法及填充方式

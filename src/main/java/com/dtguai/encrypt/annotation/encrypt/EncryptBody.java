@@ -19,6 +19,9 @@ public @interface EncryptBody {
 
     EncryptBodyMethod value() default EncryptBodyMethod.AES;
 
+    /**
+     * 注解key 优先于配置文件key
+     */
     String otherKey() default "";
 
     SHAEncryptType shaType() default SHAEncryptType.SHA256;

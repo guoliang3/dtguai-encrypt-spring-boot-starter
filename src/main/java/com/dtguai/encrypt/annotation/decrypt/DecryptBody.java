@@ -23,11 +23,16 @@ public @interface DecryptBody {
      */
     DecryptBodyMethod value() default DecryptBodyMethod.AES;
 
+    /**
+     * 注解key 优先于配置文件key
+     */
     String otherKey() default "";
 
     /**
      * 数据超时时间
      */
     long timeOut() default DecryptBodyMethod.TIME_OUT;
+
+
 
 }
