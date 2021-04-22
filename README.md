@@ -26,14 +26,24 @@
     - - [x] SM4
 
 ## 开放标签
-#####@DecryptBody(value = DecryptBodyMethod.DES)
-#####@EncryptBody(value = EncryptBodyMethod.DES)
+#####@DecryptBody(value = DecryptBodyMethod.DES)  
+#####@EncryptBody(value = EncryptBodyMethod.DES)  
 
-#####@DecryptBody(value = DecryptBodyMethod.AES)
-#####@EncryptBody(value = EncryptBodyMethod.AES)
+#####@DecryptBody(value = DecryptBodyMethod.AES)  
+#####@EncryptBody(value = EncryptBodyMethod.AES)  
 
-#####@DecryptBody(value = DecryptBodyMethod.RSA)
-#####@EncryptBody(value = EncryptBodyMethod.RSA)
+#####@DecryptBody(value = DecryptBodyMethod.RSA)  
+#####@EncryptBody(value = EncryptBodyMethod.RSA)    
+
+#####@DecryptBody(value = DecryptBodyMethod.MS2)  
+#####@EncryptBody(value = EncryptBodyMethod.SM2)  
+
+#####@EncryptBody(value = EncryptBodyMethod.SM3)  
+
+#####@DecryptBody(value = DecryptBodyMethod.SM4)  
+#####@EncryptBody(value = EncryptBodyMethod.SM4)  
+
+#####@EncryptBody(value = EncryptBodyMethod.MD5)   
 
 默认为AES
 
