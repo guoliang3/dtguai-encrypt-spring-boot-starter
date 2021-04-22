@@ -181,6 +181,12 @@ private String rsaPirKey;
 
 private String rsaPubKey;
 
+private String sm2PirKey;
+
+private String sm2PubKey;
+
+private String sm4Key;
+
 /**
  * Aes密码算法及填充方式
  */
