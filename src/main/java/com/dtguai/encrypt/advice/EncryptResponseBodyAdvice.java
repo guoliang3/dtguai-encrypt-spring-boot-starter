@@ -251,7 +251,6 @@ public class EncryptResponseBodyAdvice implements ResponseBodyAdvice<Object> {
 
         }
 
-
         log.error("EncryptResponseBodyAdvice 加密数据失败 method:{}  formatStringBody:{}", method, formatStringBody);
         throw new EncryptDtguaiException("EncryptResponseBodyAdvice 加密数据失败");
     }
