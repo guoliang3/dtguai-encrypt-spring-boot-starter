@@ -207,20 +207,30 @@ public class EncryptResponseBodyAdvice implements ResponseBodyAdvice<Object> {
     private String switchEncrypt(String formatStringBody, EncryptAnnotationInfoBean infoBean) {
         EncryptBodyMethod method = infoBean.getEncryptBodyMethod();
         if (method == null) {
+
             log.error("EncryptResponseBodyAdvice加密方式未定义  找不到加密的method=null  formatStringBody:{}", formatStringBody);
             throw new EncryptDtguaiException("EncryptResponseBodyAdvice加密方式未定义  找不到加密的method");
+
         } else if (method == EncryptBodyMethod.MD5) {
+
             return Md5EncryptUtil.encrypt(formatStringBody);
+
         } else if (method == EncryptBodyMethod.SHA) {
+
             SHAEncryptType shaEncryptType = infoBean.getShaEncryptType();
             if (shaEncryptType == null) {
                 shaEncryptType = SHAEncryptType.SHA256;
             }
             return ShaEncryptUtil.encrypt(formatStringBody, shaEncryptType);
+
         } else if (method == EncryptBodyMethod.SM3) {
+
             return SmUtil.sm3(formatStringBody);
+
         }
+
         String key = infoBean.getKey();
+
         if (method == EncryptBodyMethod.DES) {
 
             key = CheckUtils.checkAndGetKey(config.getDesKey(), key, "DES-KEY加密");
@@ -245,7 +255,7 @@ public class EncryptResponseBodyAdvice implements ResponseBodyAdvice<Object> {
 
         } else if (method == EncryptBodyMethod.SM4) {
 
-            key = CheckUtils.checkAndGetKey(config.getRsaPirKey(), key, "RSA-KEY加密");
+            key = CheckUtils.checkAndGetKey(config.getSm4Key(), key, "RSA-KEY加密");
             return SmUtil.sm4(key.getBytes())
                     .encryptHex(formatStringBody);
 
