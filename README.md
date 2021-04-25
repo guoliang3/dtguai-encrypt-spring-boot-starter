@@ -8,6 +8,11 @@
 # 介绍
 数据传输加密/解密及数字证书(数据防改)的组件
 
+## springboot 使用demo  
+<a href="https://gitee.com/gouliang/dtguai-app-api/tree/master/src/main/java/com/dtguai/app/api/controller/user">
+ https://gitee.com/gouliang/dtguai-app-api/tree/master/src/main/java/com/dtguai/app/api/controller/user
+</a> 
+
 ## 加密/解密支持
 - 可进行加密的方式有：
     - - [x] MD5
