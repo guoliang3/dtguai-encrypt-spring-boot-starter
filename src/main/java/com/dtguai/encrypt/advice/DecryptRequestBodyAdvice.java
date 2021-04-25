@@ -101,7 +101,7 @@ public class DecryptRequestBodyAdvice implements RequestBodyAdvice {
             log.error("无法获取请求正文数据，请检查发送数据体或请求方法是否符合规范", e);
             throw new DecryptDtguaiException("无法获取请求正文数据，请检查发送数据体或请求方法是否符合规范");
         }
-        if (StringUtils.hasText(body)) {
+        if (!StringUtils.hasText(body)) {
             log.error("请求参数dataSecret为null或为空字符串，因此解密失败body:{}", body);
             throw new DecryptDtguaiException("请求正文为NULL或为空字符串，因此解密失败");
         }
