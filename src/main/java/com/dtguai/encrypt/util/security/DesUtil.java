@@ -1,8 +1,9 @@
 package com.dtguai.encrypt.util.security;
 
+import com.dtguai.encrypt.config.EncryptBodyConfig;
 import com.dtguai.encrypt.exception.EncryptDtguaiException;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import com.dtguai.encrypt.util.CheckUtils;
+import com.dtguai.encrypt.util.ISecurity;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.crypto.BadPaddingException;
@@ -17,35 +18,12 @@ import java.security.SecureRandom;
  * <p>DES加密处理工具类</p>
  *
  * @author guo
- * @date 2021年3月11日19:52:43
+ * @date 2021年4月28日11:19:07
  */
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
 @Slf4j
-public class DesEncryptUtil {
+public class DesUtil implements ISecurity {
 
     private static final String DES = "DES";
-
-    /**
-     * DES加密
-     *
-     * @param content  字符串内容
-     * @param password 密钥
-     */
-    public static String encrypt(String content, String password, String cipherAlgorithm) {
-        return des(content, password, Cipher.ENCRYPT_MODE, cipherAlgorithm);
-    }
-
-
-    /**
-     * DES解密
-     *
-     * @param content  字符串内容
-     * @param password 密钥
-     */
-    public static String decrypt(String content, String password, String cipherAlgorithm) {
-        return des(content, password, Cipher.DECRYPT_MODE, cipherAlgorithm);
-    }
-
 
     /**
      * DES加密/解密公共方法
@@ -65,10 +43,10 @@ public class DesEncryptUtil {
             Cipher cipher = Cipher.getInstance(cipherAlgorithm);
             cipher.init(type, keyFactory.generateSecret(desKey), random);
 
-            return DesEncryptUtil.encryptMode(content, type, cipher);
+            return DesUtil.encryptMode(content, type, cipher);
 
         } catch (Exception e) {
-            log.error("des解密异常content:{},password:{},type:{},cipherAlgorithm:{},e:{}",content,password,type,cipherAlgorithm,e.getMessage());
+            log.error("des解密异常content:{},password:{},type:{},cipherAlgorithm:{},e:{}", content, password, type, cipherAlgorithm, e.getMessage());
             throw new EncryptDtguaiException("des解密异常");
         }
     }
@@ -89,5 +67,33 @@ public class DesEncryptUtil {
         }
 
 
+    }
+
+    /**
+     * 加密
+     *
+     * @param content  内容
+     * @param password 注解中传入的key 可为null或空字符
+     * @param config   yml配置类
+     * @return String
+     */
+    @Override
+    public String encrypt(String content, String password, EncryptBodyConfig config) {
+        String key = CheckUtils.checkAndGetKey(config.getDesKey(), password, "DES-KEY加密");
+        return des(content, key, Cipher.ENCRYPT_MODE, config.getDesCipherAlgorithm());
+    }
+
+    /**
+     * 解密
+     *
+     * @param content  内容
+     * @param password 注解中传入的key 可为null或空字符
+     * @param config   yml配置类
+     * @return String
+     */
+    @Override
+    public String decrypt(String content, String password, EncryptBodyConfig config) {
+        String key = CheckUtils.checkAndGetKey(config.getDesKey(), password, "DES-KEY解密");
+        return des(content, key, Cipher.DECRYPT_MODE, config.getDesCipherAlgorithm());
     }
 }

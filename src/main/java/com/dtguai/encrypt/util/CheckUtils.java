@@ -2,8 +2,7 @@ package com.dtguai.encrypt.util;
 
 
 import com.dtguai.encrypt.exception.EncryptDtguaiException;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
 
@@ -14,7 +13,7 @@ import org.springframework.util.StringUtils;
  * @date 2021年3月15日19:50:23
  */
 @Slf4j
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@UtilityClass
 public class CheckUtils {
 
     /**

@@ -1,8 +1,10 @@
 package com.dtguai.encrypt.util.security;
 
+import com.dtguai.encrypt.config.EncryptBodyConfig;
 import com.dtguai.encrypt.exception.DecryptDtguaiException;
 import com.dtguai.encrypt.exception.EncryptDtguaiException;
-import lombok.experimental.UtilityClass;
+import com.dtguai.encrypt.util.CheckUtils;
+import com.dtguai.encrypt.util.ISecurity;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.crypto.*;
@@ -24,26 +26,46 @@ import java.util.Optional;
  * @date 2021年3月15日18:28:42
  */
 @Slf4j
-@UtilityClass
-public class AesEncryptUtil {
+public class AesUtil implements ISecurity {
 
     private static final String AES = "AES";
-
     private static final int GCM_IV_LENGTH = 12;
-
     private static final int GCM_TAG_LENGTH = 16;
+    private static final int KEY_LENGTH = 16;
 
 
     /**
-     * AES加密
+     * 根据 pwd 返回key
      *
-     * @param content         字符串内容
-     * @param password        密钥
-     * @param cipherAlgorithm 加密及填充方式
+     * @param password 密码
+     * @return key
      */
-    public static String encrypt(String content, String password, String cipherAlgorithm) {
+    public static SecretKey getKey(String password) {
 
-        SecretKey key = getKey(password);
+        byte[] passwordBytes = Optional.ofNullable(password)
+                .map(String::getBytes)
+                .orElseThrow(() -> new DecryptDtguaiException("aes加解密getKey异常password:{}" + password));
+
+        if (passwordBytes.length != KEY_LENGTH && passwordBytes.length != KEY_LENGTH << 1) {
+            log.error("aes钥匙长度为16或32,passwordBytes.length:{}", passwordBytes.length);
+            throw new DecryptDtguaiException("aes钥匙长度为16或32");
+        }
+
+        return new SecretKeySpec(passwordBytes, AES);
+    }
+
+    /**
+     * 加密
+     *
+     * @param content  内容
+     * @param password 注解中传入的key 可为null或空字符
+     * @param config   yml配置类
+     * @return String
+     */
+    @Override
+    public String encrypt(String content, String password, EncryptBodyConfig config) {
+
+        SecretKey key = getKey(CheckUtils.checkAndGetKey(config.getAesKey(), password, "AES-KEY加密"));
 
         byte[] iv = new byte[GCM_IV_LENGTH];
 
@@ -52,7 +74,7 @@ public class AesEncryptUtil {
         GCMParameterSpec ivSpec = new GCMParameterSpec(GCM_TAG_LENGTH * Byte.SIZE, iv);
         byte[] ciphertext;
         try {
-            Cipher cipher = Cipher.getInstance(cipherAlgorithm);
+            Cipher cipher = Cipher.getInstance(config.getAesCipherAlgorithm());
             cipher.init(Cipher.ENCRYPT_MODE, key, ivSpec);
             ciphertext = cipher.doFinal(content.getBytes(StandardCharsets.UTF_8));
         } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException
@@ -67,16 +89,18 @@ public class AesEncryptUtil {
         return Base64.getEncoder().encodeToString(encrypted);
     }
 
-
     /**
-     * AES解密
+     * 解密
      *
-     * @param content  字符串内容
-     * @param password 密钥
+     * @param content  内容
+     * @param password 注解中传入的key 可为null或空字符
+     * @param config   yml配置类
+     * @return String
      */
-    public static String decrypt(String content, String password, String cipherAlgorithm) {
+    @Override
+    public String decrypt(String content, String password, EncryptBodyConfig config) {
 
-        SecretKey key = getKey(password);
+        SecretKey key = getKey(CheckUtils.checkAndGetKey(config.getAesKey(), password, "AES-KEY解密"));
 
         byte[] decoded = Base64.getDecoder().decode(content);
 
@@ -86,7 +110,7 @@ public class AesEncryptUtil {
 
         byte[] ciphertext;
         try {
-            Cipher cipher = Cipher.getInstance(cipherAlgorithm);
+            Cipher cipher = Cipher.getInstance(config.getAesCipherAlgorithm());
             cipher.init(Cipher.DECRYPT_MODE, key, ivSpec);
             ciphertext = cipher.doFinal(decoded, GCM_IV_LENGTH, decoded.length - GCM_IV_LENGTH);
         } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException
@@ -97,24 +121,5 @@ public class AesEncryptUtil {
         return new String(ciphertext, StandardCharsets.UTF_8);
     }
 
-    /**
-     * 根据 pwd 返回key
-     *
-     * @param password 密码
-     * @return key
-     */
-    public static SecretKey getKey(String password) {
-
-        byte[] passwordBytes = Optional.ofNullable(password)
-                .map(String::getBytes)
-                .orElseThrow(() -> new DecryptDtguaiException("aes加解密getKey异常password:{}" + password));
-
-        if (passwordBytes.length != 16 && passwordBytes.length != 32) {
-            log.error("aes钥匙长度为16或32,passwordBytes.length:{}", passwordBytes.length);
-            throw new DecryptDtguaiException("aes钥匙长度为16或32");
-        }
-
-        return new SecretKeySpec(passwordBytes, AES);
-    }
 
 }

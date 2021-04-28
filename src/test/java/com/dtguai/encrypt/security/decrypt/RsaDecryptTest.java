@@ -1,11 +1,19 @@
 package com.dtguai.encrypt.security.decrypt;
 
+import com.dtguai.encrypt.TestStart;
+import com.dtguai.encrypt.config.EncryptBodyConfig;
+import com.dtguai.encrypt.enums.EncryptBodyMethod;
 import com.dtguai.encrypt.security.encrypt.RsaEncryptTest;
-import com.dtguai.encrypt.util.security.RsaEncryptUtil;
+import com.dtguai.encrypt.util.security.rsa.RsaUtil;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Base64;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
  * 解密
@@ -13,11 +21,14 @@ import org.junit.Test;
  * @author guo
  * @date 2021年3月16日17:06:21
  */
+@SpringBootTest(classes = TestStart.class)
 @Slf4j
+@RunWith(SpringJUnit4ClassRunner.class)
+@NoArgsConstructor
 public class RsaDecryptTest {
 
-
-    public static final String rep = "{\"code\":200,\"msg\":\"成功\",\"result\":[]}";
+    @Autowired
+    private EncryptBodyConfig config;
 
     /**
      * RSA私钥
@@ -33,18 +44,18 @@ public class RsaDecryptTest {
         log.warn("原始的json数据长度:{}", RsaEncryptTest.dataJson.length());
 
         //公钥加密
-        byte[] jiami = RsaEncryptUtil.encryptByPublicKey(RsaEncryptTest.dataJson.getBytes(), Base64.decodeBase64(RsaEncryptTest.RSA_PUB_KEY));
+        byte[] jiami = RsaUtil.encryptByPublicKey(RsaEncryptTest.dataJson.getBytes(), Base64.decodeBase64(RsaEncryptTest.RSA_PUB_KEY));
         log.warn("公钥加密数据长度为:{}", jiami.length);
         log.warn("公钥加密数据为:{}", Base64.encodeBase64String(jiami));
 
 
         //私钥解密
         long startTime = System.currentTimeMillis();
-        String jiemi = RsaEncryptUtil.decrypt(Base64.encodeBase64String(jiami), RSA_PIR_KEY);
+        String jiemi = EncryptBodyMethod.RSA.getISecurity().decrypt(Base64.encodeBase64String(jiami), RSA_PIR_KEY, config);
         long endTime = System.currentTimeMillis();
         System.out.println("私钥解密执行时间：" + (endTime - startTime) + "毫秒");
         System.out.println("私钥解密数据:" + jiemi);
-        Assert.assertNotNull(jiemi);
+        Assert.assertEquals(RsaEncryptTest.dataJson, jiemi);
     }
 
     /**
@@ -55,17 +66,17 @@ public class RsaDecryptTest {
         log.warn("原始的json数据为:{}", RsaEncryptTest.dataJson);
         log.warn("原始的json数据长度为:{}", RsaEncryptTest.dataJson.length());
         //私钥加密
-        String jiami = RsaEncryptUtil.encrypt(RsaEncryptTest.dataJson, RsaDecryptTest.RSA_PIR_KEY);
+        String jiami = EncryptBodyMethod.RSA.getISecurity().encrypt(RsaEncryptTest.dataJson, RsaDecryptTest.RSA_PIR_KEY, config);
         log.warn("私钥加密数据:{}", jiami);
         log.warn("私钥加密数据长度:{}", jiami.length());
 
         //公钥解密
         long startTime = System.currentTimeMillis();
-        byte[] decode = RsaEncryptUtil.decryptByPublicKey(Base64.decodeBase64(jiami), Base64.decodeBase64(RsaEncryptTest.RSA_PUB_KEY));
+        byte[] decode = RsaUtil.decryptByPublicKey(Base64.decodeBase64(jiami), Base64.decodeBase64(RsaEncryptTest.RSA_PUB_KEY));
         long endTime = System.currentTimeMillis();
         System.out.println("公钥解密执行时间：" + (endTime - startTime) + "毫秒");
         System.out.println("公钥解密后的数据：" + new String(decode));
-        Assert.assertNotNull(decode);
+        Assert.assertEquals(RsaEncryptTest.dataJson, new String(decode));
 
     }
 

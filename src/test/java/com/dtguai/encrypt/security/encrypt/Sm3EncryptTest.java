@@ -1,7 +1,7 @@
 package com.dtguai.encrypt.security.encrypt;
 
 
-import cn.hutool.crypto.SmUtil;
+import com.dtguai.encrypt.enums.EncryptBodyMethod;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
 import org.junit.Test;
@@ -13,6 +13,7 @@ import org.junit.Test;
  * @author guo
  * @date 2021年4月22日14:39:11
  */
+
 @Slf4j
 public class Sm3EncryptTest {
 
@@ -31,14 +32,15 @@ public class Sm3EncryptTest {
     /**
      * 摘要加密算法SM3 相当于md5
      * 结果为:
-     * cdc91cfad08a3c27703553a8a88d419c97ed6f8ec32df203da02ab5ba6c37654
+     * be87ccd9062f0319502bdefa873bd203380cbab012380f17f94559d041eaa55e
      */
     @Test
     public void sm3() {
-        String digestHex = SmUtil.sm3(DATA_JSON);
-        log.info("sm3加密后:{}", digestHex);
-        System.out.println(System.currentTimeMillis());
-        Assert.assertEquals("cdc91cfad08a3c27703553a8a88d419c97ed6f8ec32df203da02ab5ba6c37654", digestHex);
+        log.info("原数据===== :{}", DATA_JSON);
+        //加密
+        String jiami = EncryptBodyMethod.SM3.getISecurity().encrypt(DATA_JSON, null, null);
+        log.info("sm3加密后 :{}", jiami);
+        Assert.assertEquals("be87ccd9062f0319502bdefa873bd203380cbab012380f17f94559d041eaa55e", jiami);
     }
 
 

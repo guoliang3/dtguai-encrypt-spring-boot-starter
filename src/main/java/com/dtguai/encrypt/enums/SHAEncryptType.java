@@ -2,7 +2,6 @@ package com.dtguai.encrypt.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
 
 /**
  * <p>SHA加密类型</p>
@@ -11,6 +10,7 @@ import lombok.Setter;
  * @date 2019年4月16日14:10:18
  */
 @AllArgsConstructor
+@Getter
 public enum SHAEncryptType {
 
     /**
@@ -30,9 +30,5 @@ public enum SHAEncryptType {
      */
     SHA512("sha-512");
 
-    @Getter
-    @Setter
     String value;
-
-
 }

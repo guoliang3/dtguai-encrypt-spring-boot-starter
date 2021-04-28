@@ -2,8 +2,12 @@ package com.dtguai.encrypt.security.encrypt;
 
 
 import com.dtguai.encrypt.TestStart;
+import com.dtguai.encrypt.config.EncryptBodyConfig;
+import com.dtguai.encrypt.enums.DecryptBodyMethod;
 import com.dtguai.encrypt.security.decrypt.RsaDecryptTest;
-import com.dtguai.encrypt.util.security.RsaEncryptUtil;
+import com.dtguai.encrypt.util.security.rsa.InitKey;
+import com.dtguai.encrypt.util.security.rsa.RsaUtil;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Base64;
 import org.junit.Assert;
@@ -24,10 +28,14 @@ import java.util.Map;
 @SpringBootTest(classes = TestStart.class)
 @Slf4j
 @RunWith(SpringJUnit4ClassRunner.class)
+@NoArgsConstructor
 public class RsaEncryptTest {
 
     @Autowired
-    private RsaEncryptUtil rsaEncryptUtil;
+    private InitKey initKey;
+
+    @Autowired
+    private EncryptBodyConfig config;
 
     public static final String dataJson = "{" +
             "  \"mobile\": 13811889989," +
@@ -45,11 +53,11 @@ public class RsaEncryptTest {
      */
     @Test
     public void rsaKeyInit() {
-        Map<String, Object> keyMap = rsaEncryptUtil.initKey();
+        Map<String, Object> keyMap = initKey.initKey();
         //公钥
-        byte[] publicKey = RsaEncryptUtil.getPublicKey(keyMap);
+        byte[] publicKey = InitKey.getPublicKey(keyMap);
         //私钥
-        byte[] privateKey = RsaEncryptUtil.getPrivateKey(keyMap);
+        byte[] privateKey = InitKey.getPrivateKey(keyMap);
 
         log.warn("公钥：{}" + Base64.encodeBase64String(publicKey));
         log.warn("私钥：{}" + Base64.encodeBase64String(privateKey));
@@ -65,7 +73,7 @@ public class RsaEncryptTest {
         log.warn("原始的json数据为:{}", dataJson);
         log.warn("原始的json数据长度为:{}", dataJson.length());
         //公钥加密
-        byte[] jiami = RsaEncryptUtil.encryptByPublicKey(dataJson.getBytes(), Base64.decodeBase64(RSA_PUB_KEY));
+        byte[] jiami = RsaUtil.encryptByPublicKey(dataJson.getBytes(), Base64.decodeBase64(RSA_PUB_KEY));
         log.warn("公钥加密数据:{}", Base64.encodeBase64String(jiami));
         log.warn("公钥加密数据长度:{}", jiami.length);
         Assert.assertNotNull(jiami);
@@ -79,7 +87,7 @@ public class RsaEncryptTest {
         log.warn("原始的json数据为:{}", dataJson);
         log.warn("原始的json数据长度为:{}", dataJson.length());
         //私钥加密
-        String jiami = RsaEncryptUtil.encrypt(RsaEncryptTest.dataJson, RsaDecryptTest.RSA_PIR_KEY);
+        String jiami = DecryptBodyMethod.RSA.getISecurity().encrypt(RsaEncryptTest.dataJson, RsaDecryptTest.RSA_PIR_KEY, config);
         log.warn("私钥加密数据:{}", jiami);
         log.warn("私钥加密数据长度:{}", jiami.length());
         Assert.assertNotNull(jiami);

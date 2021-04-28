@@ -1,9 +1,6 @@
 package com.dtguai.encrypt.advice;
 
 
-import cn.hutool.core.util.StrUtil;
-import cn.hutool.crypto.SmUtil;
-import cn.hutool.crypto.asymmetric.KeyType;
 import com.alibaba.fastjson.JSON;
 import com.dtguai.encrypt.annotation.decrypt.DecryptBody;
 import com.dtguai.encrypt.bean.DecryptAnnotationInfoBean;
@@ -11,10 +8,6 @@ import com.dtguai.encrypt.bean.DecryptHttpInputMessage;
 import com.dtguai.encrypt.config.EncryptBodyConfig;
 import com.dtguai.encrypt.enums.DecryptBodyMethod;
 import com.dtguai.encrypt.exception.DecryptDtguaiException;
-import com.dtguai.encrypt.util.CheckUtils;
-import com.dtguai.encrypt.util.security.AesEncryptUtil;
-import com.dtguai.encrypt.util.security.DesEncryptUtil;
-import com.dtguai.encrypt.util.security.RsaEncryptUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
@@ -54,7 +47,7 @@ public class DecryptRequestBodyAdvice implements RequestBodyAdvice {
 
         Annotation[] annotations = methodParameter.getDeclaringClass().getAnnotations();
 
-        if (Arrays.stream(annotations).anyMatch(x -> x instanceof DecryptBody)) {
+        if (Arrays.stream(annotations).anyMatch(DecryptBody.class::isInstance)) {
             return true;
         }
 
@@ -210,45 +203,10 @@ public class DecryptRequestBodyAdvice implements RequestBodyAdvice {
      */
     private String switchDecrypt(String formatStringBody, DecryptAnnotationInfoBean infoBean) {
 
-        DecryptBodyMethod method = infoBean.getDecryptBodyMethod();
-
-        method = Optional.ofNullable(method)
+        DecryptBodyMethod method = Optional.ofNullable(infoBean.getDecryptBodyMethod())
                 .orElseThrow(() -> new DecryptDtguaiException("解密方式未定义"));
 
-        //获取注解中的key
-        String key = infoBean.getKey();
-        String decodeData;
-        if (method == DecryptBodyMethod.DES) {
-
-            key = CheckUtils.checkAndGetKey(config.getDesKey(), key, "DES-KEY解密");
-            decodeData = DesEncryptUtil.decrypt(formatStringBody, key, config.getDesCipherAlgorithm());
-
-        } else if (method == DecryptBodyMethod.AES) {
-
-            key = CheckUtils.checkAndGetKey(config.getAesKey(), key, "AES-KEY解密");
-            decodeData = AesEncryptUtil.decrypt(formatStringBody, key, config.getAesCipherAlgorithm());
-
-        } else if (method == DecryptBodyMethod.RSA) {
-
-            key = CheckUtils.checkAndGetKey(config.getRsaPirKey(), key, "RSA-KEY解密");
-            decodeData = RsaEncryptUtil.decrypt(formatStringBody, key);
-
-        } else if (method == DecryptBodyMethod.SM2) {
-
-            key = CheckUtils.checkAndGetKey(config.getSm2PirKey(), key, "SM2-KEY解密");
-            decodeData = StrUtil.utf8Str(
-                    SmUtil.sm2(key, null).decryptFromBcd(formatStringBody, KeyType.PrivateKey)
-            );
-
-        } else if (method == DecryptBodyMethod.SM4) {
-
-            key = CheckUtils.checkAndGetKey(config.getSm4Key(), key, "SM4-KEY解密");
-            decodeData = SmUtil.sm4(key.getBytes()).decryptStr(formatStringBody);
-
-        } else {
-            log.error("解密方式未定义,不知道你是aes/ecs/rsa");
-            throw new DecryptDtguaiException("解密方式未定义,不知道你是aes/ecs/rsa");
-        }
+        String decodeData = method.getISecurity().decrypt(formatStringBody,infoBean.getKey(),config);
 
         //验证数据是否过期timestamp
         verifyTime(decodeData, infoBean.getTimeOut());
