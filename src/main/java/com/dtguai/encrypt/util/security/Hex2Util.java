@@ -1,7 +1,7 @@
 package com.dtguai.encrypt.util.security;
 
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import lombok.experimental.UtilityClass;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * <p>二进制转换工具类</p>
@@ -9,7 +9,8 @@ import lombok.NoArgsConstructor;
  * @author guo
  * @date 2019年4月10日10:53:09
  */
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@Slf4j
+@UtilityClass
 public class Hex2Util {
 
     /**
