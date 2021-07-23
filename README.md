@@ -10,7 +10,7 @@
 
 ## springboot 使用demo  
 <a href="https://gitee.com/gouliang/dtguai-app-api/tree/master/src/main/java/com/dtguai/app/api/controller/user">
- https://gitee.com/gouliang/dtguai-app-api/tree/master/src/main/java/com/dtguai/app/api/controller/user
+ https://gitee.com/gouliang/dtguai-app-api/tree/master/src/main/java/com/dtguai/app/api/controller/encrypt
 </a> 
 
 ## 加密/解密支持
