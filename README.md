@@ -70,7 +70,7 @@ long 默认为0不限制超时时间
     <dependency>
         <groupId>com.dtguai</groupId>
         <artifactId>dtguai-encrypt-spring-boot-starter</artifactId>
-        <version>1.0.6</version>
+        <version>1.0.7</version>
     </dependency>
 ```
 
@@ -156,6 +156,8 @@ dtguai:
       sm2-pub-key: MFkwEwYHKoZIzj0CAQYIKoEcz1UBgi0DQgAE48m8eusGQVR8jBsmZMrKsEexfsDhM0cIvDLtz4b+l1S1d6sobYA2uOLozbB4Rmwj+H8XYgOzUtgH3iZ+kU1TQw==
       #SM4加密秘钥
       sm4-key: xiaoFuLoveXiaoQi
+    #自定义返回类中需要加密的字段名称 默认为result
+    #result-name: cxbn
   sign:
     key: qyxVsFzp
 ```
