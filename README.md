@@ -10,7 +10,7 @@
 
 ## springboot 使用demo  
 <a href="https://gitee.com/gouliang/dtguai-app-api/tree/master/src/main/java/com/dtguai/app/api/controller/user">
- https://gitee.com/gouliang/dtguai-app-api/tree/master/src/main/java/com/dtguai/app/api/controller/user
+ https://gitee.com/gouliang/dtguai-app-api/tree/master/src/main/java/com/dtguai/app/api/controller/encrypt
 </a> 
 
 ## 加密/解密支持
@@ -58,7 +58,7 @@ long 默认为0不限制超时时间
 
 ## 使用方式
 
-##注:开发使用的版本为 jdk11
+##注:开发使用的版本为 jdk8+
 ```yaml
     <properties>
         <java.version>8</java.version>
