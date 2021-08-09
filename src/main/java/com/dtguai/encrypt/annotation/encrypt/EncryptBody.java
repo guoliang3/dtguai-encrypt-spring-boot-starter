@@ -20,7 +20,8 @@ public @interface EncryptBody {
     EncryptBodyMethod value() default EncryptBodyMethod.AES;
 
     /**
-     * 注解key 优先于配置文件key
+     * 注解key 优先级高于配置文件key
+     * 如果注解有key则忽略配置文件key
      */
     String otherKey() default "";
 
@@ -29,6 +30,6 @@ public @interface EncryptBody {
     /**
      * 所需要加密的字段
      */
-    String encryptMsgName() default "result";
+    String resultName() default "";
 
 }

@@ -5,9 +5,11 @@ import com.alibaba.fastjson.JSON;
 import com.dtguai.encrypt.annotation.encrypt.EncryptBody;
 import com.dtguai.encrypt.bean.EncryptAnnotationInfoBean;
 import com.dtguai.encrypt.config.EncryptBodyConfig;
+import com.dtguai.encrypt.config.EncryptConfig;
 import com.dtguai.encrypt.enums.EncryptBodyMethod;
 import com.dtguai.encrypt.exception.DecryptDtguaiException;
 import com.dtguai.encrypt.exception.EncryptDtguaiException;
+import com.dtguai.encrypt.util.CheckUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -45,10 +47,13 @@ public class EncryptResponseBodyAdvice implements ResponseBodyAdvice<Object> {
 
     private final EncryptBodyConfig config;
 
+    private final EncryptConfig encryptConfig;
+
     @Autowired
-    public EncryptResponseBodyAdvice(ObjectMapper objectMapper, EncryptBodyConfig config) {
+    public EncryptResponseBodyAdvice(ObjectMapper objectMapper, EncryptBodyConfig config, EncryptConfig encryptConfig) {
         this.objectMapper = objectMapper;
         this.config = config;
+        this.encryptConfig = encryptConfig;
     }
 
     /**
@@ -102,6 +107,7 @@ public class EncryptResponseBodyAdvice implements ResponseBodyAdvice<Object> {
 
         try {
             str = objectMapper.writeValueAsString(body);
+
             repMap = Optional.ofNullable(str)
                     .map(x -> JSON.<Map<String, Object>>parseObject(x, Map.class))
                     .orElse(null);
@@ -155,7 +161,7 @@ public class EncryptResponseBodyAdvice implements ResponseBodyAdvice<Object> {
                     .encryptBodyMethod(encryptBody.value())
                     .key(encryptBody.otherKey())
                     .shaEncryptType(encryptBody.shaType())
-                    .encryptMsgName(encryptBody.encryptMsgName())
+                    .encryptMsgName(CheckUtils.checkAndGetKey(encryptConfig.getResultName(), encryptBody.resultName(), "返回值名称"))
                     .build();
 
         }

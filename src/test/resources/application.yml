@@ -21,5 +21,6 @@ dtguai:
       sm2-pub-key: MFkwEwYHKoZIzj0CAQYIKoEcz1UBgi0DQgAE48m8eusGQVR8jBsmZMrKsEexfsDhM0cIvDLtz4b+l1S1d6sobYA2uOLozbB4Rmwj+H8XYgOzUtgH3iZ+kU1TQw==
       #AES加密秘钥
       sm4-key: xiaoFuLoveXiaoQi
+  result-name: cx
   sign:
     key: qyxVsFzp

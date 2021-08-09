@@ -17,11 +17,11 @@ import org.springframework.util.StringUtils;
 public class CheckUtils {
 
     /**
-     * 注解的 key 高于 全局配置的 key
+     * 注解的 key 优先级高于 全局配置的 key
      *
      * @param k1      全局
      * @param k2      注解
-     * @param keyName 解密方式名称
+     * @param keyName 来源信息
      * @return key
      */
     public static String checkAndGetKey(String k1, String k2, String keyName) {
