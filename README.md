@@ -9,8 +9,9 @@
 数据传输加密/解密及数字证书(数据防改)的组件
 
 ## springboot 使用demo  
-<a href="https://gitee.com/gouliang/dtguai-app-api/tree/master/src/main/java/com/dtguai/app/api/controller/user">
- https://gitee.com/gouliang/dtguai-app-api/tree/master/src/main/java/com/dtguai/app/api/controller/encrypt
+<a href="https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/tree/master/dtguai-encrypt-example">
+  demo 示例
+ dtguai-encrypt-example
 </a> 
 
 ## 加密/解密支持
