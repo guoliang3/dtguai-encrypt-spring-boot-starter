@@ -1,7 +1,7 @@
 /target/
 /logs/
 **/target
-/.idea/
+.idea/
 *.iml
 *.idea
 rebel.xml
