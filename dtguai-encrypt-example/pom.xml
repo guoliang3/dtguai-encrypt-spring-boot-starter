@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.dtguai</groupId>
-    <artifactId>dtguai-encrypt-demo</artifactId>
+    <artifactId>dtguai-encrypt-example</artifactId>
     <version>1.0.7</version>
     <packaging>jar</packaging>
 
