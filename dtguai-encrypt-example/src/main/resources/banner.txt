@@ -1,0 +1,17 @@
+${AnsiColor.BLUE}
+${application.version}
+${application.formatted-version}
+${spring-boot.version}
+${spring-boot.formatted-version}
+
+ 　    /\
+　　　//\\　　　 /\
+　　 /'　\\　　 //\\
+　　　　　\\　 //　`\
+　　　　　 \\ //
+　　　　　.-'^'-.
+　　　　.' a___a `.
+　　　 ==　(___)　==
+　　　　'. ._I_. .'
+　　____/.`-----'.\____
+[###(__)#### [###(__)####

@@ -1,0 +1,20 @@
+# Maven #
+target/
+
+# IDEA #
+.idea/
+*.iml
+
+# Eclipse #
+.settings/
+.classpath
+.project
+.factorypath
+
+# jrebel #
+src/main/resources/rebel.xml
+/.apt_generated/
+
+
+logs/*
+src/main/resources/static/
