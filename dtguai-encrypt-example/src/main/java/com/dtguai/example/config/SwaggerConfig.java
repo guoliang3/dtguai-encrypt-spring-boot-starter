@@ -4,8 +4,10 @@ import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import springfox.documentation.builders.*;
-import springfox.documentation.schema.ModelRef;
+import springfox.documentation.builders.ApiInfoBuilder;
+import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.builders.ResponseMessageBuilder;
 import springfox.documentation.service.*;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.contexts.SecurityContext;
@@ -18,7 +20,7 @@ import java.util.List;
 
 /**
  * @author guo
- * @date 2020年3月31日17:15:57
+ * @date 2021年8月10日10:13:19
  */
 @SpringBootConfiguration
 @EnableSwagger2WebMvc
@@ -60,8 +62,8 @@ public class SwaggerConfig implements WebMvcConfigurer {
      */
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("dtguai-app-api")
-                .description("app接口平台")
+                .title("dtguai-encrypt-demo")
+                .description("dtguai-encrypt-demo")
                 .termsOfServiceUrl("/monitoring")
                 .license("Apache License Version 2.0")
                 .licenseUrl("https://github.com/springfox/springfox/blob/master/LICENSE")
@@ -77,7 +79,7 @@ public class SwaggerConfig implements WebMvcConfigurer {
     private SecurityContext securityContext() {
         return SecurityContext.builder()
                 .securityReferences(defaultAuth())
-                .forPaths(PathSelectors.regex("/api.*"))
+                .forPaths(PathSelectors.regex("/controller.*"))
                 .build();
     }
 
