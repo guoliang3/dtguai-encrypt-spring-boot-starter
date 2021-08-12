@@ -24,8 +24,7 @@ public class CorsConfig implements WebMvcConfigurer {
                 //浏览器是否应该同时发送凭据
                 .allowCredentials(true)
                 //允许请求方法跨域
-                //.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-                .allowedMethods("GET", "POST")
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .maxAge(3600);
     }
 }
