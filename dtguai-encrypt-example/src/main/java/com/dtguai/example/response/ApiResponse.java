@@ -24,12 +24,6 @@ public class ApiResponse<T> {
     @ApiModelProperty(value = "返回信息")
     private String msg = "OK";
 
-    /**
-     * 自定义 加密 返回name
-     */
-    @ApiModelProperty(value = "cx暴虐")
-    private T cxbn;
-
     @ApiModelProperty(value = "返回时间")
     private String timestamp;
     @ApiModelProperty(value = "返回数据")
@@ -39,7 +33,6 @@ public class ApiResponse<T> {
 
     public ApiResponse(T t) {
         this.result = t;
-        this.cxbn = t;
     }
 
 }

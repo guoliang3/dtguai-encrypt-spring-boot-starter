@@ -2,7 +2,6 @@ package com.dtguai.example.api.controller.encrypt;
 
 
 import com.alibaba.fastjson.JSON;
-
 import com.dtguai.encrypt.annotation.decrypt.DecryptBody;
 import com.dtguai.encrypt.annotation.encrypt.EncryptBody;
 import com.dtguai.encrypt.enums.DecryptBodyMethod;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 
 import java.util.Date;
 
@@ -46,12 +44,11 @@ public class RsaTest {
     @EncryptBody(value = EncryptBodyMethod.RSA)
     public ApiResponse<User> rsa(@RequestBody RsaForm form) {
         log.info("rsa解密数据:{}", JSON.toJSONString(form));
-        User user = User.builder()
+        return new ApiResponse<>(User.builder()
                 .name("克隆人")
                 .createTime(new Date())
                 .imei("11111")
-                .build();
-        return new ApiResponse<>(user);
+                .build());
     }
 
 

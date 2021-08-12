@@ -35,6 +35,7 @@ dtguai:
       sm2-pub-key: MFkwEwYHKoZIzj0CAQYIKoEcz1UBgi0DQgAEzvfcusfPh/zUD+RvFoJ1/Z7GRpJDMHbVWXp6Os3/IJW0rips4OyO6OvVqeussXC/Za0PAYheH1Gw/W5BT9u7XA==
       #SM4加密秘钥
       sm4-key: xiaoFuLoveXiaoQi
-    result-name: cxbn
+    #自定义返回类中需要加密的字段名称 默认为result
+    #result-name: cxbn
   sign:
     key: qyxVsFzp
