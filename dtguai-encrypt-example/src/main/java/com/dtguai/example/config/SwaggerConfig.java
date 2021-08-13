@@ -30,11 +30,6 @@ public class SwaggerConfig implements WebMvcConfigurer {
     public Docket createRestApi() {
         List<ResponseMessage> responseMessageList = new ArrayList<>();
         responseMessageList.add(new ResponseMessageBuilder().code(200).message("ok").build());
-        responseMessageList.add(new ResponseMessageBuilder().code(400).message("参数有误").build());
-        responseMessageList.add(new ResponseMessageBuilder().code(401).message("无效的token").build());
-        responseMessageList.add(new ResponseMessageBuilder().code(402).message("token过期").build());
-        responseMessageList.add(new ResponseMessageBuilder().code(404).message("路径不存在").build());
-        responseMessageList.add(new ResponseMessageBuilder().code(405).message("记录重复").build());
         responseMessageList.add(new ResponseMessageBuilder().code(500).message("服务器内部错误").build());
 
         return new Docket(DocumentationType.SWAGGER_2)

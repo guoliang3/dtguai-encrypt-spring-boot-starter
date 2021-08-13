@@ -1,5 +1,6 @@
 package com.dtguai.example.response;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import io.swagger.annotations.ApiModelProperty;
@@ -26,8 +27,8 @@ public class ApiResponse<T> {
 
     @ApiModelProperty(value = "返回时间")
     private String timestamp;
-    @ApiModelProperty(value = "返回数据")
 
+    @ApiModelProperty(value = "返回数据")
     @JsonInclude(Include.NON_NULL)
     private T result;
 
