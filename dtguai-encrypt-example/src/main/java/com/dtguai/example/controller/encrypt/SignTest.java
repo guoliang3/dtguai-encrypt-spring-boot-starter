@@ -21,6 +21,9 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Map;
 import java.util.TreeMap;
 
+import static com.dtguai.encrypt.sign.SignAspect.SIGN_HEADER;
+import static com.dtguai.encrypt.sign.SignAspect.TOKEN_HEADER;
+
 /**
  * 描述
  *
@@ -53,25 +56,22 @@ public class SignTest {
     /**
      * aes加密解密
      *
-     * @param json 加密对象
+     * @param json 测试数据
      * @return ApiResponse
      */
-    @ApiOperation(value = "测试数据生成数字证书", notes = "通过测试数据生成sign数字证书")
+    @ApiOperation(value = "生成数字证书", notes = "通过测试数据生成sign数字证书")
     @PostMapping(value = "/sign/data")
-    @Sign
     @ApiImplicitParam(name = "json", value = "json测试数据", defaultValue = "{ " +
             " \"createTime\": \"2021-8-13 09:47:49\", " +
             " \"id\": 0," +
             " \"imei\": \"11111\"," +
             " \"mobile\": \"13811889989\"," +
-            " \"name\": \"克隆人des\"," +
+            " \"name\": \"克隆人cx\"," +
             " \"password\": \"123456\"," +
-            " \"type\": 0," +
             " \"timestamp\":\"1628823973123\"" +
             " }")
     public ApiResponse<String> signData(String json) {
-        final String sign = "sign";
-        final String token = "token";
+
         log.info("json数据为:{}", json);
 
         Map<String, Object> my = JSON.<Map<String, Object>>parseObject(json, TreeMap.class);
@@ -80,7 +80,7 @@ public class SignTest {
 
         StringBuilder paramBuilder = new StringBuilder();
         my.forEach((k, v) -> {
-            if (v != null && !sign.equals(k) && !token.equals(k)) {
+            if (v != null && !SIGN_HEADER.equals(k) && !TOKEN_HEADER.equals(k)) {
                 paramBuilder.append(k).append("=").append(v).append("&");
             }
         });
