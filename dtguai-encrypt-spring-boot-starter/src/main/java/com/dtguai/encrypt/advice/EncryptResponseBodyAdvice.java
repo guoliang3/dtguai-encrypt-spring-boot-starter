@@ -114,9 +114,8 @@ public class EncryptResponseBodyAdvice implements ResponseBodyAdvice<Object> {
 
             result = Optional.ofNullable(repMap)
                     .map(x -> x.get(dataName))
-                    .map(JSON::toJSONString)
+                    .map(Object::toString)
                     .orElse(null);
-
         } catch (JsonProcessingException e) {
             log.error("响应数据的加密异常,请联系管理员", e);
         }
