@@ -66,7 +66,7 @@ public class DesTest {
             " }")
     public ApiResponse<String> desData(String json) {
         log.info("des-测试数据加密,原始数据:{}", json);
-        return new ApiResponse<>("des加密以后的数据为:" + json);
+        return new ApiResponse<>(json);
     }
 
 }

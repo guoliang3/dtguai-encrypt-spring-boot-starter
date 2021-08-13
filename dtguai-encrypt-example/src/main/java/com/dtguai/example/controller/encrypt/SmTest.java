@@ -65,7 +65,7 @@ public class SmTest {
             " }")
     public ApiResponse<String> sm2Data(String json) {
         log.info("sm2-测试数据加密,原始数据:{}", json);
-        return new ApiResponse<>("sm2加密以后的数据为:" + json);
+        return new ApiResponse<>(json);
     }
 
     /**
@@ -121,6 +121,6 @@ public class SmTest {
             " }")
     public ApiResponse<String> sm4Data(String json) {
         log.info("sm4-测试数据加密,原始数据:{}", json);
-        return new ApiResponse<>("sm4加密以后的数据为:" + json);
+        return new ApiResponse<>(json);
     }
 }

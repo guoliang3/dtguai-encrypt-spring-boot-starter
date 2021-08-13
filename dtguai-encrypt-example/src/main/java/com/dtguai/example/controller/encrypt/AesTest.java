@@ -4,7 +4,6 @@ package com.dtguai.example.controller.encrypt;
 import com.alibaba.fastjson.JSON;
 import com.dtguai.encrypt.annotation.decrypt.DecryptBody;
 import com.dtguai.encrypt.annotation.encrypt.EncryptBody;
-import com.dtguai.encrypt.config.EncryptBodyConfig;
 import com.dtguai.encrypt.enums.DecryptBodyMethod;
 import com.dtguai.encrypt.enums.EncryptBodyMethod;
 import com.dtguai.example.api.form.encrypt.AesForm;
@@ -13,7 +12,6 @@ import com.dtguai.example.response.ApiResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -69,7 +67,7 @@ public class AesTest {
             " }")
     public ApiResponse<String> aesData(String json) {
         log.info("aes-测试数据加密,原始数据:{}", json);
-        return new ApiResponse<>("aes加密以后的数据为:" + json);
+        return new ApiResponse<>(json);
     }
 
 }
