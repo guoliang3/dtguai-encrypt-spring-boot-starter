@@ -123,7 +123,8 @@ public class DecryptRequestBodyAdvice implements RequestBodyAdvice {
             InputStream inputStream = IOUtils.toInputStream(JSON.toJSONString(req), config.getEncoding());
             return new DecryptHttpInputMessage(inputStream, inputMessage.getHeaders());
         } catch (Exception e) {
-            throw new DecryptDtguaiException("字符串转换成流格式异常，请检查编码等格式是否正确");
+            log.error("字符串转换成流格式异常，请检查编码等格式是否正确,decryptBody:{}",decryptBody);
+            throw new DecryptDtguaiException("字符串转换成流格式异常，请检查编码等格式是否正确,decryptBody:"+decryptBody);
         }
     }
 

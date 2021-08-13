@@ -22,6 +22,6 @@ dtguai:
       #SM4加密秘钥
       sm4-key: xiaoFuLoveXiaoQi
     #自定义 需要加密返回的 name
-    #result-name: cxbn
+    #result-name: xxxx
   sign:
     key: qyxVsFzp
