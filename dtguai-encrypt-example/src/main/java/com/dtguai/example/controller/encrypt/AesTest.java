@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
+
 /**
  * 描述
  *
@@ -42,7 +44,12 @@ public class AesTest {
     @EncryptBody(value = EncryptBodyMethod.AES)
     public ApiResponse<User> aes(@RequestBody AesForm form) {
         log.info("aes解密数据:{}", JSON.toJSONString(form));
-        return new ApiResponse<>(new User());
+        return new ApiResponse<>(User.builder()
+                .name("克隆人")
+                .createTime(new Date())
+                .imei("11111")
+                .mobile("13811788899")
+                .build());
     }
 
 

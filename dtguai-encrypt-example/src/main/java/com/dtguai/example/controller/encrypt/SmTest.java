@@ -16,6 +16,8 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
+
 /**
  * 描述
  *
@@ -41,7 +43,12 @@ public class SmTest {
     @EncryptBody(value = EncryptBodyMethod.SM2)
     public ApiResponse<User> sm2(@RequestBody Sm2Form form) {
         log.info("sm2解密数据:{}", JSON.toJSONString(form));
-        return new ApiResponse<>(new User());
+        return new ApiResponse<>(User.builder()
+                .name("克隆人")
+                .createTime(new Date())
+                .imei("11111")
+                .mobile("13811788899")
+                .build());
     }
 
     /**
@@ -97,7 +104,12 @@ public class SmTest {
     @EncryptBody(value = EncryptBodyMethod.SM4)
     public ApiResponse<User> sm4(@RequestBody Sm4Form form) {
         log.info("sm4解密数据:{}", JSON.toJSONString(form));
-        return new ApiResponse<>(new User());
+        return new ApiResponse<>(User.builder()
+                .name("克隆人")
+                .createTime(new Date())
+                .imei("11111")
+                .mobile("13811788899")
+                .build());
     }
 
     /**
