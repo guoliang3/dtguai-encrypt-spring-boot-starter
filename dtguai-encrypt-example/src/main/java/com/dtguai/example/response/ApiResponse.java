@@ -1,6 +1,5 @@
 package com.dtguai.example.response;
 
-import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import io.swagger.annotations.ApiModelProperty;
@@ -30,6 +29,7 @@ public class ApiResponse<T> {
 
     @ApiModelProperty(value = "返回数据")
     @JsonInclude(Include.NON_NULL)
+    //@JSONField(jsonDirect=true)
     private T result;
 
     public ApiResponse(T t) {

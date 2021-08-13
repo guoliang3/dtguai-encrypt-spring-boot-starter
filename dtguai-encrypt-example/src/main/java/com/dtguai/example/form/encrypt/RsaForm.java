@@ -17,6 +17,9 @@ import lombok.EqualsAndHashCode;
 public class RsaForm {
 
     @ApiModelProperty(hidden = true)
+    private String name;
+
+    @ApiModelProperty(hidden = true)
     private String mobile;
 
     @ApiModelProperty(hidden = true)
