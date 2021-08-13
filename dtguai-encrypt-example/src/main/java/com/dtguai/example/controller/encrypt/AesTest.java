@@ -1,4 +1,4 @@
-package com.dtguai.example.api.controller.encrypt;
+package com.dtguai.example.controller.encrypt;
 
 
 import com.alibaba.fastjson.JSON;
@@ -30,17 +30,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/test")
 @Api(value = "aes", tags = {"aes"})
 @Slf4j
-@AllArgsConstructor
 public class AesTest {
-
-    private final EncryptBodyConfig config;
-
 
     /**
      * aes加密解密
      *
      * @param form 加密对象
-     * @return ResponseEntity
+     * @return ApiResponse
      */
     @ApiOperation(value = "aes加密解密", notes = "aes加密解密")
     @PostMapping(value = "/aes")
@@ -56,9 +52,9 @@ public class AesTest {
      * aes加密解密
      *
      * @param json 测试json数据
-     * @return ResponseEntity
+     * @return ApiResponse
      */
-    @ApiOperation(value = "aes加密", notes = "使用aes给测试数据加密")
+    @ApiOperation(value = "aes测试数据加密", notes = "使用aes给测试数据加密")
     @PostMapping(value = "/aes/data")
     @EncryptBody(value = EncryptBodyMethod.AES)
     @ApiImplicitParam(name = "json", value = "json测试数据", defaultValue = "{ " +
@@ -72,11 +68,8 @@ public class AesTest {
             " \"timestamp\":\"1628823973123\"" +
             " }")
     public ApiResponse<String> aesData(String json) {
-        System.out.println("------------" + json);
         log.info("aes-测试数据加密,原始数据:{}", json);
-        String jiami = EncryptBodyMethod.AES.getISecurity().encrypt(json, config.getAesKey(), config);
-        log.warn("加密后的数据为:        {}", jiami);
-        return new ApiResponse<>(json);
+        return new ApiResponse<>("aes加密以后的数据为:" + json);
     }
 
 }

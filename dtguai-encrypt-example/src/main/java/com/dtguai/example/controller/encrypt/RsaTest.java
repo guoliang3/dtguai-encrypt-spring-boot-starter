@@ -1,4 +1,4 @@
-package com.dtguai.example.api.controller.encrypt;
+package com.dtguai.example.controller.encrypt;
 
 
 import com.alibaba.fastjson.JSON;
@@ -10,6 +10,7 @@ import com.dtguai.example.api.form.encrypt.RsaForm;
 import com.dtguai.example.model.User;
 import com.dtguai.example.response.ApiResponse;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -51,5 +52,28 @@ public class RsaTest {
                 .build());
     }
 
+    /**
+     * rsa加密解密
+     *
+     * @param json 测试json数据
+     * @return ApiResponse
+     */
+    @ApiOperation(value = "rsa测试数据加密", notes = "使用rsa给测试数据加密")
+    @PostMapping(value = "/rsa/data")
+    @EncryptBody(value = EncryptBodyMethod.RSA)
+    @ApiImplicitParam(name = "json", value = "json测试数据", defaultValue = "{ " +
+            " \"createTime\": \"2021-8-13 09:47:49\", " +
+            " \"id\": 0," +
+            " \"imei\": \"11111\"," +
+            " \"mobile\": \"13811889989\"," +
+            " \"name\": \"克隆人rsa\"," +
+            " \"password\": \"123456\"," +
+            " \"type\": 0," +
+            " \"timestamp\":\"1628823973123\"" +
+            " }")
+    public ApiResponse<String> rsaData(String json) {
+        log.info("rsa-测试数据加密,原始数据:{}", json);
+        return new ApiResponse<>("rsa加密以后的数据为:" + json);
+    }
 
 }
