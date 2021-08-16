@@ -48,12 +48,13 @@ public class SignAspect {
         //请求的参数
         Object[] args = point.getArgs();
 
-        TreeMap<String, String> reqm = Optional.ofNullable(args[0])
+        TreeMap<String, Object> reqm = Optional.ofNullable(args[0])
                 .map(x -> JSON.toJSONStringWithDateFormat(x, "yyyy-MM-dd HH:mm:ss"))
-                .map(x -> JSON.<TreeMap<String, String>>parseObject(x, TreeMap.class))
+                .map(x -> JSON.<TreeMap<String, Object>>parseObject(x, TreeMap.class))
                 .orElseThrow(() -> new SignDtguaiException("sing注解中加密数据为空"));
 
         String timestamp = Optional.ofNullable(reqm.get("timestamp"))
+                .map(Object::toString)
                 .orElseThrow(() -> new SignDtguaiException("数字证书timestamp不能为空"));
 
         log.info("sign的TreeMap默认key升序排序timestamp:{} ---- json:{}", timestamp, JSON.toJSONString(reqm));
@@ -69,14 +70,16 @@ public class SignAspect {
      *
      * @param reqm 数据map
      */
-    private void validSign(Map<String, String> reqm) {
+    private void validSign(Map<String, Object> reqm) {
         String md5Sign;
         String sign;
         StringBuilder paramBuilder = new StringBuilder();
         try {
             reqm = Optional.ofNullable(reqm)
                     .orElseThrow(() -> new SignDtguaiException(SIGN_HEADER + "的map不能为空"));
-            sign = Optional.ofNullable(reqm).map(x -> x.get(SIGN_HEADER))
+            sign = Optional.ofNullable(reqm)
+                    .map(x -> x.get(SIGN_HEADER))
+                    .map(Object::toString)
                     .orElseThrow(() -> new SignDtguaiException(SIGN_HEADER + "不能为空"));
 
             // 校验 Sign

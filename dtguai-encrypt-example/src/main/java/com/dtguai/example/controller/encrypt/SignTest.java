@@ -54,7 +54,10 @@ public class SignTest {
     }
 
     /**
-     * aes加密解密
+     * sign 数字签名
+     * 注意时间问题
+     * createTime 2021-08-13 09:47:49
+     * JSON.toJSONStringWithDateFormat(x, "yyyy-MM-dd HH:mm:ss")
      *
      * @param json 测试数据
      * @return ApiResponse
@@ -62,7 +65,7 @@ public class SignTest {
     @ApiOperation(value = "生成数字证书", notes = "通过测试数据生成sign数字证书")
     @PostMapping(value = "/sign/data")
     @ApiImplicitParam(name = "json", value = "json测试数据", defaultValue = "{ " +
-            " \"createTime\": \"2021-8-13 09:47:49\", " +
+            " \"createTime\": \"2021-08-13 09:47:49\", " +
             " \"id\": 0," +
             " \"imei\": \"11111\"," +
             " \"mobile\": \"13811889989\"," +

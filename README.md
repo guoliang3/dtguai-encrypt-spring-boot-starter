@@ -71,7 +71,7 @@ long 默认为0不限制超时时间
     <dependency>
         <groupId>com.dtguai</groupId>
         <artifactId>dtguai-encrypt-spring-boot-starter</artifactId>
-        <version>1.0.7</version>
+        <version>1.0.8</version>
     </dependency>
 ```
 
