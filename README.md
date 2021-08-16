@@ -1,72 +1,95 @@
 # dtguai-encrypt-spring-boot-starter
 
-
 <a href="http://spring.io/projects/spring-boot">
             <img src="https://img.shields.io/badge/spring--boot-2.5.3-green.svg" alt="spring-boot">
 </a>     
- 
+
 # 介绍
+
 数据传输加密/解密及数字证书(数据防改)的组件
 
-## springboot 使用demo  
+## springboot 使用demo
+
 <a href="https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/tree/master/dtguai-encrypt-example">
   demo 示例
  dtguai-encrypt-example
 </a> 
 
 ## 加密/解密支持
+
 - 可进行加密的方式有：
-    - - [x] MD5
-    - - [x] SHA-224 / 256 / 384 / 512
-    - - [x] AES
-    - - [x] DES
-    - - [x] RSA
-    - - [x] SM2
-    - - [x] SM3
-    - - [x] SM4
+  -
+        - [x] MD5
+    -
+        - [x] SHA-224 / 256 / 384 / 512
+    -
+        - [x] AES
+    -
+        - [x] DES
+    -
+        - [x] RSA
+    -
+        - [x] SM2
+    -
+        - [x] SM3
+    -
+        - [x] SM4
 - 可进行解密的方式有：
-    - - [x] AES
-    - - [x] DES
-    - - [x] RSA
-    - - [x] SM2
-    - - [x] SM4
+  -
+        - [x] AES
+    -
+        - [x] DES
+    -
+        - [x] RSA
+    -
+        - [x] SM2
+    -
+        - [x] SM4
 
 ## 开放标签
-#####@DecryptBody(value = DecryptBodyMethod.DES)  
-#####@EncryptBody(value = EncryptBodyMethod.DES)  
 
-#####@DecryptBody(value = DecryptBodyMethod.AES)  
-#####@EncryptBody(value = EncryptBodyMethod.AES)  
+##### @DecryptBody(value = DecryptBodyMethod.DES)
 
-#####@DecryptBody(value = DecryptBodyMethod.RSA)  
-#####@EncryptBody(value = EncryptBodyMethod.RSA)    
+##### @EncryptBody(value = EncryptBodyMethod.DES)
 
-#####@DecryptBody(value = DecryptBodyMethod.MS2)  
-#####@EncryptBody(value = EncryptBodyMethod.SM2)  
+##### @DecryptBody(value = DecryptBodyMethod.AES)
 
-#####@EncryptBody(value = EncryptBodyMethod.SM3)  
+##### @EncryptBody(value = EncryptBodyMethod.AES)
 
-#####@DecryptBody(value = DecryptBodyMethod.SM4)  
-#####@EncryptBody(value = EncryptBodyMethod.SM4)  
+##### @DecryptBody(value = DecryptBodyMethod.RSA)
 
-#####@EncryptBody(value = EncryptBodyMethod.MD5)   
+##### @EncryptBody(value = EncryptBodyMethod.RSA)
+
+##### @DecryptBody(value = DecryptBodyMethod.MS2)
+
+##### @EncryptBody(value = EncryptBodyMethod.SM2)
+
+##### @EncryptBody(value = EncryptBodyMethod.SM3)
+
+##### @DecryptBody(value = DecryptBodyMethod.SM4)
+
+##### @EncryptBody(value = EncryptBodyMethod.SM4)
+
+##### @EncryptBody(value = EncryptBodyMethod.MD5)
 
 默认为AES
 
-###标签主要参数介绍
-value 默认为 DecryptBodyMethod.AES;
-long 默认为0不限制超时时间
+### 标签主要参数介绍
+
+value 默认为 DecryptBodyMethod.AES; long 默认为0不限制超时时间
 
 ## 使用方式
 
-##注:开发使用的版本为 jdk8+
+## 注:开发使用的版本为 jdk8+
+
 ```yaml
     <properties>
-        <java.version>8</java.version>
+    <java.version>8</java.version>
     </properties>
 ```
 
 ## Maven依赖
+
 ```
     <dependency>
         <groupId>com.dtguai</groupId>
@@ -76,34 +99,38 @@ long 默认为0不限制超时时间
 ```
 
 ```java
+
 @RestController
 @RequestMapping("/test")
 public class TestController {
-    
+
     //需要数字证书
     @Sign
     //des解密
     @DecryptBody(value = DecryptBodyMethod.DES)
     //des输出加密
     @EncryptBody(value = EncryptBodyMethod.DES)
-    public String api(){
+    public String api() {
         return "小邱爱小付";
     }
 
 }
 ```
+
 ## 入参对象使用
+
 ```java
     @Sign
-    @DecryptBody(value = DecryptBodyMethod.RSA)
-    @EncryptBody(value = EncryptBodyMethod.RSA)
-    public ApiResponse<?> rsaSign(@RequestBody TestRsaDataSecretForm user) {
-        
-    }
-    
-    需要在原有的入参form添加 sign 和  dataSecret 字段 
-揭秘原理:接到解密数据和sign数据会解密完放到对应对象字段
-public class TestRsaDataSecretForm  {
+@DecryptBody(value = DecryptBodyMethod.RSA)
+@EncryptBody(value = EncryptBodyMethod.RSA)
+public ApiResponse<?> rsaSign(@RequestBody TestRsaDataSecretForm user){
+
+        }
+
+        需要在原有的入参form添加 sign 和 dataSecret 字段
+        揭秘原理:接到解密数据和sign数据会解密完放到对应对象字段
+
+public class TestRsaDataSecretForm {
 
     @ApiModelProperty(hidden = true)
     private String mobile;
@@ -124,19 +151,20 @@ public class TestRsaDataSecretForm  {
 ```
 
 ## 加密注意事项
+
 ```java
-public class ApiResponse<T>{
+public class ApiResponse<T> {
     //返回对象中 需要有result 字段 加密是根据此字段加密
     @JsonInclude(Include.NON_NULL)
     private T result;
 ```
-如果名字不是result 请使用自定义
-@EncryptBody(encryptMsgName=xxx)
 
+如果名字不是result 请使用自定义 @EncryptBody(encryptMsgName=xxx)
 
 ## 配置文件
-- 参数配置
-在项目的`application.yml`或`application.properties`文件中进行参数配置，例如：
+
+- 参数配置 在项目的`application.yml`或`application.properties`文件中进行参数配置，例如：
+
 ```yaml
 dtguai:
   encrypt:
@@ -162,20 +190,25 @@ dtguai:
   sign:
     key: qyxVsFzp
 ```
+
 - 只需要对控制器响应体进行数字签名验证
+
 ```java
+
 @RestController
 @RequestMapping("/test")
 public class TestController {
 
     @Sign
-    public String api(){
+    public String api() {
         return "小邱爱小付";
     }
 
 }
 ```
+
 - 配置文件可配置参数
+
 ```java
 private String aesKey;
 
@@ -183,7 +216,7 @@ private String desKey;
 
 private String rsaKey;
 
-private String encoding = "UTF-8";
+private String encoding="UTF-8";
 
 private String rsaPirKey;
 
@@ -198,50 +231,30 @@ private String sm4Key;
 /**
  * Aes密码算法及填充方式
  */
-private String aesCipherAlgorithm = "AES/GCM/NoPadding";
+private String aesCipherAlgorithm="AES/GCM/NoPadding";
 
 /**
  * Aes密码算法及填充方式
  */
-private String desCipherAlgorithm = "DES/ECB/PKCS5Padding";
+private String desCipherAlgorithm="DES/ECB/PKCS5Padding";
 ```
 
+- 更新日志
+  <a href="https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E6%9B%B4%E6%96%B0%E8%AE%B0%E5%BD%95?sort_id=4355068">
+  更新日志
+  </a>
 
 ---------------------------------------------------------------   
-算法分类  
 
-根据加密结果是否可以被解密，算法可以分为可逆加密和不可逆加密（单向加密），从这个意义上来说，单向加密只能称之为加密算法而不是加解密算法。对于可逆加密，又可以根据密钥的的对称性分为对称加密和非对称加密。具体的分类结构如下：
-
-◦可逆加密◦对称加密：DES，3DES，AES，PBE   
-◦非对称加密：RSA，DSA，ECC（椭圆曲线加密算法）  
-
-◦不可逆加密（单向加密）：MD5，SHA，HMAC   
-
-很显然，如果是签名，我们可以用不可逆加密，如果是body体的话，我们需要用可逆算法，去解出相应数据才能进行业务处理。
-
-RSA介绍
-不管明文长度是多少，RSA 生成的密文长度总是固定的。  
-但是明文长度不能超过密钥长度。    
-比如 Java 默认的 RSA 加密实现不允许明文长度超过密钥长度减去 11(单位是字节，也就是 byte)。     
-也就是说，如果我们定义的密钥(我们可以通过 java.security.KeyPairGenerator.initialize(int keysize)     
- 来定义密钥长度)长度为 1024(单位是位，也就是 bit)，生成的密钥长度就是 1024位 / 8位/字节 = 128字节，      
- 那么我们需要加密的明文长度不能超过 128字节 -11 字节 = 117字节。      
-也就是说，我们最大能将 117 字节长度的明文进行加密，     
-否则会出问题     
-(抛诸如 javax.crypto.IllegalBlockSizeException: Data must not be longer than 53 bytes 的异常)。   
-而 BC 提供的加密算法能够支持到的 RSA 明文长度最长为密钥长度。    
+- 算法分类
+  <a href="https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E7%AE%97%E6%B3%95%E5%88%86%E7%B1%BB%20?sort_id=4355085">
+  算法分类
+  </a>
 
 -------------------------------------------------------------------------------------------------------------------
 
-国密即国家密码局认定的国产密码算法。主要有SM1，SM2，SM3，SM4。密钥长度和分组长度均为128位。  
-
-SM1 为对称加密。其加密强度与AES相当。该算法不公开，调用该算法时，需要通过加密芯片的接口进行调用。  
-
-SM2为非对称加密，基于ECC。该算法已公开。由于该算法基于ECC，故其签名速度与秘钥生成速度都快于RSA。ECC 256位（SM2采用的就是ECC 256位的一种）安全强度比RSA 2048位高，但运算速度快于RSA。  
-
-SM3 消息摘要。可以用MD5作为对比理解。该算法已公开。校验结果为256位。  
-
-SM4 无线局域网标准的分组数据算法。对称加密，密钥长度和分组长度均为128位。  
-
-由于SM1、SM4加解密的分组大小为128bit，故对消息进行加解密时，若消息长度过长，需要进行分组，要消息长度不足，则要进行填充。  
+- 国密算法
+  <a href="https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E5%9B%BD%E5%AF%86%E7%AE%97%E6%B3%95?sort_id=4355178">
+  国密算法
+  </a>
 
