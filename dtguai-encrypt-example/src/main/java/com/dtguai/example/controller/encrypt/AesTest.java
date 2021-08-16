@@ -63,7 +63,7 @@ public class AesTest {
     @PostMapping(value = "/aes/data")
     @EncryptBody(value = EncryptBodyMethod.AES)
     @ApiImplicitParam(name = "json", value = "json测试数据", defaultValue = "{ " +
-            " \"createTime\": \"2021-8-13 09:47:49\", " +
+            " \"createTime\": \"2021-08-13 09:47:49\", " +
             " \"id\": 0," +
             " \"imei\": \"11111\"," +
             " \"mobile\": \"13811889989\"," +

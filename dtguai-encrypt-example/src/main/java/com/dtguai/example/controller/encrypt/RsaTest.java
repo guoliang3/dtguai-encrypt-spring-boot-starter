@@ -69,7 +69,7 @@ public class RsaTest {
     @PostMapping(value = "/rsa/pir", produces = "application/json;charset=UTF-8")
     @EncryptBody(value = EncryptBodyMethod.RSA)
     @ApiImplicitParam(name = "json", value = "json测试数据", defaultValue = "{ " +
-            " \"createTime\": \"2021-8-13 09:47:49\", " +
+            " \"createTime\": \"2021-08-13 09:47:49\", " +
             " \"id\": 0," +
             " \"imei\": \"11111\"," +
             " \"mobile\": \"13811889989\"," +
@@ -111,7 +111,7 @@ public class RsaTest {
     @ApiOperation(value = "rsa公钥加密", notes = "rsa公钥加密")
     @PostMapping(value = "/rsa/data")
     @ApiImplicitParam(name = "json", value = "json测试数据", defaultValue = "{ " +
-            " \"createTime\": \"2021-8-13 09:47:49\", " +
+            " \"createTime\": \"2021-08-13 09:47:49\", " +
             " \"id\": 0," +
             " \"imei\": \"11111\"," +
             " \"mobile\": \"13811889989\"," +

@@ -5,6 +5,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.util.Date;
+
 /**
  * 登录表单
  *
@@ -17,7 +19,19 @@ import lombok.EqualsAndHashCode;
 public class Sm4Form {
 
     @ApiModelProperty(hidden = true)
+    private Date createTime;
+
+    @ApiModelProperty(hidden = true)
+    private int id;
+
+    @ApiModelProperty(hidden = true)
+    private String imei;
+
+    @ApiModelProperty(hidden = true)
     private String mobile;
+
+    @ApiModelProperty(hidden = true)
+    private String name;
 
     @ApiModelProperty(hidden = true)
     private String password;
