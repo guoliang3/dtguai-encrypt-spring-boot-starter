@@ -39,3 +39,10 @@ dtguai:
     #result-name: cxbn
   sign:
     key: qyxVsFzp
+    #自定义数字证书 过滤值 默认为"token","sign","dataSecret"
+#    ignore:
+#      - token
+#      - sign
+#      - dataSecret
+#      - name
+#      - klr

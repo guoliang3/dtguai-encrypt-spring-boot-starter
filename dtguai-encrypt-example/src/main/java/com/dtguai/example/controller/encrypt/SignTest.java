@@ -18,11 +18,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-
-import static com.dtguai.encrypt.sign.SignAspect.SIGN_HEADER;
-import static com.dtguai.encrypt.sign.SignAspect.TOKEN_HEADER;
 
 /**
  * 描述
@@ -83,7 +81,8 @@ public class SignTest {
 
         StringBuilder paramBuilder = new StringBuilder();
         my.forEach((k, v) -> {
-            if (v != null && !SIGN_HEADER.equals(k) && !TOKEN_HEADER.equals(k)) {
+            List<String> ignore = signConfig.getIgnore();
+            if (v != null && !ignore.contains(k)) {
                 paramBuilder.append(k).append("=").append(v).append("&");
             }
         });

@@ -37,11 +37,16 @@ public class SignTest {
         log.warn("添加了时间戳,并且排好序(按key的顺序排)的json:{}", newDataJson);
 
         StringBuilder paramBuilder = new StringBuilder();
+
         my.forEach((k, v) -> {
-            if (v != null && !k.equals("sign") && !k.equals("token")) {
+            if (v != null
+                    && !k.equals(SignAspect.TOKEN_HEADER)
+                    && !k.equals(SignAspect.SIGN_HEADER)
+                    && !k.equals(SignAspect.DATA_SECRET_HEADER)) {
                 paramBuilder.append(k).append("=").append(v).append("&");
             }
         });
+
         log.warn("循环map拼接数据串把token和sign剔除:{}", paramBuilder);
         String signData = paramBuilder.append("signKey=").append(signKey).toString();
         log.warn("最后加入signkey:                  {}", signData);

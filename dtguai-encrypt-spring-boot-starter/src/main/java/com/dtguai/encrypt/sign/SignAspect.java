@@ -13,6 +13,7 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.TreeMap;
@@ -84,7 +85,8 @@ public class SignAspect {
 
             // 校验 Sign
             reqm.forEach((k, v) -> {
-                if (v != null && !k.equals(SIGN_HEADER) && !k.equals(TOKEN_HEADER) && !k.equals(DATA_SECRET_HEADER)) {
+                List<String> ignore = signConfig.getIgnore();
+                if(v != null && !ignore.contains(k)){
                     paramBuilder.append(k).append("=").append(v).append("&");
                 }
             });
@@ -96,7 +98,7 @@ public class SignAspect {
             throw new SignDtguaiException(SIGN_HEADER + "数据签名校验出错");
         }
         if (!md5Sign.equals(sign)) {
-            log.error("验证失败:{}  传入的sign:{}  当前生成的md5Sign:{}", paramBuilder.toString(), sign, md5Sign);
+            log.error("验证失败:{}  传入的sign:{}  当前生成的md5Sign:{}", paramBuilder, sign, md5Sign);
             throw new SignDtguaiException("数字证书校验失败");
         }
 

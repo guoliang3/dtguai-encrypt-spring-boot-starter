@@ -6,7 +6,7 @@
 
     <groupId>com.dtguai</groupId>
     <artifactId>dtguai-encrypt-example</artifactId>
-    <version>1.0.7</version>
+    <version>1.0.9</version>
     <packaging>jar</packaging>
 
     <parent>
@@ -55,7 +55,7 @@
         <dependency>
             <groupId>com.dtguai</groupId>
             <artifactId>dtguai-encrypt-spring-boot-starter</artifactId>
-            <version>1.0.8</version>
+            <version>1.0.9</version>
         </dependency>
 
     </dependencies>

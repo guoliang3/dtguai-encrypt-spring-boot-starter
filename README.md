@@ -94,7 +94,7 @@ value 默认为 DecryptBodyMethod.AES; long 默认为0不限制超时时间
     <dependency>
         <groupId>com.dtguai</groupId>
         <artifactId>dtguai-encrypt-spring-boot-starter</artifactId>
-        <version>1.0.8</version>
+        <version>1.0.9</version>
     </dependency>
 ```
 
@@ -189,6 +189,13 @@ dtguai:
     #result-name: cxbn
   sign:
     key: qyxVsFzp
+    #自定义数字证书 过滤值 默认为"token","sign","dataSecret"
+#   ignore:
+#     - token
+#     - sign
+#     - dataSecret
+#     - name
+#     - klr
 ```
 
 - 只需要对控制器响应体进行数字签名验证
