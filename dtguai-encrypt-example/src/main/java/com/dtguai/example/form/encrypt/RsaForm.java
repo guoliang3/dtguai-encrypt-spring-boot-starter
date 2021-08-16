@@ -1,4 +1,4 @@
-package com.dtguai.example.api.form.encrypt;
+package com.dtguai.example.form.encrypt;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

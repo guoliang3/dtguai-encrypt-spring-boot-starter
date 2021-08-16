@@ -4,7 +4,7 @@ package com.dtguai.example.controller.encrypt;
 import com.alibaba.fastjson.JSON;
 import com.dtguai.encrypt.annotation.Sign;
 import com.dtguai.encrypt.config.SignConfig;
-import com.dtguai.example.api.form.encrypt.SignForm;
+import com.dtguai.example.form.encrypt.SignForm;
 import com.dtguai.example.model.User;
 import com.dtguai.example.response.ApiResponse;
 import io.swagger.annotations.Api;

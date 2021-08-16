@@ -5,7 +5,7 @@ import com.dtguai.encrypt.annotation.decrypt.DecryptBody;
 import com.dtguai.encrypt.annotation.encrypt.EncryptBody;
 import com.dtguai.encrypt.enums.DecryptBodyMethod;
 import com.dtguai.encrypt.enums.EncryptBodyMethod;
-import com.dtguai.example.api.form.encrypt.DesForm;
+import com.dtguai.example.form.encrypt.DesForm;
 import com.dtguai.example.model.User;
 import com.dtguai.example.response.ApiResponse;
 import io.swagger.annotations.Api;

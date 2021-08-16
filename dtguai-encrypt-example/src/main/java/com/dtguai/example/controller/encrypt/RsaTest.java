@@ -8,7 +8,7 @@ import com.dtguai.encrypt.config.EncryptBodyConfig;
 import com.dtguai.encrypt.enums.DecryptBodyMethod;
 import com.dtguai.encrypt.enums.EncryptBodyMethod;
 import com.dtguai.encrypt.util.security.rsa.RsaUtil;
-import com.dtguai.example.api.form.encrypt.RsaForm;
+import com.dtguai.example.form.encrypt.RsaForm;
 import com.dtguai.example.model.User;
 import com.dtguai.example.response.ApiResponse;
 import io.swagger.annotations.Api;
