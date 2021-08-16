@@ -10,6 +10,7 @@ import com.dtguai.example.form.encrypt.Sm2Form;
 import com.dtguai.example.form.encrypt.Sm4Form;
 import com.dtguai.example.model.User;
 import com.dtguai.example.response.ApiResponse;
+import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -35,6 +36,7 @@ public class SmTest {
      * @return ApiResponse
      */
     @ApiOperation(value = "sm2加密", notes = "使用sm2给测试数据加密")
+    @ApiOperationSupport(order = 1)
     @PostMapping(value = "/sm2/data")
     @EncryptBody(value = EncryptBodyMethod.SM2)
     @ApiImplicitParam(name = "json", value = "json测试数据", defaultValue = "{ " +
@@ -42,10 +44,10 @@ public class SmTest {
             " \"id\": 0," +
             " \"imei\": \"11111\"," +
             " \"mobile\": \"13811889989\"," +
-            " \"name\": \"克隆人rsa\"," +
+            " \"name\": \"克隆人sm2\"," +
             " \"password\": \"123456\"," +
             " \"type\": 0," +
-            " \"timestamp\":\"1628823973123\"" +
+            " \"timestamp\":\"1628823973123\"" +",\"user\":{\"name\":\"克隆人跑火车\"}" +
             " }")
     public ApiResponse<String> sm2Data(String json) {
         log.info("sm2-测试数据加密,原始数据:{}", json);
@@ -59,6 +61,7 @@ public class SmTest {
      * @param form 测试表单
      * @return ApiResponse
      */
+    @ApiOperationSupport(order = 2)
     @ApiOperation(value = "sm2解密", notes = "sm2解密")
     @PostMapping(value = "/sm2", produces = "application/json;charset=UTF-8")
     @DecryptBody(value = DecryptBodyMethod.SM2)
@@ -73,6 +76,7 @@ public class SmTest {
      *
      * @return ApiResponse
      */
+    @ApiOperationSupport(order = 3)
     @ApiOperation(value = "sm3加密", notes = "sm3加密")
     @GetMapping(value = "/sm3", produces = "application/json;charset=UTF-8")
     @EncryptBody(value = EncryptBodyMethod.SM3)
@@ -91,6 +95,7 @@ public class SmTest {
      * @param json 测试数据
      * @return ApiResponse
      */
+    @ApiOperationSupport(order = 4)
     @ApiOperation(value = "sm4加密", notes = "使用sm4给测试数据加密")
     @PostMapping(value = "/sm4/data")
     @EncryptBody(value = EncryptBodyMethod.SM4)
@@ -115,6 +120,7 @@ public class SmTest {
      * @param form 测试表单
      * @return ApiResponse
      */
+    @ApiOperationSupport(order = 5)
     @ApiOperation(value = "sm4解密", notes = "sm4解密")
     @PostMapping(value = "/sm4", produces = "application/json;charset=UTF-8")
     @DecryptBody(value = DecryptBodyMethod.SM4)
