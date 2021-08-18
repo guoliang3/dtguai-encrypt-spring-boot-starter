@@ -70,7 +70,7 @@ public class InitKey {
         //甲方私钥
         RSAPrivateKey privateKey = (RSAPrivateKey) keyPair.getPrivate();
         //将密钥存储在map中
-        Map<String, Object> keyMap = new HashMap<>(2);
+        Map<String, Object> keyMap = new HashMap<>(4);
         keyMap.put(PUBLIC_KEY, publicKey);
         keyMap.put(PRIVATE_KEY, privateKey);
         return keyMap;

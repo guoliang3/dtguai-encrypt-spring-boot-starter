@@ -7,6 +7,7 @@ import com.dtguai.encrypt.annotation.encrypt.EncryptBody;
 import com.dtguai.encrypt.config.EncryptBodyConfig;
 import com.dtguai.encrypt.enums.DecryptBodyMethod;
 import com.dtguai.encrypt.enums.EncryptBodyMethod;
+import com.dtguai.encrypt.util.security.rsa.InitKey;
 import com.dtguai.encrypt.util.security.rsa.RsaUtil;
 import com.dtguai.example.form.encrypt.RsaForm;
 import com.dtguai.example.model.User;
@@ -23,6 +24,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 描述
@@ -38,6 +41,8 @@ import java.util.Date;
 public class RsaTest {
 
     private final EncryptBodyConfig config;
+
+    private final InitKey initKey;
 
     /**
      * rsa私钥解密+rsa私钥加密
@@ -131,4 +136,22 @@ public class RsaTest {
         return new ApiResponse<>(json);
     }
 
+
+    @ApiOperation(value = "初始化公私钥", notes = "rsa初始化公私钥")
+    @PostMapping(value = "/rsa/key", produces = "application/json;charset=UTF-8")
+    public ApiResponse<Map<String, Object>> rsaKey() {
+        Map<String, Object> keyMap = initKey.initKey();
+        //公钥
+        String publicKey = Base64.encodeBase64String(InitKey.getPublicKey(keyMap));
+        //私钥
+        String privateKey = Base64.encodeBase64String(InitKey.getPrivateKey(keyMap));
+
+        log.warn("公钥：{}" + publicKey);
+        log.warn("私钥：{}" + privateKey);
+
+        keyMap = new HashMap<>(4);
+        keyMap.put("公钥", publicKey);
+        keyMap.put("私钥", privateKey);
+        return new ApiResponse<>(keyMap);
+    }
 }
