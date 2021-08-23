@@ -32,9 +32,6 @@ import java.util.Map;
 public class RsaEncryptTest {
 
     @Autowired
-    private InitKey initKey;
-
-    @Autowired
     private EncryptBodyConfig config;
 
     public static final String dataJson = "{" +
@@ -53,7 +50,8 @@ public class RsaEncryptTest {
      */
     @Test
     public void rsaKeyInit() {
-        Map<String, Object> keyMap = initKey.initKey();
+        final String key = "xiaoFuLoveXiaoQiu";
+        Map<String, Object> keyMap = InitKey.initKey(key);
         //公钥
         byte[] publicKey = InitKey.getPublicKey(keyMap);
         //私钥

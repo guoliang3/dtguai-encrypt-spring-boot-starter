@@ -42,8 +42,6 @@ public class RsaTest {
 
     private final EncryptBodyConfig config;
 
-    private final InitKey initKey;
-
     /**
      * rsa私钥解密+rsa私钥加密
      *
@@ -139,8 +137,9 @@ public class RsaTest {
 
     @ApiOperation(value = "初始化公私钥", notes = "rsa初始化公私钥")
     @PostMapping(value = "/rsa/key", produces = "application/json;charset=UTF-8")
-    public ApiResponse<Map<String, Object>> rsaKey() {
-        Map<String, Object> keyMap = initKey.initKey();
+    @ApiImplicitParam(name = "key", value = "自定义key初始化rsa公私钥", defaultValue = "xiaoFuLoveXiaoQiu")
+    public ApiResponse<Map<String, Object>> rsaKey(String key) {
+        Map<String, Object> keyMap = InitKey.initKey(key);
         //公钥
         String publicKey = Base64.encodeBase64String(InitKey.getPublicKey(keyMap));
         //私钥

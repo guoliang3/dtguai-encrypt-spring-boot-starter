@@ -97,7 +97,7 @@ value 默认为 DecryptBodyMethod.AES; long 默认为0不限制超时时间
     <dependency>
         <groupId>com.dtguai</groupId>
         <artifactId>dtguai-encrypt-spring-boot-starter</artifactId>
-        <version>1.0.9</version>
+        <version>1.1.0</version>
     </dependency>
 ```
 

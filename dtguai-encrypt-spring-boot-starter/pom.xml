@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.dtguai</groupId>
     <artifactId>dtguai-encrypt-spring-boot-starter</artifactId>
-    <version>1.0.9</version>
+    <version>1.1.0</version>
     <name>dtguai-encrypt-spring-boot-starter</name>
     <url>https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter</url>
 

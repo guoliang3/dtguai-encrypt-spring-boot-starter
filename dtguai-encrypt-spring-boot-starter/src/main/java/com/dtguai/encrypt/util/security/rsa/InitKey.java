@@ -1,10 +1,7 @@
 package com.dtguai.encrypt.util.security.rsa;
 
-import com.dtguai.encrypt.config.EncryptBodyConfig;
 import com.dtguai.encrypt.exception.EncryptDtguaiException;
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
 
 import java.security.*;
 import java.security.interfaces.RSAPrivateKey;
@@ -17,15 +14,10 @@ import java.util.Optional;
  * 初始化rsa key
  *
  * @author guo
- * @date 2021/4/28 11:40
+ * @date 2021年8月23日11:39:42
  */
-@AllArgsConstructor
 @Slf4j
-@Component
 public class InitKey {
-
-
-    private final EncryptBodyConfig config;
 
     /**
      * 公钥
@@ -38,16 +30,11 @@ public class InitKey {
     public static final String PRIVATE_KEY = "pri";
 
     /**
-     * 非对称密钥算法
-     */
-    private static final byte[] DEF_RSA_KEY = "xiaoFuLoveXiaoQiu".getBytes();
-
-    /**
      * 初始化密钥对
      *
      * @return Map 密钥初始化
      */
-    public Map<String, Object> initKey() {
+    public static Map<String, Object> initKey(String rsaKey) {
         //实例化密钥生成器
         KeyPairGenerator keyPairGenerator;
         try {
@@ -58,9 +45,9 @@ public class InitKey {
         }
         //初始化密钥生成器
         SecureRandom secureRandom = new SecureRandom(
-                Optional.ofNullable(config.getRsaKey())
+                Optional.ofNullable(rsaKey)
                         .map(String::getBytes)
-                        .orElse(DEF_RSA_KEY)
+                        .orElseThrow(() -> new EncryptDtguaiException("rsa秘钥初始化失败,rsaKey:"+rsaKey))
         );
         keyPairGenerator.initialize(RsaUtil.KEY_SIZE, secureRandom);
         //生成密钥对
