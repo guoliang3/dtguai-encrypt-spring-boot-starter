@@ -84,11 +84,9 @@ public class DecryptRequestBodyAdvice implements RequestBodyAdvice {
             body = IOUtils.toString((inputMessage.getBody()), config.getEncoding());
             req = JSON.<LinkedHashMap<String, Object>>parseObject(body, LinkedHashMap.class);
 
-            body = (String) Optional.ofNullable(req.get("dataSecret"))
-                    .orElse(null);
+            body = (String) req.get("dataSecret");
 
-            sign = (String) Optional.ofNullable(req.get("sign"))
-                    .orElse(null);
+            sign = (String) req.get("sign");
 
         } catch (Exception e) {
             log.error("无法获取请求正文数据，请检查发送数据体或请求方法是否符合规范", e);

@@ -1,8 +1,11 @@
 package com.dtguai.encrypt.sign;
 
+
 import com.alibaba.fastjson.JSON;
+import com.dtguai.encrypt.annotation.Sign;
 import com.dtguai.encrypt.config.SignConfig;
 import com.dtguai.encrypt.exception.SignDtguaiException;
+import com.dtguai.encrypt.util.CheckUtils;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -23,7 +26,7 @@ import java.util.TreeMap;
  * 系统日志，切面处理类
  *
  * @author guo
- * @date 2021年3月12日13:41:04
+ * @date 2022年4月19日18:23:48
  */
 @Aspect
 @Component
@@ -43,8 +46,8 @@ public class SignAspect {
     public static final String SIGN_HEADER = "sign";
     public static final String DATA_SECRET_HEADER = "dataSecret";
 
-    @Around("signPointCut()")
-    public Object around(ProceedingJoinPoint point) throws Throwable {
+    @Around("signPointCut()&&@annotation(sign)")
+    public Object around(ProceedingJoinPoint point, Sign sign) throws Throwable {
 
         //请求的参数
         Object[] args = point.getArgs();
@@ -60,8 +63,10 @@ public class SignAspect {
 
         log.info("sign的TreeMap默认key升序排序timestamp:{} ---- json:{}", timestamp, JSON.toJSONString(reqm));
 
-        Optional.of(reqm)
-                .ifPresent(this::validSign);
+        String key = CheckUtils.checkAndGetKey(signConfig.getKey(), sign.key(), "sign验签key不能为空");
+
+        validSign(reqm, key);
+
         //执行方法
         return point.proceed();
     }
@@ -71,7 +76,7 @@ public class SignAspect {
      *
      * @param reqm 数据map
      */
-    private void validSign(Map<String, Object> reqm) {
+    private void validSign(Map<String, Object> reqm, String key) {
         String md5Sign;
         String sign;
         StringBuilder paramBuilder = new StringBuilder();
@@ -86,11 +91,12 @@ public class SignAspect {
             // 校验 Sign
             reqm.forEach((k, v) -> {
                 List<String> ignore = signConfig.getIgnore();
-                if(v != null && !ignore.contains(k)){
+                if (v != null && !ignore.contains(k)) {
                     paramBuilder.append(k).append("=").append(v).append("&");
                 }
             });
-            String dataSing = paramBuilder.append("signKey=").append(signConfig.getKey()).toString();
+
+            String dataSing = paramBuilder.append("signKey=").append(key).toString();
             log.info("sing之前的拼装数据:{}", dataSing);
             md5Sign = DigestUtils.md5Hex(dataSing);
         } catch (Exception e) {

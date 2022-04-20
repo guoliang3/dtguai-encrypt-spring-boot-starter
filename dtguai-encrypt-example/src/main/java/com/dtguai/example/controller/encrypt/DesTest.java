@@ -1,6 +1,7 @@
 package com.dtguai.example.controller.encrypt;
 
 import com.alibaba.fastjson.JSON;
+import com.dtguai.encrypt.annotation.SignOut;
 import com.dtguai.encrypt.annotation.decrypt.DecryptBody;
 import com.dtguai.encrypt.annotation.encrypt.EncryptBody;
 import com.dtguai.encrypt.enums.DecryptBodyMethod;
@@ -51,6 +52,7 @@ public class DesTest {
                 .mobile("13811788899")
                 .build());
     }
+
 
     /**
      * des加密解密

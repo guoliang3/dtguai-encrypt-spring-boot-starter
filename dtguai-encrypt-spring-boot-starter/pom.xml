@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.dtguai</groupId>
     <artifactId>dtguai-encrypt-spring-boot-starter</artifactId>
-    <version>1.1.0</version>
+    <version>1.1.1</version>
     <name>dtguai-encrypt-spring-boot-starter</name>
     <url>https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter</url>
 
@@ -33,7 +33,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.5.3</version>
+        <version>2.6.6</version>
     </parent>
 
     <properties>
@@ -67,13 +67,13 @@
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-crypto</artifactId>
-            <version>5.7.7</version>
+            <version>5.8.0.M3</version>
         </dependency>
 
         <dependency>
             <groupId>org.bouncycastle</groupId>
             <artifactId>bcprov-jdk15on</artifactId>
-            <version>1.69</version>
+            <version>1.70</version>
         </dependency>
 
         <dependency>
@@ -91,7 +91,7 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>1.2.76</version>
+            <version>1.2.80</version>
         </dependency>
 
         <dependency>

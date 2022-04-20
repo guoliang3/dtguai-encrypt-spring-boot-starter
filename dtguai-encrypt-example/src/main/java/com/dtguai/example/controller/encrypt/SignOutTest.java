@@ -3,6 +3,7 @@ package com.dtguai.example.controller.encrypt;
 
 import com.alibaba.fastjson.JSON;
 import com.dtguai.encrypt.annotation.Sign;
+import com.dtguai.encrypt.annotation.SignOut;
 import com.dtguai.encrypt.config.SignConfig;
 import com.dtguai.example.form.encrypt.SignForm;
 import com.dtguai.example.model.User;
@@ -18,37 +19,46 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
 /**
- * 验签
+ * 数据加签
  *
  * @author guo
- * @date 2021/3/15 20:07
+ * @date 2022年4月20日10:52:58
  */
 @RestController
 @RequestMapping("/test")
-@Api(value = "sign", tags = {"sign"})
+@Api(value = "signOut", tags = {"signOut"})
 @Slf4j
 @AllArgsConstructor
-public class SignTest {
+public class SignOutTest {
 
     private final SignConfig signConfig;
 
     /**
-     * 验签
+     * 加签
      *
-     * @param form 表单
+     * @param form 加密对象
      * @return ApiResponse
      */
-    @ApiOperation(value = "sign数字证书", notes = "sign数字证书")
-    @PostMapping(value = "/sign")
+    @ApiOperation(value = "signOut加签", notes = "signOut加签")
+    @PostMapping(value = "/signOut")
     @Sign
-    public ApiResponse<User> sign(@RequestBody SignForm form) {
+    @SignOut
+    public ApiResponse<User> signOut(@RequestBody SignForm form) {
         log.info("sign数据:{}", JSON.toJSONString(form));
-        return new ApiResponse<>(new User());
+        return new ApiResponse<>(User
+                .builder()
+                .name("克隆人-cx")
+                .password("123456")
+                .mobile("13800138000")
+                .imei("123456789")
+                .createTime(new Date())
+                .build());
     }
 
     /**
@@ -61,7 +71,7 @@ public class SignTest {
      * @return ApiResponse
      */
     @ApiOperation(value = "生成数字证书", notes = "通过测试数据生成sign数字证书")
-    @PostMapping(value = "/sign/data")
+    @PostMapping(value = "/signOut/data")
     @ApiImplicitParam(name = "json", value = "json测试数据", defaultValue = "{ " +
             " \"createTime\": \"2021-08-13 09:47:49\", " +
             " \"id\": 0," +
@@ -71,7 +81,7 @@ public class SignTest {
             " \"password\": \"123456\"," +
             " \"timestamp\":\"1628823973123\"" +
             " }")
-    public ApiResponse<String> signData(String json) {
+    public ApiResponse<String> signOutData(String json) {
 
         log.info("json数据为:{}", json);
 

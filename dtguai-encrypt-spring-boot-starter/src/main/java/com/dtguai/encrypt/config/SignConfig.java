@@ -29,4 +29,8 @@ public class SignConfig {
      */
     private List<String> ignore = Arrays.asList(SignAspect.TOKEN_HEADER, SignAspect.SIGN_HEADER, SignAspect.DATA_SECRET_HEADER);
 
+    /**
+     * 所需要加签的数据对象key
+     */
+    private String resultName = "result";
 }

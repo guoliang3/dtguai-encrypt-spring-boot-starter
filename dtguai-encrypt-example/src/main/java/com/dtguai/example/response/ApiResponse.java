@@ -27,9 +27,11 @@ public class ApiResponse<T> {
     @ApiModelProperty(value = "返回时间")
     private String timestamp;
 
+    @ApiModelProperty(value = "数字加签")
+    private String sign;
+
     @ApiModelProperty(value = "返回数据")
     @JsonInclude(Include.NON_NULL)
-    //@JSONField(jsonDirect=true)
     private T result;
 
     public ApiResponse(T t) {
