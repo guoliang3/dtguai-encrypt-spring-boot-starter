@@ -18,7 +18,7 @@ import java.util.Date;
 @EqualsAndHashCode(callSuper = false)
 public class SignForm {
 
-    @ApiModelProperty(value = "创建时间", example = "2021-08-13 09:47:49")
+    @ApiModelProperty(value = "创建时间", dataType = "Date", example = "2021-08-13 09:47:49")
     private Date createTime;
 
     @ApiModelProperty(value = "id", example = "0")

@@ -1,6 +1,7 @@
 package com.dtguai.example.controller.encrypt;
 
 
+import cn.hutool.core.thread.ThreadException;
 import com.alibaba.fastjson.JSON;
 import com.dtguai.encrypt.annotation.Sign;
 import com.dtguai.encrypt.annotation.SignOut;
@@ -23,6 +24,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 数据加签
@@ -50,7 +55,9 @@ public class SignOutTest {
     @Sign
     @SignOut
     public ApiResponse<User> signOut(@RequestBody SignForm form) {
+
         log.info("sign数据:{}", JSON.toJSONString(form));
+
         return new ApiResponse<>(User
                 .builder()
                 .name("克隆人-cx")
