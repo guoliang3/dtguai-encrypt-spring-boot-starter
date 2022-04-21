@@ -1,5 +1,6 @@
 package com.dtguai.example.form.encrypt;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -18,8 +19,8 @@ import java.util.Date;
 @EqualsAndHashCode(callSuper = false)
 public class SignForm {
 
-    @ApiModelProperty(value = "创建时间", dataType = "Date", example = "2021-08-13 09:47:49")
-    private Date createTime;
+    @ApiModelProperty(value = "创建时间", dataType = "String", example = "2021-08-13 09:47:49")
+    private String createTime;
 
     @ApiModelProperty(value = "id", example = "0")
     private int id;

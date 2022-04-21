@@ -8,7 +8,12 @@ spring:
   mvc:
     throw-exception-if-no-handler-found: true
     static-path-pattern: /static/**
-
+    pathmatch:
+#      恢复Springfox假定将使用的配置。
+#      请注意，只有在不使用Spring Boot的执行器时，此功能才起作用。
+#      无论配置的匹配策略如何，执行器始终使用基于路径模式的解析。
+#      如果您想在Spring Boot 2.6及更高版本中将其与执行器一起使用，则需要对Springfox进行更改。
+      matching-strategy: ant_path_matcher
 server:
   tomcat:
     uri-encoding: UTF-8

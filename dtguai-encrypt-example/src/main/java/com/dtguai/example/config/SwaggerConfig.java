@@ -1,9 +1,8 @@
 package com.dtguai.example.config;
 
 import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
+import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
@@ -21,10 +20,9 @@ import java.util.Collections;
  * @author guo
  * @date 2021年8月10日10:13:19
  */
-@Configuration
-@EnableSwagger2
 @EnableKnife4j
-@EnableWebMvc
+@SpringBootConfiguration
+@EnableSwagger2
 public class SwaggerConfig implements WebMvcConfigurer {
 
     @Bean
