@@ -3,24 +3,19 @@ package com.dtguai.example.controller.encrypt;
 
 import com.alibaba.fastjson.JSON;
 import com.dtguai.encrypt.annotation.Sign;
-import com.dtguai.encrypt.config.SignConfig;
 import com.dtguai.example.form.encrypt.SignForm;
 import com.dtguai.example.model.User;
 import com.dtguai.example.response.ApiResponse;
+import com.dtguai.example.service.ISignService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 
 /**
  * 验签
@@ -35,7 +30,7 @@ import java.util.TreeMap;
 @AllArgsConstructor
 public class SignTest {
 
-    private final SignConfig signConfig;
+    private final ISignService signService;
 
     /**
      * 验签
@@ -72,28 +67,7 @@ public class SignTest {
             " \"timestamp\":\"1628823973123\"" +
             " }")
     public ApiResponse<String> signData(String json) {
-
-        log.info("json数据为:{}", json);
-
-        Map<String, Object> my = JSON.<Map<String, Object>>parseObject(json, TreeMap.class);
-        String newDataJson = JSON.toJSONString(my);
-        log.info("1.将json转换为TreeMap,进行重新排序(按key的顺序排)的json:{}", newDataJson);
-
-        StringBuilder paramBuilder = new StringBuilder();
-        my.forEach((k, v) -> {
-            List<String> ignore = signConfig.getIgnore();
-            if (v != null && !ignore.contains(k)) {
-                paramBuilder.append(k).append("=").append(v).append("&");
-            }
-        });
-        log.warn("2.循环map拼接数据串把token和sign剔除:{}", paramBuilder);
-
-        String signData = paramBuilder.append("signKey=").append(signConfig.getKey()).toString();
-        log.warn("3.顺序拼好后加入sign-key,完整signData:{}", signData);
-
-        String md5Sign = DigestUtils.md5Hex(signData);
-        log.warn("4.signStr-md5加密:{}", md5Sign);
-        return new ApiResponse<>(md5Sign);
+        return new ApiResponse<>(signService.getSign(json));
     }
 
 

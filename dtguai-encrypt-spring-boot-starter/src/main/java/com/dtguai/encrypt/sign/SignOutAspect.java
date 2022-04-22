@@ -55,7 +55,7 @@ public class SignOutAspect {
 
         //获取返回类型->转换成map
         Map<String, Object> repMap = Optional.of(result)
-                .map(JSON::toJSONString)
+                .map(x -> JSON.toJSONStringWithDateFormat(x, "yyyy-MM-dd HH:mm:ss"))
                 .map(x -> {
                     try {
                         return JSON.<Map<String, Object>>parseObject(x, Map.class);
@@ -98,6 +98,7 @@ public class SignOutAspect {
                 paramBuilder.append(k).append("=").append(v).append("&")
         );
         String signData = paramBuilder.append("signKey=").append(signConfig.getKey()).toString();
+        log.info("signOut加签数据:{}", signData);
         return DigestUtils.md5Hex(signData);
     }
 
