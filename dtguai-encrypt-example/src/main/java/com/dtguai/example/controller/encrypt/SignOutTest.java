@@ -1,7 +1,6 @@
 package com.dtguai.example.controller.encrypt;
 
 
-import cn.hutool.core.thread.ThreadException;
 import com.alibaba.fastjson.JSON;
 import com.dtguai.encrypt.annotation.Sign;
 import com.dtguai.encrypt.annotation.SignOut;
@@ -24,10 +23,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 
 /**
  * 数据加签
@@ -78,8 +73,8 @@ public class SignOutTest {
      * @return ApiResponse
      */
     @ApiOperation(value = "生成数字证书", notes = "通过测试数据生成sign数字证书")
-    @PostMapping(value = "/signOut/data")
-    @ApiImplicitParam(name = "json", value = "json测试数据", defaultValue = "{ " +
+    @PostMapping(value = "/signOut/data", produces = "application/json;charset=UTF-8")
+    @ApiImplicitParam(name = "json", value = "json测试数据", dataTypeClass = String.class, defaultValue = "{ " +
             " \"createTime\": \"2021-08-13 09:47:49\", " +
             " \"id\": 0," +
             " \"imei\": \"11111\"," +
