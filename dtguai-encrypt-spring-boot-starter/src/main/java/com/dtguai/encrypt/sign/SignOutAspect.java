@@ -60,7 +60,7 @@ public class SignOutAspect {
                     try {
                         return JSON.<Map<String, Object>>parseObject(x, Map.class);
                     } catch (JSONException e) {
-                        log.error("sing加签json转map败请检查返回参数:{},fastjson转换后的json:{}", result,x);
+                        log.error("sing加签json转map败请检查返回参数:{},fastjson转换后的json:{}", result, x);
                         throw new SignDtguaiException("sing加签json转map败请检查返回参数:" + result);
                     }
                 })
@@ -70,7 +70,7 @@ public class SignOutAspect {
         //返回对象添加时间戳以便验证sing(验签) 参数:必须
         repMap.put("timestamp", timestamp);
 
-        //获取加签对象key
+        //获取返回对象需要->加签对象的key
         String dataName = CheckUtils.checkAndGetKey(signConfig.getResultName(), signOut.resultName(), "sign返回加签");
 
         TreeMap<String, Object> nm = Optional.of(repMap)
@@ -82,7 +82,7 @@ public class SignOutAspect {
         //添加时间戳避免加签相同
         nm.put("timestamp", timestamp);
         //添加签名
-        repMap.put("sign", sign(nm));
+        repMap.put("sign", sign(nm, signOut));
 
         return parse(JSON.toJSONString(repMap), returnType);
     }
@@ -92,12 +92,13 @@ public class SignOutAspect {
      *
      * @param repm 数据map
      */
-    private String sign(Map<String, Object> repm) {
+    private String sign(Map<String, Object> repm, SignOut signOut) {
         StringBuilder paramBuilder = new StringBuilder();
         repm.forEach((k, v) ->
                 paramBuilder.append(k).append("=").append(v).append("&")
         );
-        String signData = paramBuilder.append("signKey=").append(signConfig.getKey()).toString();
+        String key = CheckUtils.checkAndGetKey(signConfig.getKey(), signOut.key(), "signOut加签key不能为空");
+        String signData = paramBuilder.append("signKey=").append(key).toString();
         log.info("signOut加签数据:{}", signData);
         return DigestUtils.md5Hex(signData);
     }

@@ -11,13 +11,9 @@ SpringBoot 通过注解实现数据加密与解密,
 支持多种加密方式(MD5/SHA/AES/DES/RSA)及国密算法(SM2/SM3/SM4),  
 加密解密,注解,springboot,java,加密,解密,数字证书,国密,加签,验签,等全套服务
 
+## \- [dtguai-encrypt-spring-boot-starter示例](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/tree/master/dtguai-encrypt-example)
 
-## springboot 使用demo
 
-<a href="https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/tree/master/dtguai-encrypt-example">
-  demo 示例
- dtguai-encrypt-example
-</a> 
 
 ## 加密/解密支持
 
@@ -39,19 +35,19 @@ SpringBoot 通过注解实现数据加密与解密,
         - [x] SM3
     -
         - [x] SM4
-      
+
 - 可进行解密的方式有：
-  -
-    -
+
+  - 
       - [x] AES
-    -
-        - [x] DES
-    -
-        - [x] RSA
-    -
-        - [x] SM2
-    -
-        - [x] SM4
+  - 
+      - [x] DES
+  - 
+      - [x] RSA
+  - 
+      - [x] SM2
+  - 
+      - [x] SM4
 
 ## 开放标签
 
@@ -80,6 +76,58 @@ SpringBoot 通过注解实现数据加密与解密,
 ##### @EncryptBody(value = EncryptBodyMethod.MD5)
 
 默认为AES
+
+
+
+## 快速开始
+
+
+
+### 加密
+
+#### MD5
+
+#### SHA-224 / 256 / 384 / 512
+
+#### AES
+
+#### DES
+
+#### RSA
+
+#### 国密
+
+##### SM2
+
+##### SM3
+
+##### SM4
+
+### 解密
+
+#### AES
+
+#### DES
+
+#### RSA
+
+#### 国密
+
+##### SM2
+
+##### SM4
+
+
+
+### 数字证书
+
+#### 验签
+
+
+
+#### 加签
+
+
 
 ### 标签主要参数介绍
 
@@ -258,7 +306,7 @@ private String desCipherAlgorithm="DES/ECB/PKCS5Padding";
   更新日志
   </a>
 
----------------------------------------------------------------   
+---------------------------------------------------------------
 
 - 算法分类
   <a href="https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E7%AE%97%E6%B3%95%E5%88%86%E7%B1%BB%20?sort_id=4355085">

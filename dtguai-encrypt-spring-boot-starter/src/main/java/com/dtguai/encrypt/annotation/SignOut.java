@@ -7,7 +7,7 @@ import java.lang.annotation.*;
  * 数字证书输出加签
  *
  * @author guo
- * @date 2022年4月15日16:23:23
+ * @date 2022年4月24日09:43:30
  * @version 1.1.1
  */
 @Target(ElementType.METHOD)
@@ -19,5 +19,10 @@ public @interface SignOut {
      * 所需要加签的数据对象key
      */
     String resultName() default "";
+
+    /**
+     * 加签自定义key
+     */
+    String key() default "";
 
 }

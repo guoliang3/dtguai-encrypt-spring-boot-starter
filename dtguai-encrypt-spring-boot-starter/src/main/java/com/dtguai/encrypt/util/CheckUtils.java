@@ -26,8 +26,8 @@ public class CheckUtils {
      */
     public static String checkAndGetKey(String k1, String k2, String keyName) {
         if (!StringUtils.hasText(k1) && !StringUtils.hasText(k2)) {
-            log.error("{} is not configured (未配置{})", keyName, keyName);
-            throw new EncryptDtguaiException(String.format("%s is not configured (未配置%s)", keyName, keyName));
+            log.error("{} 未配置,k1:{},k2:{}", keyName,k1,k2);
+            throw new EncryptDtguaiException(String.format("%s未配置,k1:%s,k2:%s", keyName, k1, k2));
         }
         return StringUtils.hasText(k2) ? k2 : k1;
     }

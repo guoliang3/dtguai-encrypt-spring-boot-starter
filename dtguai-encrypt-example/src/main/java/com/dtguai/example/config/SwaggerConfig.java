@@ -45,8 +45,8 @@ public class SwaggerConfig implements WebMvcConfigurer {
      */
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("dtguai-encrypt-demo")
-                .description("dtguai-encrypt-demo")
+                .title("dtguai-encrypt-example")
+                .description("dtguai-encrypt-example")
                 .termsOfServiceUrl("/monitoring")
                 .license("Apache License Version 2.0")
                 .licenseUrl("https://github.com/springfox/springfox/blob/master/LICENSE")
