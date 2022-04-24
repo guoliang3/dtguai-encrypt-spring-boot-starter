@@ -1,8 +1,6 @@
 # dtguai-encrypt-spring-boot-starter
 
-<a href="http://spring.io/projects/spring-boot">
-            <img src="https://img.shields.io/badge/spring--boot-2.6.6-green.svg" alt="spring-boot">
-</a>     
+[![AUR](https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg)](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/blob/master/LICENSE)[![](https://img.shields.io/badge/version-1.1.1-brightgreen.svg)](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter)[![](https://img.shields.io/badge/spring--boot-2.6.6-green.svg)](http://spring.io/projects/spring-boot)
 
 # 介绍
 
@@ -11,14 +9,14 @@ SpringBoot 通过注解实现数据加密与解密,
 支持多种加密方式(MD5/SHA/AES/DES/RSA)及国密算法(SM2/SM3/SM4),  
 加密解密,注解,springboot,java,加密,解密,数字证书,国密,加签,验签,等全套服务
 
-## \- [dtguai-encrypt-spring-boot-starter示例](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/tree/master/dtguai-encrypt-example)
+##  [dtguai-encrypt-spring-boot-starter示例](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/tree/master/dtguai-encrypt-example)
 
 
 
 ## 加密/解密支持
 
 - 可进行加密的方式有：
-  -
+
     -
         - [x] MD5
     -
@@ -38,16 +36,16 @@ SpringBoot 通过注解实现数据加密与解密,
 
 - 可进行解密的方式有：
 
-  - 
-      - [x] AES
-  - 
-      - [x] DES
-  - 
-      - [x] RSA
-  - 
-      - [x] SM2
-  - 
-      - [x] SM4
+    -
+        - [x] AES
+    -
+        - [x] DES
+    -
+        - [x] RSA
+    -
+        - [x] SM2
+    -
+        - [x] SM4
 
 ## 开放标签
 
