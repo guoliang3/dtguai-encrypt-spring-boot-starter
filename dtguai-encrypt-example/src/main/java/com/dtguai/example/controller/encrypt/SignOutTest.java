@@ -56,7 +56,7 @@ public class SignOutTest {
     }
 
     /**
-     * sign 数字签名
+     * sign 数字签名 静态
      * 注意时间问题
      * createTime 2022-04-22 14:41:20
      * JSON.toJSONStringWithDateFormat(x, "yyyy-MM-dd HH:mm:ss")
@@ -65,7 +65,7 @@ public class SignOutTest {
      * @param json 测试数据
      * @return ApiResponse
      */
-    @ApiOperation(value = "生成数字证书", notes = "通过测试数据生成sign数字证书")
+    @ApiOperation(value = "静态-生成数字证书", notes = "静态-生成sign数字证书")
     @PostMapping(value = "/signOut/data", produces = "application/json;charset=UTF-8")
     @ApiImplicitParam(name = "json", value = "json测试数据", dataTypeClass = String.class, defaultValue = "{ " +
             " \"createTime\": \"2022-04-22 14:41:20\", " +
@@ -79,5 +79,27 @@ public class SignOutTest {
         return new ApiResponse<>(signService.getSign(json));
     }
 
+
+    /**
+     * sign 加签->动态timestamp
+     * 每次会覆盖timestamp 请注意
+     *
+     * @param json 测试数据
+     * @return ApiResponse
+     */
+    @ApiOperation(value = "动态加签", notes = "动态加签")
+    @PostMapping(value = "/signOut/dynamic", produces = "application/json;charset=UTF-8")
+    @ApiImplicitParam(name = "json", value = "json测试数据", dataTypeClass = String.class, defaultValue = "{ " +
+            " \"createTime\": \"2022-04-22 14:41:20\", " +
+            " \"type\": 1," +
+            " \"imei\": \"123456789\"," +
+            " \"mobile\": \"13800138000\"," +
+            " \"name\": \"克隆人cx911\"," +
+            " \"timestamp\":\"1628823973123\"" +
+            " }")
+    @SignOut
+    public ApiResponse<String> dynamic(String json) {
+        return new ApiResponse<>(json);
+    }
 
 }

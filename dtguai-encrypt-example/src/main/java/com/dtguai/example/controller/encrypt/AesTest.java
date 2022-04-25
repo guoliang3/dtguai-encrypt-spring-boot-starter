@@ -24,7 +24,8 @@ import java.util.Date;
  * 描述
  *
  * @author guo
- * @date 2021/3/15 20:07
+ * @date 2022年4月24日18:14:07
+ * @version 1.1.1
  */
 @RestController
 @RequestMapping("/test")
@@ -33,7 +34,7 @@ import java.util.Date;
 public class AesTest {
 
     /**
-     * aes加密解密
+     * aes解密
      *
      * @param form 加密对象
      * @return ApiResponse
@@ -41,7 +42,6 @@ public class AesTest {
     @ApiOperation(value = "aes加密解密", notes = "aes加密解密")
     @PostMapping(value = "/aes")
     @DecryptBody(value = DecryptBodyMethod.AES)
-    @EncryptBody(value = EncryptBodyMethod.AES)
     public ApiResponse<User> aes(@RequestBody AesForm form) {
         log.info("aes解密数据:{}", JSON.toJSONString(form));
         return new ApiResponse<>(User.builder()
@@ -62,7 +62,7 @@ public class AesTest {
     @ApiOperation(value = "aes测试数据加密", notes = "使用aes给测试数据加密")
     @PostMapping(value = "/aes/data")
     @EncryptBody(value = EncryptBodyMethod.AES)
-    @ApiImplicitParam(name = "json", value = "json测试数据", defaultValue = "{ " +
+    @ApiImplicitParam(name = "json", value = "json测试数据", dataTypeClass = String.class, defaultValue = "{ " +
             " \"createTime\": \"2021-08-13 09:47:49\", " +
             " \"id\": 0," +
             " \"imei\": \"11111\"," +
