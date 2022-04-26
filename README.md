@@ -55,7 +55,7 @@ SpringBoot 通过注解实现数据加密与解密,
 
 #### 注:开发使用的版本为 jdk8+
 
-```yaml
+```xml
     <properties>
     	<java.version>8</java.version>
     </properties>
