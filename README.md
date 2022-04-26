@@ -1,6 +1,6 @@
 # dtguai-encrypt-spring-boot-starter
 
-[![AUR](https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg)](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/blob/master/LICENSE)[![](https://img.shields.io/badge/version-1.1.1-brightgreen.svg)](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter)[![](https://img.shields.io/badge/spring--boot-2.6.6-green.svg)](http://spring.io/projects/spring-boot)
+[![AUR](https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg)](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/blob/master/LICENSE)  [![](https://img.shields.io/badge/version-1.1.1-brightgreen.svg)](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter)  [![](https://img.shields.io/badge/spring--boot-2.6.6-green.svg)](http://spring.io/projects/spring-boot)
 
 # 介绍
 
@@ -47,34 +47,6 @@ SpringBoot 通过注解实现数据加密与解密,
     -
         - [x] SM4
 
-## 开放标签
-
-##### @DecryptBody(value = DecryptBodyMethod.DES)
-
-##### @EncryptBody(value = EncryptBodyMethod.DES)
-
-##### @DecryptBody(value = DecryptBodyMethod.AES)
-
-##### @EncryptBody(value = EncryptBodyMethod.AES)
-
-##### @DecryptBody(value = DecryptBodyMethod.RSA)
-
-##### @EncryptBody(value = EncryptBodyMethod.RSA)
-
-##### @DecryptBody(value = DecryptBodyMethod.MS2)
-
-##### @EncryptBody(value = EncryptBodyMethod.SM2)
-
-##### @EncryptBody(value = EncryptBodyMethod.SM3)
-
-##### @DecryptBody(value = DecryptBodyMethod.SM4)
-
-##### @EncryptBody(value = EncryptBodyMethod.SM4)
-
-##### @EncryptBody(value = EncryptBodyMethod.MD5)
-
-默认为AES
-
 
 
 ## 快速开始
@@ -110,108 +82,58 @@ SpringBoot 通过注解实现数据加密与解密,
 - [@EncryptBody(value = EncryptBodyMethod.SHA)](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E5%8A%A0%E5%AF%86/SHA-224,256,384,512)
 
 #### AES
-- [@EncryptBody(value = EncryptBodyMethod.MD5)](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E5%8A%A0%E5%AF%86/MD5)
+- [@EncryptBody(value = EncryptBodyMethod.AES)](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E5%8A%A0%E5%AF%86/AES)
 
 #### DES
-- [@EncryptBody(value = EncryptBodyMethod.MD5)](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E5%8A%A0%E5%AF%86/MD5)
+- [@EncryptBody(value = EncryptBodyMethod.DES)](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E5%8A%A0%E5%AF%86/DES)
 
 #### RSA
-- [@EncryptBody(value = EncryptBodyMethod.MD5)](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E5%8A%A0%E5%AF%86/MD5)
+- [@EncryptBody(value = EncryptBodyMethod.RSA)](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E5%8A%A0%E5%AF%86/RSA)
 
 #### 国密
 
 ##### SM2
-- [@EncryptBody(value = EncryptBodyMethod.MD5)](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E5%8A%A0%E5%AF%86/MD5)
+- [@EncryptBody(value = EncryptBodyMethod.SM2)](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E5%8A%A0%E5%AF%86/%E5%9B%BD%E5%AF%86/SM2)
 
 ##### SM3
-- [@EncryptBody(value = EncryptBodyMethod.MD5)](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E5%8A%A0%E5%AF%86/MD5)
+- [@EncryptBody(value = EncryptBodyMethod.SM3)](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E5%8A%A0%E5%AF%86/%E5%9B%BD%E5%AF%86/SM3)
 
 ##### SM4
-- [@EncryptBody(value = EncryptBodyMethod.MD5)](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E5%8A%A0%E5%AF%86/MD5)
+- [@EncryptBody(value = EncryptBodyMethod.SM4)](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E5%8A%A0%E5%AF%86/%E5%9B%BD%E5%AF%86/SM4)
 
 ### 解密
 
 #### AES
+- [@DecryptBody(value = DecryptBodyMethod.AES)](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E8%A7%A3%E5%AF%86/AES)
 
 #### DES
+- [@DecryptBody(value = DecryptBodyMethod.DES)](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E8%A7%A3%E5%AF%86/DES)
 
 #### RSA
+- [@DecryptBody(value = DecryptBodyMethod.RSA)](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E8%A7%A3%E5%AF%86/RSA)
 
 #### 国密
 
 ##### SM2
+- [@DecryptBody(value = DecryptBodyMethod.SM2)](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E8%A7%A3%E5%AF%86/%E5%9B%BD%E5%AF%86/SM2)
 
 ##### SM4
+- [@DecryptBody(value = DecryptBodyMethod.SM4)](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E8%A7%A3%E5%AF%86/%E5%9B%BD%E5%AF%86/SM4)
 
 
 
 ### 数字证书
 
 #### 验签
-
-
+- [@Sign](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D/%E9%AA%8C%E7%AD%BE/sign)
 
 #### 加签
-
-
+- [@SignOut](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D/%E5%8A%A0%E7%AD%BE/SignOut)
 
 ### 标签主要参数介绍
 
 value 默认为 DecryptBodyMethod.AES; long 默认为0不限制超时时间
 
-
-
-```java
-
-@RestController
-@RequestMapping("/test")
-public class TestController {
-
-    //需要数字证书
-    @Sign
-    //des解密
-    @DecryptBody(value = DecryptBodyMethod.DES)
-    //des输出加密
-    @EncryptBody(value = EncryptBodyMethod.DES)
-    public String api() {
-        return "小邱爱小付";
-    }
-
-}
-```
-
-## 入参对象使用
-
-```java
-    @Sign
-@DecryptBody(value = DecryptBodyMethod.RSA)
-@EncryptBody(value = EncryptBodyMethod.RSA)
-public ApiResponse<?> rsaSign(@RequestBody TestRsaDataSecretForm user){
-
-        }
-
-        需要在原有的入参form添加 sign 和 dataSecret 字段
-        揭秘原理:接到解密数据和sign数据会解密完放到对应对象字段
-
-public class TestRsaDataSecretForm {
-
-    @ApiModelProperty(hidden = true)
-    private String mobile;
-
-    @ApiModelProperty(hidden = true)
-    private String password;
-
-    @ApiModelProperty(hidden = true)
-    private String timestamp;
-
-    @ApiModelProperty(value = "数字签名", example = "")
-    private String sign;
-
-    @NotBlank(message = "加密数据不能为空", groups = {LoginGroup.class})
-    private String dataSecret;
-
-}
-```
 
 ## 加密注意事项
 
@@ -261,21 +183,6 @@ dtguai:
 #     - klr
 ```
 
-- 只需要对控制器响应体进行数字签名验证
-
-```java
-
-@RestController
-@RequestMapping("/test")
-public class TestController {
-
-    @Sign
-    public String api() {
-        return "小邱爱小付";
-    }
-
-}
-```
 
 - 配置文件可配置参数
 
@@ -309,21 +216,21 @@ private String aesCipherAlgorithm="AES/GCM/NoPadding";
 private String desCipherAlgorithm="DES/ECB/PKCS5Padding";
 ```
 
-- 更新日志
+##  更新日志
   <a href="https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E6%9B%B4%E6%96%B0%E8%AE%B0%E5%BD%95?sort_id=4355068">
   更新日志
   </a>
 
----------------------------------------------------------------
 
-- 算法分类
+## 算法说明
+
+### 算法分类
   <a href="https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E7%AE%97%E6%B3%95%E5%88%86%E7%B1%BB%20?sort_id=4355085">
   算法分类
   </a>
 
--------------------------------------------------------------------------------------------------------------------
 
-- 国密算法
+### 国密算法
   <a href="https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E5%9B%BD%E5%AF%86%E7%AE%97%E6%B3%95?sort_id=4355178">
   国密算法
   </a>

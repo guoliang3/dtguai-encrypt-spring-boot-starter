@@ -4,7 +4,6 @@ package com.dtguai.example.controller.encrypt;
 import com.dtguai.encrypt.annotation.SignOut;
 import com.dtguai.example.model.User;
 import com.dtguai.example.response.ApiResponse;
-import com.dtguai.example.service.ISignService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -30,8 +29,6 @@ import java.util.Date;
 @Slf4j
 @AllArgsConstructor
 public class SignOutTest {
-
-    private final ISignService signService;
 
     /**
      * 加签 对输出对象进行加签

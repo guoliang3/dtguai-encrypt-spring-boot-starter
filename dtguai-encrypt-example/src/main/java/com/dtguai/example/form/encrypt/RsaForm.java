@@ -9,10 +9,11 @@ import lombok.EqualsAndHashCode;
  * 登录表单
  *
  * @author guo
- * @date 2019年6月25日15:28:42
+ * @date 2022年4月26日17:41:29
+ * @version 1.1.1
  */
 @Data
-@ApiModel(value = "测试-加密")
+@ApiModel(value = "rsa-form")
 @EqualsAndHashCode(callSuper = false)
 public class RsaForm {
 

@@ -11,7 +11,8 @@ import java.util.Date;
  * 登录表单
  *
  * @author guo
- * @date 2019年6月25日15:28:42
+ * @version 1.1.1
+ * @date 2022年4月26日17:38:20
  */
 @Data
 @ApiModel(value = "测试-des")
@@ -43,14 +44,11 @@ public class DesForm {
      */
     @ApiModelProperty(hidden = true)
     private Integer type;
-
-
     /**
      * imei号
      */
     @ApiModelProperty(hidden = true)
     private String imei;
-
     /**
      * 显示解密后的timestamp,用于展示
      */

@@ -39,7 +39,7 @@ public class SmTest {
     @ApiOperationSupport(order = 1)
     @PostMapping(value = "/sm2/data")
     @EncryptBody(value = EncryptBodyMethod.SM2)
-    @ApiImplicitParam(name = "json", value = "json测试数据", defaultValue = "{ " +
+    @ApiImplicitParam(name = "json", value = "json测试数据", dataTypeClass = String.class, required = true, defaultValue = "{ " +
             " \"createTime\": \"2021-08-13 09:47:49\", " +
             " \"id\": 0," +
             " \"imei\": \"11111\"," +
@@ -47,7 +47,8 @@ public class SmTest {
             " \"name\": \"克隆人sm2\"," +
             " \"password\": \"123456\"," +
             " \"type\": 0," +
-            " \"timestamp\":\"1628823973123\"" +",\"user\":{\"name\":\"克隆人跑火车\"}" +
+            " \"timestamp\":\"1628823973123\""
+            + ",\"user\":{\"name\":\"克隆人跑火车\"}" +
             " }")
     public ApiResponse<String> sm2Data(String json) {
         log.info("sm2-测试数据加密,原始数据:{}", json);
@@ -99,7 +100,7 @@ public class SmTest {
     @ApiOperation(value = "sm4加密", notes = "使用sm4给测试数据加密")
     @PostMapping(value = "/sm4/data")
     @EncryptBody(value = EncryptBodyMethod.SM4)
-    @ApiImplicitParam(name = "json", value = "json测试数据", defaultValue = "{ " +
+    @ApiImplicitParam(name = "json", value = "json测试数据", dataTypeClass = String.class, required = true, defaultValue = "{ " +
             " \"createTime\": \"2021-08-13 09:47:49\", " +
             " \"id\": 0," +
             " \"imei\": \"11111\"," +
@@ -115,7 +116,7 @@ public class SmTest {
     }
 
     /**
-     * sm4
+     * sm4解密
      *
      * @param form 测试表单
      * @return ApiResponse
