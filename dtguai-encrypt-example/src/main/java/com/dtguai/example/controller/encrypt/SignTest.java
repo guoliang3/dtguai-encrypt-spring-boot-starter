@@ -4,7 +4,6 @@ package com.dtguai.example.controller.encrypt;
 import com.alibaba.fastjson.JSON;
 import com.dtguai.encrypt.annotation.Sign;
 import com.dtguai.example.form.encrypt.SignForm;
-import com.dtguai.example.model.User;
 import com.dtguai.example.response.ApiResponse;
 import com.dtguai.example.service.ISignService;
 import io.swagger.annotations.Api;
@@ -41,9 +40,9 @@ public class SignTest {
     @ApiOperation(value = "sign数字证书", notes = "sign数字证书")
     @PostMapping(value = "/sign")
     @Sign
-    public ApiResponse<User> sign(@RequestBody SignForm form) {
-        log.info("sign数据:{}", JSON.toJSONString(form));
-        return new ApiResponse<>(new User());
+    public ApiResponse<String> sign(@RequestBody SignForm form) {
+        log.info("sign数据:{}", JSON.toJSONStringWithDateFormat(form, "yyyy-MM-dd HH:mm:ss"));
+        return new ApiResponse<>("验签成功");
     }
 
     /**
@@ -55,9 +54,9 @@ public class SignTest {
      * @param json 测试数据
      * @return ApiResponse
      */
-    @ApiOperation(value = "生成数字证书", notes = "通过测试数据生成sign数字证书")
+    @ApiOperation(value = "生成数字证书-静态", notes = "timestamp可指定")
     @PostMapping(value = "/sign/data")
-    @ApiImplicitParam(name = "json", value = "json测试数据", defaultValue = "{ " +
+    @ApiImplicitParam(name = "json", value = "json测试数据", dataTypeClass = String.class, required = true, defaultValue = "{ " +
             " \"createTime\": \"2021-08-13 09:47:49\", " +
             " \"id\": 0," +
             " \"imei\": \"11111\"," +

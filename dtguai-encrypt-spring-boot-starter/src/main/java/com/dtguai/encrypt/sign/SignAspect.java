@@ -97,7 +97,7 @@ public class SignAspect {
             });
 
             String dataSing = paramBuilder.append("signKey=").append(key).toString();
-            log.info("sing之前的拼装数据:{}", dataSing);
+            log.info("sing-md5前的拼装数据:{}", dataSing);
             md5Sign = DigestUtils.md5Hex(dataSing);
         } catch (Exception e) {
             log.error("sign数据签名校验出错{}", reqm, e);

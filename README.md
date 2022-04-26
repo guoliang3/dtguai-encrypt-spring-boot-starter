@@ -79,27 +79,55 @@ SpringBoot 通过注解实现数据加密与解密,
 
 ## 快速开始
 
+### 使用方式
+
+#### 注:开发使用的版本为 jdk8+
+
+```yaml
+    <properties>
+    	<java.version>8</java.version>
+    </properties>
+```
+
+#### Maven依赖
+
+```
+    <dependency>
+        <groupId>com.dtguai</groupId>
+        <artifactId>dtguai-encrypt-spring-boot-starter</artifactId>
+        <version>1.1.1</version>
+    </dependency>
+```
 
 
-### 加密
+### 加密(RestController将指定输出数据加密)
 
 #### MD5
 
+- [@EncryptBody(value = EncryptBodyMethod.MD5)](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E5%8A%A0%E5%AF%86/MD5)
+
 #### SHA-224 / 256 / 384 / 512
+- [@EncryptBody(value = EncryptBodyMethod.SHA)](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E5%8A%A0%E5%AF%86/SHA-224,256,384,512)
 
 #### AES
+- [@EncryptBody(value = EncryptBodyMethod.MD5)](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E5%8A%A0%E5%AF%86/MD5)
 
 #### DES
+- [@EncryptBody(value = EncryptBodyMethod.MD5)](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E5%8A%A0%E5%AF%86/MD5)
 
 #### RSA
+- [@EncryptBody(value = EncryptBodyMethod.MD5)](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E5%8A%A0%E5%AF%86/MD5)
 
 #### 国密
 
 ##### SM2
+- [@EncryptBody(value = EncryptBodyMethod.MD5)](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E5%8A%A0%E5%AF%86/MD5)
 
 ##### SM3
+- [@EncryptBody(value = EncryptBodyMethod.MD5)](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E5%8A%A0%E5%AF%86/MD5)
 
 ##### SM4
+- [@EncryptBody(value = EncryptBodyMethod.MD5)](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E5%8A%A0%E5%AF%86/MD5)
 
 ### 解密
 
@@ -131,25 +159,7 @@ SpringBoot 通过注解实现数据加密与解密,
 
 value 默认为 DecryptBodyMethod.AES; long 默认为0不限制超时时间
 
-## 使用方式
 
-## 注:开发使用的版本为 jdk8+
-
-```yaml
-    <properties>
-    <java.version>8</java.version>
-    </properties>
-```
-
-## Maven依赖
-
-```
-    <dependency>
-        <groupId>com.dtguai</groupId>
-        <artifactId>dtguai-encrypt-spring-boot-starter</artifactId>
-        <version>1.1.0</version>
-    </dependency>
-```
 
 ```java
 

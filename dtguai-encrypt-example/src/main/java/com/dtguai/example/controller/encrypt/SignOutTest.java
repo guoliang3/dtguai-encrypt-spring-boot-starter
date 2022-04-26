@@ -47,38 +47,13 @@ public class SignOutTest {
         log.warn("signOut-date:{}", date);
         return new ApiResponse<>(User
                 .builder()
-                .name("克隆人cx911")
+                .name("克隆人cx911-signOut加签")
                 .type(1)
                 .mobile("13800138000")
                 .imei("123456789")
                 .createTime(date)
                 .build());
     }
-
-    /**
-     * sign 数字签名 静态
-     * 注意时间问题
-     * createTime 2022-04-22 14:41:20
-     * JSON.toJSONStringWithDateFormat(x, "yyyy-MM-dd HH:mm:ss")
-     * 请根据signOut方法返回的 timestamp 修改入参
-     *
-     * @param json 测试数据
-     * @return ApiResponse
-     */
-    @ApiOperation(value = "静态-生成数字证书", notes = "静态-生成sign数字证书")
-    @PostMapping(value = "/signOut/data", produces = "application/json;charset=UTF-8")
-    @ApiImplicitParam(name = "json", value = "json测试数据", dataTypeClass = String.class, defaultValue = "{ " +
-            " \"createTime\": \"2022-04-22 14:41:20\", " +
-            " \"type\": 1," +
-            " \"imei\": \"123456789\"," +
-            " \"mobile\": \"13800138000\"," +
-            " \"name\": \"克隆人cx911\"," +
-            " \"timestamp\":\"1628823973123\"" +
-            " }")
-    public ApiResponse<String> signOutData(String json) {
-        return new ApiResponse<>(signService.getSign(json));
-    }
-
 
     /**
      * sign 加签->动态timestamp
