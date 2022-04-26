@@ -218,19 +218,16 @@ private String desCipherAlgorithm="DES/ECB/PKCS5Padding";
 
 ##  更新日志
   <a href="https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E6%9B%B4%E6%96%B0%E8%AE%B0%E5%BD%95?sort_id=4355068">
-  更新日志
+更新日志
   </a>
 
 
 ## 算法说明
 
-### 算法分类
   <a href="https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E7%AE%97%E6%B3%95%E5%88%86%E7%B1%BB%20?sort_id=4355085">
   算法分类
   </a>
 
-
-### 国密算法
   <a href="https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E5%9B%BD%E5%AF%86%E7%AE%97%E6%B3%95?sort_id=4355178">
   国密算法
   </a>
