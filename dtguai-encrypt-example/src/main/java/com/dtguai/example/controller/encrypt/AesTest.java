@@ -13,19 +13,18 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Date;
-
 /**
  * 描述
  *
  * @author guo
- * @date 2022年4月24日18:14:07
  * @version 1.1.1
+ * @date 2022年4月24日18:14:07
  */
 @RestController
 @RequestMapping("/test")
@@ -37,33 +36,30 @@ public class AesTest {
      * aes解密
      *
      * @param form 加密对象
-     * @return ApiResponse
+     * @return ApiResponse<User>
      */
-    @ApiOperation(value = "aes加密解密", notes = "aes加密解密")
+    @ApiOperation(value = "aes解密", notes = "aes解密")
     @PostMapping(value = "/aes")
     @DecryptBody(value = DecryptBodyMethod.AES)
     public ApiResponse<User> aes(@RequestBody AesForm form) {
         log.info("aes解密数据:{}", JSON.toJSONString(form));
-        return new ApiResponse<>(User.builder()
-                .name("克隆人")
-                .createTime(new Date())
-                .imei("11111")
-                .mobile("13811788899")
-                .build());
+        User user = new User();
+        BeanUtils.copyProperties(form, user);
+        return new ApiResponse<>(user);
     }
 
 
     /**
-     * aes加密解密
+     * aes加密
      *
      * @param json 测试json数据
-     * @return ApiResponse
+     * @return ApiResponse<String>
      */
-    @ApiOperation(value = "aes测试数据加密", notes = "使用aes给测试数据加密")
+    @ApiOperation(value = "aes加密", notes = "aes加密")
     @PostMapping(value = "/aes/data")
     @EncryptBody(value = EncryptBodyMethod.AES)
     @ApiImplicitParam(name = "json", value = "json测试数据", dataTypeClass = String.class, defaultValue = "{ " +
-            " \"createTime\": \"2021-08-13 09:47:49\", " +
+            " \"createTime\": \"2022-04-25 09:47:49\", " +
             " \"id\": 0," +
             " \"imei\": \"11111\"," +
             " \"mobile\": \"13811889989\"," +

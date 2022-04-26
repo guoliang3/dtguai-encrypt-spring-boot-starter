@@ -14,7 +14,7 @@ import java.util.Date;
  * @date 2021年3月15日19:57:56
  */
 @Data
-@ApiModel(value = "测试-aes")
+@ApiModel(value = "sm4-form")
 @EqualsAndHashCode(callSuper = false)
 public class Sm4Form {
 

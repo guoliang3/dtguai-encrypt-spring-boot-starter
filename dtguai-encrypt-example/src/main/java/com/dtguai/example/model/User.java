@@ -36,7 +36,6 @@ public class User {
      * 密码
      */
     @ApiModelProperty(value = "密码")
-    @JsonIgnore
     private String password;
     /**
      * 创建时间

@@ -5,6 +5,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.util.Date;
+
 /**
  * 登录表单
  *
@@ -16,12 +18,42 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 public class DesForm {
 
+    /**
+     * 手机号
+     */
     @ApiModelProperty(hidden = true)
     private String mobile;
-
+    /**
+     * 用户名
+     */
+    @ApiModelProperty(hidden = true)
+    private String name;
+    /**
+     * 密码
+     */
     @ApiModelProperty(hidden = true)
     private String password;
+    /**
+     * 创建时间
+     */
+    @ApiModelProperty(hidden = true)
+    private Date createTime;
+    /**
+     * 状态
+     */
+    @ApiModelProperty(hidden = true)
+    private Integer type;
 
+
+    /**
+     * imei号
+     */
+    @ApiModelProperty(hidden = true)
+    private String imei;
+
+    /**
+     * 显示解密后的timestamp,用于展示
+     */
     @ApiModelProperty(hidden = true)
     private String timestamp;
 

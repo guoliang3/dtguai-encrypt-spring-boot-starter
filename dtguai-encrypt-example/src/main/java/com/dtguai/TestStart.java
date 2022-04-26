@@ -28,8 +28,7 @@ public class TestStart implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        LocalDateTime time = LocalDateTime.now();
-        log.info("--------------------服务启动完成!{}--------------------", time);
+        log.info("--------------------服务启动完成!{}--------------------", LocalDateTime.now());
     }
 
     @GetMapping("/")

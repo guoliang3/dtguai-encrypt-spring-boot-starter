@@ -1,7 +1,6 @@
 package com.dtguai.example.controller.encrypt;
 
 import com.alibaba.fastjson.JSON;
-import com.dtguai.encrypt.annotation.SignOut;
 import com.dtguai.encrypt.annotation.decrypt.DecryptBody;
 import com.dtguai.encrypt.annotation.encrypt.EncryptBody;
 import com.dtguai.encrypt.enums.DecryptBodyMethod;
@@ -13,12 +12,11 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Date;
 
 /**
  * 描述
@@ -34,37 +32,33 @@ public class DesTest {
 
 
     /**
-     * des加密解密
+     * des解密
      *
      * @param form 加密对象
-     * @return ResponseEntity
+     * @return ApiResponse<User>
      */
-    @ApiOperation(value = "des加密解密", notes = "des加密解密")
+    @ApiOperation(value = "des解密", notes = "des解密")
     @PostMapping(value = "/des", produces = "application/json;charset=UTF-8")
     @DecryptBody(value = DecryptBodyMethod.DES)
-    @EncryptBody(value = EncryptBodyMethod.DES)
     public ApiResponse<User> des(@RequestBody DesForm form) {
         log.info("des解密数据:{}", JSON.toJSONString(form));
-        return new ApiResponse<>(User.builder()
-                .name("克隆人")
-                .createTime(new Date())
-                .imei("11111")
-                .mobile("13811788899")
-                .build());
+        User user = new User();
+        BeanUtils.copyProperties(form, user);
+        return new ApiResponse<>(user);
     }
 
 
     /**
-     * des加密解密
+     * des加密
      *
      * @param json 测试json数据
-     * @return ApiResponse
+     * @return ApiResponse<String>
      */
-    @ApiOperation(value = "des测试数据加密", notes = "使用des给测试数据加密")
+    @ApiOperation(value = "des加密", notes = "des加密")
     @PostMapping(value = "/des/data")
     @EncryptBody(value = EncryptBodyMethod.DES)
-    @ApiImplicitParam(name = "json", value = "json测试数据", defaultValue = "{ " +
-            " \"createTime\": \"2021-08-13 09:47:49\", " +
+    @ApiImplicitParam(name = "json", value = "json测试数据", dataTypeClass = String.class, defaultValue = "{ " +
+            " \"createTime\": \"2022-04-26 09:47:49\", " +
             " \"id\": 0," +
             " \"imei\": \"11111\"," +
             " \"mobile\": \"13811889989\"," +
