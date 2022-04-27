@@ -75,7 +75,7 @@ SpringBoot 通过注解实现数据加密与解密,
 <dependency>
     <groupId>com.dtguai</groupId>
     <artifactId>dtguai-encrypt-spring-boot-starter</artifactId>
-    <version>1.1.1</version>
+    <version>1.1.2</version>
 </dependency>
 ```
 
