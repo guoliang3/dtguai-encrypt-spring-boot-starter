@@ -1,7 +1,7 @@
 package com.dtguai.encrypt.sign;
 
 
-import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson2.JSON;
 import com.dtguai.encrypt.annotation.Sign;
 import com.dtguai.encrypt.config.SignConfig;
 import com.dtguai.encrypt.exception.SignDtguaiException;
@@ -53,7 +53,7 @@ public class SignAspect {
         Object[] args = point.getArgs();
 
         TreeMap<String, Object> reqm = Optional.ofNullable(args[0])
-                .map(x -> JSON.toJSONStringWithDateFormat(x, "yyyy-MM-dd HH:mm:ss"))
+                .map(x -> JSON.toJSONString(x, "yyyy-MM-dd HH:mm:ss"))
                 .map(x -> JSON.<TreeMap<String, Object>>parseObject(x, TreeMap.class))
                 .orElseThrow(() -> new SignDtguaiException("sing注解中加密数据为空"));
 

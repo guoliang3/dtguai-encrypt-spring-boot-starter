@@ -1,7 +1,8 @@
 package com.dtguai.encrypt.sign;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONException;
+
+import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONException;
 import com.dtguai.encrypt.annotation.SignOut;
 import com.dtguai.encrypt.config.SignConfig;
 import com.dtguai.encrypt.exception.SignDtguaiException;
@@ -55,7 +56,7 @@ public class SignOutAspect {
 
         //获取返回类型->转换成map
         Map<String, Object> repMap = Optional.of(result)
-                .map(x -> JSON.toJSONStringWithDateFormat(x, "yyyy-MM-dd HH:mm:ss"))
+                .map(x -> JSON.toJSONString(x, "yyyy-MM-dd HH:mm:ss"))
                 .map(x -> {
                     try {
                         return JSON.<Map<String, Object>>parseObject(x, Map.class);

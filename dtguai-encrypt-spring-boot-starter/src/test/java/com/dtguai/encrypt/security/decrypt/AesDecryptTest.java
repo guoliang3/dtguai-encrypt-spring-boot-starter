@@ -1,6 +1,7 @@
 package com.dtguai.encrypt.security.decrypt;
 
-import com.alibaba.fastjson.JSON;
+
+import com.alibaba.fastjson2.JSON;
 import com.dtguai.encrypt.TestStart;
 import com.dtguai.encrypt.config.EncryptBodyConfig;
 import com.dtguai.encrypt.enums.EncryptBodyMethod;
@@ -70,7 +71,7 @@ public class AesDecryptTest {
                 .map(x -> JSON.parseObject(x, Map.class))
                 .map(x -> x.get("timestamp"))
                 .orElseThrow(() -> new DecryptDtguaiException("数据加密timestamp不能为空"));
-        
+
         Assert.assertEquals(DATA_JSON, jiemi);
     }
 

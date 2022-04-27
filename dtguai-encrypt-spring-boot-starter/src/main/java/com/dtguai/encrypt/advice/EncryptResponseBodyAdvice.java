@@ -1,7 +1,8 @@
 package com.dtguai.encrypt.advice;
 
 
-import com.alibaba.fastjson.JSON;
+
+import com.alibaba.fastjson2.JSON;
 import com.dtguai.encrypt.annotation.encrypt.EncryptBody;
 import com.dtguai.encrypt.bean.EncryptAnnotationInfoBean;
 import com.dtguai.encrypt.config.EncryptBodyConfig;

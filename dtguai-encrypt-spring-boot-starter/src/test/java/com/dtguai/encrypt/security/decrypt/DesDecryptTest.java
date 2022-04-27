@@ -1,6 +1,7 @@
 package com.dtguai.encrypt.security.decrypt;
 
-import com.alibaba.fastjson.JSON;
+
+import com.alibaba.fastjson2.JSON;
 import com.dtguai.encrypt.TestStart;
 import com.dtguai.encrypt.config.EncryptBodyConfig;
 import com.dtguai.encrypt.enums.EncryptBodyMethod;
