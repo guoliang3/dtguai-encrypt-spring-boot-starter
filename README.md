@@ -18,9 +18,9 @@ SpringBoot 通过注解实现数据加密与解密,
 - 可进行加密的方式有：
 
     -
-        - [x] MD5
+        - [x] [MD5](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E5%8A%A0%E5%AF%86/MD5)
     -
-        - [x] SHA-224 / 256 / 384 / 512
+        - [[x] SHA-224 / 256 / 384 / 512](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E5%8A%A0%E5%AF%86/SHA-224,256,384,512)
     -
         - [x] AES
     -
@@ -47,7 +47,12 @@ SpringBoot 通过注解实现数据加密与解密,
     -
         - [x] SM4
 
+## 验签/加签
 
+-
+     - [x] 验签
+    -
+        - [x] 加签
 
 ## 快速开始
 
@@ -61,7 +66,7 @@ SpringBoot 通过注解实现数据加密与解密,
     </properties>
 ```
 
-#### Maven依赖
+#### 1.Maven依赖
 
 ```xml
     <dependency>
@@ -71,6 +76,9 @@ SpringBoot 通过注解实现数据加密与解密,
     </dependency>
 ```
 
+#### 2. 添加配置文件
+
+- [说明](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E9%85%8D%E7%BD%AE%E8%AF%B4%E6%98%8E)
 
 ### 加密(RestController将指定输出数据加密)
 
@@ -135,11 +143,6 @@ SpringBoot 通过注解实现数据加密与解密,
 value 默认为 DecryptBodyMethod.AES;
 
 long 默认为0不限制超时时间
-
-## 配置文件
-
-- [说明](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E9%85%8D%E7%BD%AE%E8%AF%B4%E6%98%8E)
-
 
 ##  更新日志
 
