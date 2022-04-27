@@ -9,7 +9,7 @@ SpringBoot 通过注解实现数据加密与解密,
 支持多种加密方式(MD5/SHA/AES/DES/RSA)及国密算法(SM2/SM3/SM4),  
 加密解密,注解,springboot,java,加密,解密,数字证书,国密,加签,验签,等全套服务
 
-##  [dtguai-encrypt-spring-boot-starter示例](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/tree/master/dtguai-encrypt-example)
+##  [示例](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/tree/master/dtguai-encrypt-example)
 
 
 
@@ -20,39 +20,43 @@ SpringBoot 通过注解实现数据加密与解密,
     -
         - [x] [MD5](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E5%8A%A0%E5%AF%86/MD5)
     -
-        - [[x] SHA-224 / 256 / 384 / 512](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E5%8A%A0%E5%AF%86/SHA-224,256,384,512)
+        - [x] [SHA-224 / 256 / 384 / 512](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E5%8A%A0%E5%AF%86/SHA-224,256,384,512)
     -
-        - [x] AES
+        - [x] [AES](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E5%8A%A0%E5%AF%86/AES)
     -
-        - [x] DES
+        - [x] [DES](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E5%8A%A0%E5%AF%86/DES)
     -
-        - [x] RSA
+        - [x] [RSA](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E5%8A%A0%E5%AF%86/RSA)
     -
-        - [x] SM2
+        - [x] [SM2](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E5%8A%A0%E5%AF%86/%E5%9B%BD%E5%AF%86/SM2)
     -
-        - [x] SM3
+        - [x] [SM3](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E5%8A%A0%E5%AF%86/%E5%9B%BD%E5%AF%86/SM3)
     -
-        - [x] SM4
+        - [x] [SM4](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E5%8A%A0%E5%AF%86/%E5%9B%BD%E5%AF%86/SM4)
 
 - 可进行解密的方式有：
 
     -
-        - [x] AES
+        - [x] [AES](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E8%A7%A3%E5%AF%86/AES)
     -
-        - [x] DES
+        - [x] [DES](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E8%A7%A3%E5%AF%86/DES)
     -
-        - [x] RSA
+        - [x] [RSA](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E8%A7%A3%E5%AF%86/RSA)
     -
-        - [x] SM2
+        - [x] [SM2](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E8%A7%A3%E5%AF%86/%E5%9B%BD%E5%AF%86/SM2)
     -
-        - [x] SM4
+        - [x] [SM4](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E8%A7%A3%E5%AF%86/%E5%9B%BD%E5%AF%86/SM4)
 
-## 验签/加签
+## 数字证书
+
+### 验签/加签
 
 -
-     - [x] 验签
-    -
-        - [x] 加签
+    - [x] [验签](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D/%E9%AA%8C%E7%AD%BE/sign)
+
+
+-
+    - [x] [加签](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D/%E5%8A%A0%E7%AD%BE/SignOut)
 
 ## 快速开始
 
@@ -79,64 +83,6 @@ SpringBoot 通过注解实现数据加密与解密,
 #### 2. 添加配置文件
 
 - [说明](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E9%85%8D%E7%BD%AE%E8%AF%B4%E6%98%8E)
-
-### 加密(RestController将指定输出数据加密)
-
-#### MD5
-
-- [@EncryptBody(value = EncryptBodyMethod.MD5)](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E5%8A%A0%E5%AF%86/MD5)
-
-#### SHA-224 / 256 / 384 / 512
-- [@EncryptBody(value = EncryptBodyMethod.SHA)](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E5%8A%A0%E5%AF%86/SHA-224,256,384,512)
-
-#### AES
-- [@EncryptBody(value = EncryptBodyMethod.AES)](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E5%8A%A0%E5%AF%86/AES)
-
-#### DES
-- [@EncryptBody(value = EncryptBodyMethod.DES)](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E5%8A%A0%E5%AF%86/DES)
-
-#### RSA
-- [@EncryptBody(value = EncryptBodyMethod.RSA)](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E5%8A%A0%E5%AF%86/RSA)
-
-#### 国密
-
-##### SM2
-- [@EncryptBody(value = EncryptBodyMethod.SM2)](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E5%8A%A0%E5%AF%86/%E5%9B%BD%E5%AF%86/SM2)
-
-##### SM3
-- [@EncryptBody(value = EncryptBodyMethod.SM3)](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E5%8A%A0%E5%AF%86/%E5%9B%BD%E5%AF%86/SM3)
-
-##### SM4
-- [@EncryptBody(value = EncryptBodyMethod.SM4)](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E5%8A%A0%E5%AF%86/%E5%9B%BD%E5%AF%86/SM4)
-
-### 解密
-
-#### AES
-- [@DecryptBody(value = DecryptBodyMethod.AES)](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E8%A7%A3%E5%AF%86/AES)
-
-#### DES
-- [@DecryptBody(value = DecryptBodyMethod.DES)](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E8%A7%A3%E5%AF%86/DES)
-
-#### RSA
-- [@DecryptBody(value = DecryptBodyMethod.RSA)](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E8%A7%A3%E5%AF%86/RSA)
-
-#### 国密
-
-##### SM2
-- [@DecryptBody(value = DecryptBodyMethod.SM2)](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E8%A7%A3%E5%AF%86/%E5%9B%BD%E5%AF%86/SM2)
-
-##### SM4
-- [@DecryptBody(value = DecryptBodyMethod.SM4)](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E8%A7%A3%E5%AF%86/%E5%9B%BD%E5%AF%86/SM4)
-
-
-
-### 数字证书
-
-#### 验签
-- [@Sign](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D/%E9%AA%8C%E7%AD%BE/sign)
-
-#### 加签
-- [@SignOut](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D/%E5%8A%A0%E7%AD%BE/SignOut)
 
 ### 标签主要参数介绍
 
