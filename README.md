@@ -2,15 +2,18 @@
 
 [![AUR](https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg)](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/blob/master/LICENSE)  [![](https://img.shields.io/badge/version-1.1.1-brightgreen.svg)](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter)  [![](https://img.shields.io/badge/spring--boot-2.6.6-green.svg)](http://spring.io/projects/spring-boot)
 
-# 介绍
+## 开源不易，如果对您有帮助，请点右上角 “Star” 支持一下 谢谢！
+
+## 介绍
 
 数据传输加密/解密及数字证书(数据防改)的组件  
 SpringBoot 通过注解实现数据加密与解密,  
 支持多种加密方式(MD5/SHA/AES/DES/RSA)及国密算法(SM2/SM3/SM4),  
 加密解密,注解,springboot,java,加密,解密,数字证书,国密,加签,验签,等全套服务
 
-##  [示例](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/tree/master/dtguai-encrypt-example)
+##  示例
 
+- [传送门](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/tree/master/dtguai-encrypt-example)
 
 
 ## 加密/解密支持
@@ -62,14 +65,6 @@ SpringBoot 通过注解实现数据加密与解密,
 
 ### 使用方式
 
-#### 注: jdk8+
-
-```xml
-    <properties>
-    	<java.version>8</java.version>
-    </properties>
-```
-
 #### 1.Maven依赖
 
 ```xml
@@ -84,11 +79,13 @@ SpringBoot 通过注解实现数据加密与解密,
 
 - [说明](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E9%85%8D%E7%BD%AE%E8%AF%B4%E6%98%8E)
 
-### 标签主要参数介绍
+## 参数说明
 
-value 默认为 DecryptBodyMethod.AES;
+- [加密](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E5%8F%82%E6%95%B0%E8%AF%B4%E6%98%8E/%E5%8A%A0%E5%AF%86)
 
-long 默认为0不限制超时时间
+- [解密](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E5%8F%82%E6%95%B0%E8%AF%B4%E6%98%8E/%E8%A7%A3%E5%AF%86)
+
+- [数字签名(sign)](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E5%8F%82%E6%95%B0%E8%AF%B4%E6%98%8E/%E7%AD%BE%E5%90%8D)
 
 ##  更新日志
 
