@@ -91,7 +91,11 @@ SpringBoot 通过注解实现数据加密与解密,
 
 - [签名(sign)](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E5%8F%82%E6%95%B0%E8%AF%B4%E6%98%8E/%E6%B3%A8%E8%A7%A3/%E7%AD%BE%E5%90%8D)
 
-##  更新日志
+## 执行顺序
+
+![请求时序](https://images.gitee.com/uploads/images/2022/0428/114237_72ba7b68_486075.png "e9a020319f82eaa8dfde8c9428a2ac2.png")
+
+## 更新日志
 
 - [日志](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E6%9B%B4%E6%96%B0%E8%AE%B0%E5%BD%95?sort_id=4355068)
 
