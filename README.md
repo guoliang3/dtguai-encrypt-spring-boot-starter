@@ -81,15 +81,15 @@ SpringBoot 通过注解实现数据加密与解密,
 
 #### 2. 添加配置文件
 
-- [说明](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E9%85%8D%E7%BD%AE%E8%AF%B4%E6%98%8E)
+- [说明](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E5%8F%82%E6%95%B0%E8%AF%B4%E6%98%8E/%E9%85%8D%E7%BD%AE/%E9%85%8D%E7%BD%AE%E8%AF%B4%E6%98%8E)
 
-## 参数说明
+## 注解参数说明
 
-- [加密](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E5%8F%82%E6%95%B0%E8%AF%B4%E6%98%8E/%E5%8A%A0%E5%AF%86)
+- [加密](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E5%8F%82%E6%95%B0%E8%AF%B4%E6%98%8E/%E6%B3%A8%E8%A7%A3/%E5%8A%A0%E5%AF%86)
 
-- [解密](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E5%8F%82%E6%95%B0%E8%AF%B4%E6%98%8E/%E8%A7%A3%E5%AF%86)
+- [解密](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E5%8F%82%E6%95%B0%E8%AF%B4%E6%98%8E/%E6%B3%A8%E8%A7%A3/%E8%A7%A3%E5%AF%86)
 
-- [数字签名(sign)](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E5%8F%82%E6%95%B0%E8%AF%B4%E6%98%8E/%E7%AD%BE%E5%90%8D)
+- [签名(sign)](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E5%8F%82%E6%95%B0%E8%AF%B4%E6%98%8E/%E6%B3%A8%E8%A7%A3/%E7%AD%BE%E5%90%8D)
 
 ##  更新日志
 
