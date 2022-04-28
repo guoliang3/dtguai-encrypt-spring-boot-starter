@@ -12,8 +12,8 @@ import java.util.List;
  * 数字证书配置
  *
  * @author guo
- * @date 2022年4月28日09:17:19
  * @version 1.1.3
+ * @date 2022年4月28日09:17:19
  */
 @ConfigurationProperties(prefix = "dtguai.sign")
 @Configuration
