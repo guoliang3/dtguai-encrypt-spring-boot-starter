@@ -1,6 +1,6 @@
 # dtguai-encrypt-spring-boot-starter
 
-[![AUR](https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg)](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/blob/master/LICENSE)  [![](https://img.shields.io/badge/version-1.1.2-brightgreen.svg)](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter)  [![](https://img.shields.io/badge/spring--boot-2.6.7-green.svg)](http://spring.io/projects/spring-boot)  [![](https://img.shields.io/badge/JDK-8+-green.svg)](https://www.oracle.com/technetwork/java/javase/downloads/index.html)
+[![AUR](https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg)](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/blob/master/LICENSE)  [![](https://img.shields.io/badge/version-1.1.3-brightgreen.svg)](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter)  [![](https://img.shields.io/badge/spring--boot-2.6.7-green.svg)](http://spring.io/projects/spring-boot)  [![](https://img.shields.io/badge/JDK-8+-green.svg)](https://www.oracle.com/technetwork/java/javase/downloads/index.html)
 
 ## 开源不易，如果对您有帮助，请点右上角 “Star” 支持一下 谢谢！
 
@@ -75,7 +75,7 @@ SpringBoot 通过注解实现数据加密与解密,
 <dependency>
     <groupId>com.dtguai</groupId>
     <artifactId>dtguai-encrypt-spring-boot-starter</artifactId>
-    <version>1.1.2</version>
+    <version>1.1.3</version>
 </dependency>
 ```
 
