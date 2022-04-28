@@ -12,7 +12,8 @@ import java.util.List;
  * 数字证书配置
  *
  * @author guo
- * @date 2021/3/12 16:55
+ * @date 2022年4月28日09:17:19
+ * @version 1.1.3
  */
 @ConfigurationProperties(prefix = "dtguai.sign")
 @Configuration
@@ -33,4 +34,9 @@ public class SignConfig {
      * 所需要加签的数据对象key
      */
     private String resultName = "result";
+
+    /**
+     * 返回对象加签字段,默认sign
+     */
+    private String signName = "sign";
 }

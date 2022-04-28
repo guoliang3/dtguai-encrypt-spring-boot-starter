@@ -19,10 +19,4 @@ public class EncryptConfig {
      * 返回对象中需要加密字段的name
      */
     private String resultName = "result";
-
-    /**
-     * 返回对象中需要 数字证书 验签的名字
-     */
-    private String signName = "signName";
-
 }

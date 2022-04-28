@@ -29,7 +29,7 @@ import java.util.TreeMap;
  * 数字签名 输出加签 切面操作
  *
  * @author guo
- * @version 1.1.1
+ * @version 1.1.3
  * @date 2022年4月15日16:51:00
  */
 @Aspect
@@ -83,7 +83,7 @@ public class SignOutAspect {
         //添加时间戳避免加签相同
         nm.put("timestamp", timestamp);
         //添加签名
-        repMap.put("sign", sign(nm, signOut));
+        repMap.put(signConfig.getSignName(), sign(nm, signOut));
 
         return parse(JSON.toJSONString(repMap), returnType);
     }
