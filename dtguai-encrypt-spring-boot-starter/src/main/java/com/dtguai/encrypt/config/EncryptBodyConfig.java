@@ -46,7 +46,7 @@ public class EncryptBodyConfig {
     private String aesCipherAlgorithm = "AES/GCM/NoPadding";
 
     /**
-     * Aes密码算法及填充方式
+     * Des密码算法及填充方式
      */
     private String desCipherAlgorithm = "DES/ECB/PKCS5Padding";
 
