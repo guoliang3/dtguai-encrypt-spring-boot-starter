@@ -105,3 +105,6 @@ SpringBoot 通过注解实现数据加密与解密,
 
 - [国密算法](https://gitee.com/gouliang/dtguai-encrypt-spring-boot-starter/wikis/%E5%9B%BD%E5%AF%86%E7%AE%97%E6%B3%95?sort_id=4355178)
 
+## 依赖
+
+![pom依赖](https://images.gitee.com/uploads/images/2022/0429/095100_a8c3dd5f_486075.png "e45f10da0230aa1660fc3283a662e23.png")
