@@ -7,10 +7,13 @@ import com.dtguai.encrypt.util.security.Md5Util;
  * 描述
  *
  * @author guo
- * @date 2021/9/1 15:06
+ * @date 2022年8月23日17:19:00
  */
 public enum EnumSingleton {
 
+    /**
+     * md5
+     */
     MD5,
 
     ;

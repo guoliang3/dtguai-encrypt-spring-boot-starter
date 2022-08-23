@@ -10,16 +10,22 @@ import lombok.Getter;
  * 描述
  *
  * @author guo
- * @date 2021/9/1 15:06
+ * @date 2022年8月23日17:19:26
  */
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public enum EnumSingleton2 {
 
+    /**
+     * md5
+     */
     MD5(new Md5Util()),
 
     ;
 
+    /**
+     * 接口
+     */
     ISecurity iSecurity;
 
 
