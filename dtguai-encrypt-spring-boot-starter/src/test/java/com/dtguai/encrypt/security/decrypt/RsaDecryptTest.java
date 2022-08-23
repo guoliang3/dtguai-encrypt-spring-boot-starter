@@ -40,11 +40,11 @@ public class RsaDecryptTest {
      */
     @Test
     public void aesPubEncrypt() {
-        log.warn("原始的json数据为:{}", RsaEncryptTest.dataJson);
-        log.warn("原始的json数据长度:{}", RsaEncryptTest.dataJson.length());
+        log.warn("原始的json数据为:{}", RsaEncryptTest.DATA_JSON);
+        log.warn("原始的json数据长度:{}", RsaEncryptTest.DATA_JSON.length());
 
         //公钥加密
-        byte[] jiami = RsaUtil.encryptByPublicKey(RsaEncryptTest.dataJson.getBytes(), Base64.decodeBase64(RsaEncryptTest.RSA_PUB_KEY));
+        byte[] jiami = RsaUtil.encryptByPublicKey(RsaEncryptTest.DATA_JSON.getBytes(), Base64.decodeBase64(RsaEncryptTest.RSA_PUB_KEY));
         log.warn("公钥加密数据长度为:{}", jiami.length);
         log.warn("公钥加密数据为:{}", Base64.encodeBase64String(jiami));
 
@@ -55,7 +55,7 @@ public class RsaDecryptTest {
         long endTime = System.currentTimeMillis();
         System.out.println("私钥解密执行时间：" + (endTime - startTime) + "毫秒");
         System.out.println("私钥解密数据:" + jiemi);
-        Assert.assertEquals(RsaEncryptTest.dataJson, jiemi);
+        Assert.assertEquals(RsaEncryptTest.DATA_JSON, jiemi);
     }
 
     /**
@@ -63,10 +63,10 @@ public class RsaDecryptTest {
      */
     @Test
     public void aesPirEncrypt() {
-        log.warn("原始的json数据为:{}", RsaEncryptTest.dataJson);
-        log.warn("原始的json数据长度为:{}", RsaEncryptTest.dataJson.length());
+        log.warn("原始的json数据为:{}", RsaEncryptTest.DATA_JSON);
+        log.warn("原始的json数据长度为:{}", RsaEncryptTest.DATA_JSON.length());
         //私钥加密
-        String jiami = EncryptBodyMethod.RSA.getISecurity().encrypt(RsaEncryptTest.dataJson, RsaDecryptTest.RSA_PIR_KEY, config);
+        String jiami = EncryptBodyMethod.RSA.getISecurity().encrypt(RsaEncryptTest.DATA_JSON, RsaDecryptTest.RSA_PIR_KEY, config);
         log.warn("私钥加密数据:{}", jiami);
         log.warn("私钥加密数据长度:{}", jiami.length());
 
@@ -76,7 +76,7 @@ public class RsaDecryptTest {
         long endTime = System.currentTimeMillis();
         System.out.println("公钥解密执行时间：" + (endTime - startTime) + "毫秒");
         System.out.println("公钥解密后的数据：" + new String(decode));
-        Assert.assertEquals(RsaEncryptTest.dataJson, new String(decode));
+        Assert.assertEquals(RsaEncryptTest.DATA_JSON, new String(decode));
 
     }
 

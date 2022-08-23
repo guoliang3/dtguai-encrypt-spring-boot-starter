@@ -20,7 +20,7 @@ import java.util.TreeMap;
 public class SignTest {
 
 
-    public static final String rsa = "{" +
+    public static final String RSA = "{" +
             "  \"id\": 1," +
             "  \"mobile\": 18600231871," +
             "  \"password\": 123456," +
@@ -28,12 +28,12 @@ public class SignTest {
             //"  \"timestamp\": " + System.currentTimeMillis() +
             "}";
 
-    public static final String signKey = "qyxVsFzp";
+    public static final String SIGN_KEY = "qyxVsFzp";
 
     @Test
     public void sign() {
-        log.warn("json数据为:{}", rsa);
-        Map<String, Object> my = JSON.<Map<String, Object>>parseObject(rsa, TreeMap.class);
+        log.warn("json数据为:{}", RSA);
+        Map<String, Object> my = JSON.<Map<String, Object>>parseObject(RSA, TreeMap.class);
         String newDataJson = JSON.toJSONString(my);
         log.warn("添加了时间戳,并且排好序(按key的顺序排)的json:{}", newDataJson);
 
@@ -49,7 +49,7 @@ public class SignTest {
         });
 
         log.warn("循环map拼接数据串把token和sign剔除:{}", paramBuilder);
-        String signData = paramBuilder.append("signKey=").append(signKey).toString();
+        String signData = paramBuilder.append("signKey=").append(SIGN_KEY).toString();
         log.warn("最后加入signkey:                  {}", signData);
         String md5Sign = DigestUtils.md5Hex(signData);
         log.warn("signStr-md5加密:{}", md5Sign);

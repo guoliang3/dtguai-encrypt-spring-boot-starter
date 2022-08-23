@@ -34,7 +34,7 @@ public class RsaEncryptTest {
     @Autowired
     private EncryptBodyConfig config;
 
-    public static final String dataJson = "{" +
+    public static final String DATA_JSON = "{" +
             "  \"mobile\": 13811889989," +
             "  \"password\": 123456," +
             "  \"timestamp\": " + System.currentTimeMillis() +
@@ -68,10 +68,10 @@ public class RsaEncryptTest {
      */
     @Test
     public void rsaPubEncrypt() {
-        log.warn("原始的json数据为:{}", dataJson);
-        log.warn("原始的json数据长度为:{}", dataJson.length());
+        log.warn("原始的json数据为:{}", DATA_JSON);
+        log.warn("原始的json数据长度为:{}", DATA_JSON.length());
         //公钥加密
-        byte[] jiami = RsaUtil.encryptByPublicKey(dataJson.getBytes(), Base64.decodeBase64(RSA_PUB_KEY));
+        byte[] jiami = RsaUtil.encryptByPublicKey(DATA_JSON.getBytes(), Base64.decodeBase64(RSA_PUB_KEY));
         log.warn("公钥加密数据:{}", Base64.encodeBase64String(jiami));
         log.warn("公钥加密数据长度:{}", jiami.length);
         Assert.assertNotNull(jiami);
@@ -82,10 +82,10 @@ public class RsaEncryptTest {
      */
     @Test
     public void rsaPirEncrypt() {
-        log.warn("原始的json数据为:{}", dataJson);
-        log.warn("原始的json数据长度为:{}", dataJson.length());
+        log.warn("原始的json数据为:{}", DATA_JSON);
+        log.warn("原始的json数据长度为:{}", DATA_JSON.length());
         //私钥加密
-        String jiami = DecryptBodyMethod.RSA.getISecurity().encrypt(RsaEncryptTest.dataJson, RsaDecryptTest.RSA_PIR_KEY, config);
+        String jiami = DecryptBodyMethod.RSA.getISecurity().encrypt(RsaEncryptTest.DATA_JSON, RsaDecryptTest.RSA_PIR_KEY, config);
         log.warn("私钥加密数据:{}", jiami);
         log.warn("私钥加密数据长度:{}", jiami.length());
         Assert.assertNotNull(jiami);
